@@ -1,0 +1,44 @@
+﻿using Microsoft.Data.Sqlite;
+
+namespace YgoSoul;
+
+public class CardDatabase
+{
+    private static string _connString;
+
+    public static void Initialize(string dbPath)
+    {
+        _connString = $"Data Source={dbPath}";
+    }
+
+    public static OCG_CardData GetCardData(uint code)
+    {
+        using var connection = new SqliteConnection(_connString);
+        connection.Open();
+
+        var command = connection.CreateCommand();
+        command.CommandText = "SELECT * FROM datas WHERE id = $id";
+        command.Parameters.AddWithValue("$id", code);
+
+        using var reader = command.ExecuteReader();
+        if (reader.Read())
+        {
+            return new OCG_CardData
+            {
+                code = (uint)reader.GetInt32(0),
+                alias = (uint)reader.GetInt32(2),
+                setcode = IntPtr.Zero,
+                type = (uint)reader.GetInt32(4),
+                attack = reader.GetInt32(5),  // Coluna 'atk'
+                defense = reader.GetInt32(6), // Coluna 'def'
+                level = (uint)reader.GetInt32(7),
+                race = (ulong)reader.GetInt64(8),
+                attribute = (uint)reader.GetInt32(9),
+                lscale = 0,
+                rscale = 0,
+                link_marker = 0
+            };
+        }
+        return new OCG_CardData { code = code }; // Retorna vazio se não achar
+    }
+}
