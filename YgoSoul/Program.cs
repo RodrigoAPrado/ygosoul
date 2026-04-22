@@ -2,6 +2,13 @@
 using System.Text;
 using Microsoft.Data.Sqlite;
 using YgoSoul;
+using YgoSoul.Factory;
+using YgoSoul.Handler;
+using YgoSoul.Handler.Enum;
+using YgoSoul.Message;
+using YgoSoul.Message.Component;
+using YgoSoul.Parser;
+using YgoSoul.Parser.Abstr;
 
 class Program
 {
@@ -10,8 +17,9 @@ class Program
     private static LogHandler _logHandler;
     private static DataReaderDone _readerDone;
 
-    private static GameMessage _currentGameMessage;
-    private static List<PlayerChoice> _playerChoices;
+    private static List<IdleCmdChoiceCard> _playerChoices;
+    
+    private static Dictionary<GameMessage, IParser> _parsers;
         
         
     // Dentro do seu Main ou classe de teste
@@ -62,6 +70,8 @@ class Program
             enableUnsafeLibraries = 0
         };
 
+        _parsers = ParserFactory.CreateParsers();
+
         // 4. Criação do Duelo
         IntPtr pDuel;
         if (OcgApi.OCG_CreateDuel(out pDuel, ref options) == 0)
@@ -108,16 +118,20 @@ class Program
 
             // 3. Processa o ID que está no msgData[0]
             var result = ProcessarUnicaMensagem(msgData);
-            resultActions += result;
         }
 
         return resultActions;
     }
 
-    private static int ProcessarUnicaMensagem(byte[] buffer)
+    private static MessageHandleEnum ProcessarUnicaMensagem(byte[] buffer)
     {
         // 2. O 'msgType' está no byte 4 (logo após o header de tamanho)
         GameMessage msgType = (GameMessage)buffer[0];
+
+        if (_parsers.TryGetValue(msgType, out var value))
+        {
+            return MessageHandler.HandleMessage(value.Parse(buffer));
+        }
         
         switch (msgType)
         {
@@ -128,15 +142,6 @@ class Program
                 if(!HandleHint(buffer))
                     Console.WriteLine($"Mensagem {msgType.ToString()}, conteúdo: {BitConverter.ToString(buffer)}");
                 return 0;
-            case GameMessage.SelectIdleCmd:
-                _currentGameMessage = msgType;
-                var result = HandleIdleCmd(buffer);
-                if (!result)
-                {
-                    Console.WriteLine($"Mensagem {msgType.ToString()}, conteúdo: {BitConverter.ToString(buffer)}");
-                    return 0;
-                }
-                return 1;
             case GameMessage.SelectChain:
                 if(!HandleSelectChain(buffer))
                     Console.WriteLine($"Mensagem {msgType.ToString()}, conteúdo: {BitConverter.ToString(buffer)}");
@@ -174,8 +179,7 @@ class Program
                 }
                 return 0;
             default:
-                Console.WriteLine("Mensagem Desconhecida, conteúdo: " + BitConverter.ToString(buffer));
-                return 0;
+                return MessageHandler.HandleMessage(_parsers[GameMessage.Unknown].Parse(buffer));
         }
     }
 
@@ -264,58 +268,6 @@ class Program
 
         return (true, actionAmount);
     }
-
-    private static int AddCardAction(StringBuilder sb, uint actionValue, int currentPos, byte[] buffer, PlayerActions pa)
-    {
-        if (actionValue > 0)
-        {
-            for (var i = 0; i < actionValue; i++)
-            {
-                currentPos += 4;
-                uint monsterValue = BitConverter.ToUInt32(buffer, currentPos);
-                currentPos += 5;
-                uint locationValue = buffer[currentPos];
-                currentPos += 1;
-                uint indexValue = buffer[currentPos];
-                sb.Append($"{_playerChoices.Count} para {pa}: {CardLibrary.GetCard(monsterValue).Name}, que está na sua {((CardLocation)locationValue).ToString()} com indice {indexValue};\n");
-                _playerChoices.Add(new PlayerChoice((int)pa, i));
-            }
-        }
-        currentPos+=4;
-        return currentPos;
-    }
-    
-    
-    private static bool HandleIdleCmd(byte[] buffer)
-    {
-        _playerChoices = new List<PlayerChoice>();
-        byte player = buffer[1];
-        int currentPos = 2;
-        StringBuilder sb = new StringBuilder();
-        sb.Append($"Jogador {player}, digite o numero da ação desejada: \n");
-        foreach (PlayerActions value in Enum.GetValues(typeof(PlayerActions)))
-        {
-            uint actionValue = BitConverter.ToUInt32(buffer, currentPos);
-            var result = AddCardAction(sb, actionValue, currentPos, buffer, value);
-            currentPos = result;
-        }
-        
-        currentPos += 1;
-        if (buffer[currentPos] == 1)
-        {
-            sb.Append($"{_playerChoices.Count} para ir para a BattlePhase;\n");
-        }
-        _playerChoices.Add(new PlayerChoice(6, 0));
-
-        currentPos += 1;
-        if (buffer[currentPos] == 1)
-        {
-            sb.Append($"{_playerChoices.Count} para ir para a EndPhase;\n");
-        }
-        _playerChoices.Add(new PlayerChoice(7, 0));
-        Console.Write(sb.ToString());
-        return true;
-    }
     
     private static void CreateDecks(IntPtr pDuel)
     {
@@ -391,7 +343,7 @@ class Program
                             if (_currentGameMessage == GameMessage.SelectPlace)
                             {
                                 //TODO:
-                                byte[] response = new byte[] { 0xFF, 0xFF, 0xFF }; 
+                                byte[] response = { (byte)currentDuelist, 0x04, 0x02 }; 
                                 OcgApi.OCG_DuelSetResponse(pDuel, response, (uint)response.Length);
                                 /*
                                 var placeResult = GetLocationValue(escolha);

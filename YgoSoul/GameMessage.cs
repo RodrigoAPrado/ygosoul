@@ -2,6 +2,7 @@
 
 public enum GameMessage : byte
 {
+    Unknown = 0, // Adicionado por mim mesmo.
     Retry = 1,
     Hint = 2,
     Waiting = 3,
