@@ -248,122 +248,7 @@ class Program
         foreach (PlayerActions value in Enum.GetValues(typeof(PlayerActions)))
         {
             uint actionValue = BitConverter.ToUInt32(buffer, currentPos);
-            switch (value)
-            {
-                case PlayerActions.NormalSummon:
-                    currentPos = AddCardAction(sb, actionValue, currentPos, buffer, PlayerActions.NormalSummon);
-                    break;
-                case PlayerActions.SpecialSummon:
-                    sb.Append($"- Fazer {actionValue} Normal Summons");
-                    if (actionValue == 0)
-                    {
-                        sb.Append($";\n");
-                    }
-                    else
-                    {
-                        sb.Append($", que são os monstros:\n");
-                        for (var i = 0; i < actionValue; i++)
-                        {
-                            currentPos += 4;
-                            uint monsterValue = BitConverter.ToUInt32(buffer, currentPos);
-                            currentPos += 5;
-                            uint locationValue = buffer[currentPos];
-                            currentPos += 1;
-                            uint indexValue = buffer[currentPos];
-                            sb.Append($"    -{CardLibrary.GetCard(monsterValue).Name}, que está na sua {((CardLocation)locationValue).ToString()} com indice {indexValue};\n");
-                        }
-                    }
-                    currentPos+=4;
-                    break;
-                case PlayerActions.ChangeCardPosition:
-                    sb.Append($"- Fazer {actionValue} Normal Summons");
-                    if (actionValue == 0)
-                    {
-                        sb.Append($";\n");
-                    }
-                    else
-                    {
-                        sb.Append($", que são os monstros:\n");
-                        for (var i = 0; i < actionValue; i++)
-                        {
-                            currentPos += 4;
-                            uint monsterValue = BitConverter.ToUInt32(buffer, currentPos);
-                            currentPos += 5;
-                            uint locationValue = buffer[currentPos];
-                            currentPos += 1;
-                            uint indexValue = buffer[currentPos];
-                            sb.Append($"    -{CardLibrary.GetCard(monsterValue).Name}, que está na sua {((CardLocation)locationValue).ToString()} com indice {indexValue};\n");
-                        }
-                    }
-                    currentPos+=4;
-                    break;
-                case PlayerActions.Set:
-                    sb.Append($"- Fazer {actionValue} Normal Summons");
-                    if (actionValue == 0)
-                    {
-                        sb.Append($";\n");
-                    }
-                    else
-                    {
-                        sb.Append($", que são os monstros:\n");
-                        for (var i = 0; i < actionValue; i++)
-                        {
-                            currentPos += 4;
-                            uint monsterValue = BitConverter.ToUInt32(buffer, currentPos);
-                            currentPos += 5;
-                            uint locationValue = buffer[currentPos];
-                            currentPos += 1;
-                            uint indexValue = buffer[currentPos];
-                            sb.Append($"    -{CardLibrary.GetCard(monsterValue).Name}, que está na sua {((CardLocation)locationValue).ToString()} com indice {indexValue};\n");
-                        }
-                    }
-                    currentPos+=4;
-                    break;
-                case PlayerActions.SpellOrTrapActivation:
-                    sb.Append($"- Fazer {actionValue} Normal Summons");
-                    if (actionValue == 0)
-                    {
-                        sb.Append($";\n");
-                    }
-                    else
-                    {
-                        sb.Append($", que são os monstros:\n");
-                        for (var i = 0; i < actionValue; i++)
-                        {
-                            currentPos += 4;
-                            uint monsterValue = BitConverter.ToUInt32(buffer, currentPos);
-                            currentPos += 5;
-                            uint locationValue = buffer[currentPos];
-                            currentPos += 1;
-                            uint indexValue = buffer[currentPos];
-                            sb.Append($"    -{CardLibrary.GetCard(monsterValue).Name}, que está na sua {((CardLocation)locationValue).ToString()} com indice {indexValue};\n");
-                        }
-                    }
-                    currentPos+=4;
-                    break;
-                case PlayerActions.ExtraDeckSummon:
-                    sb.Append($"- Fazer {actionValue} Normal Summons");
-                    if (actionValue == 0)
-                    {
-                        sb.Append($";\n");
-                    }
-                    else
-                    {
-                        sb.Append($", que são os monstros:\n");
-                        for (var i = 0; i < actionValue; i++)
-                        {
-                            currentPos += 4;
-                            uint monsterValue = BitConverter.ToUInt32(buffer, currentPos);
-                            currentPos += 5;
-                            uint locationValue = buffer[currentPos];
-                            currentPos += 1;
-                            uint indexValue = buffer[currentPos];
-                            sb.Append($"    -{CardLibrary.GetCard(monsterValue).Name}, que está na sua {((CardLocation)locationValue).ToString()} com indice {indexValue};\n");
-                        }
-                    }
-                    currentPos+=4;
-                    break;
-            }
+            currentPos = AddCardAction(sb, actionValue, currentPos, buffer, value);
         }
         
         currentPos += 1;
@@ -377,7 +262,7 @@ class Program
             sb.Append($"- Ir para a EndPhase;\n");
         }
         Console.Write(sb.ToString());
-        return false;
+        return true;
     }
     
     // Normal Summon
