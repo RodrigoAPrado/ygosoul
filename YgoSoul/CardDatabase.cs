@@ -17,13 +17,13 @@ public class CardDatabase
         connection.Open();
 
         var command = connection.CreateCommand();
-        command.CommandText = "SELECT * FROM datas WHERE id = $id";
+        command.CommandText = "SELECT * FROM datas JOIN texts ON datas.id = texts.id WHERE datas.id = $id";
         command.Parameters.AddWithValue("$id", code);
 
         using var reader = command.ExecuteReader();
         if (reader.Read())
         {
-            return new OCG_CardData
+            var ocgCardData = new OCG_CardData
             {
                 code = (uint)reader.GetInt32(0),
                 alias = (uint)reader.GetInt32(2),
@@ -38,6 +38,10 @@ public class CardDatabase
                 rscale = 0,
                 link_marker = 0
             };
+
+            CardLibrary.AddCard(ocgCardData, reader.GetString(12), reader.GetString(13));
+            
+            return ocgCardData;
         }
         return new OCG_CardData { code = code }; // Retorna vazio se não achar
     }

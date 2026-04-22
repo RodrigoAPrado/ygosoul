@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using System.Text;
 using Microsoft.Data.Sqlite;
 using YgoSoul;
 
@@ -88,7 +89,6 @@ class Program
     private static void ContinueDuel(IntPtr pDuel)
     {
         int value = OcgApi.OCG_DuelProcess(pDuel);
-        Console.WriteLine("OCG duel Progress Response: " + value);
         uint length;
         IntPtr messagePtr = OcgApi.OCG_DuelGetMessage(pDuel, out length);
         if (length > 0)
@@ -98,28 +98,62 @@ class Program
             // 2. Copiamos o que está naquele endereço 0x25d1... para o nosso array
             System.Runtime.InteropServices.Marshal.Copy(messagePtr, dadosLocais, 0, (int)length);
             // 3. Agora sim, olhe para os bytes:
-            Console.WriteLine("Conteúdo da Mensagem: " + BitConverter.ToString(dadosLocais));
-
             ProcessMessage(dadosLocais);
         }
     }
     
     private static void ProcessMessage(byte[] buffer) {
         // 1. Pega o tamanho total (os 4 primeiros bytes do buffer original)
-        uint totalSize = BitConverter.ToUInt32(buffer, 0);
+        int offset = 0;
+        
+        while (offset < buffer.Length) {
+            // 1. Lê o tamanho da mensagem ATUAL (4 bytes)
+            int msgSize = BitConverter.ToInt32(buffer, offset);
+            offset += 4;
 
+            // 2. Extrai os bytes dessa mensagem específica
+            byte[] msgData = new byte[msgSize];
+            Array.Copy(buffer, offset, msgData, 0, msgSize);
+            offset += msgSize;
+
+            // 3. Processa o ID que está no msgData[0]
+            ProcessarUnicaMensagem(msgData);
+        }
+    }
+
+    private static void ProcessarUnicaMensagem(byte[] buffer)
+    {
         // 2. O 'msgType' está no byte 4 (logo após o header de tamanho)
-        GameMessage msgType = (GameMessage)buffer[4];
+        GameMessage msgType = (GameMessage)buffer[0];
 
         switch (msgType)
         {
+            case GameMessage.Hint:
+                if(!HandleHint(buffer))
+                    Console.WriteLine($"Mensagem {msgType.ToString()}, conteúdo: {BitConverter.ToString(buffer)}");
+                break;
+            case GameMessage.Retry:
+                Console.WriteLine($"Mensagem {msgType.ToString()}, conteúdo: {BitConverter.ToString(buffer)}");
+                break;
+            case GameMessage.SelectIdleCmd:
+                if(!HandleIdleCmd(buffer))
+                    Console.WriteLine($"Mensagem {msgType.ToString()}, conteúdo: {BitConverter.ToString(buffer)}");
+                break;
+            case GameMessage.SelectChain:
+                if(!HandleSelectChain(buffer))
+                    Console.WriteLine($"Mensagem {msgType.ToString()}, conteúdo: {BitConverter.ToString(buffer)}");
+                break;
+            case GameMessage.NewTurn:
+                Console.WriteLine($"Novo Turno {buffer[1] + 1}");
+                break;
+            case GameMessage.NewPhase:
+                Console.WriteLine($"É a {((GamePhases) buffer[1]).ToString()}");
+                break;
             case GameMessage.Draw:
-                byte player = buffer[5];
-                byte count = buffer[6];
+                byte player = buffer[1];
+                byte count = buffer[2];
             
-                // O segredo do PADDING: O ID da primeira carta começa no byte 10
-                // [0-3]: Size | [4]: Type | [5]: Player | [6]: Count | [7-9]: Padding
-                int currentPos = 10;
+                int currentPos = 6;
 
                 for (int i = 0; i < count; i++)
                 {
@@ -129,12 +163,232 @@ class Program
                     // Pula 8 bytes: 4 do ID + 4 da localização (o 0x0A que você viu)
                     currentPos += 8;
 
-                    Console.WriteLine($"Jogador {player} comprou a carta: {cardId}");
+                    Console.WriteLine($"Jogador {player} comprou a carta: {CardLibrary.GetCard(cardId).Name}");
                 }
+                break;
+            default:
+                Console.WriteLine("Mensagem Desconhecida, conteúdo: " + BitConverter.ToString(buffer));
                 break;
         }
     }
 
+    private static bool HandleHint(byte[] buffer)
+    {
+        switch ((GameHintType) buffer[1])
+        {
+            case GameHintType.HintEvent:
+                return HandleHintEvent(buffer);
+            default:
+                return false;
+        }
+    }
+
+    private static bool HandleHintEvent(byte[] buffer)
+    {
+        switch (buffer[3])
+        {
+            case 27:
+                Console.WriteLine($"Jogador {buffer[2]}, é a Draw Phase.");
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private static bool HandleSelectChain(byte[] buffer)
+    {
+        var player = buffer[1];
+        var availableEffects = buffer[2];
+        var mandatoryEffects = buffer[3];
+        if (availableEffects == 0 && mandatoryEffects == 0)
+        {
+            if (buffer[6] == 33 && buffer[10] == 33)
+            {
+                Console.WriteLine($"Jogador {player}, você tem {availableEffects} efeitos opcionais e {mandatoryEffects} obrigatórios. Vou passar a vez.");
+                return true;
+            }
+            return false;
+        }
+
+        return false;
+    }
+
+    private static int AddCardAction(StringBuilder sb, uint actionValue, int currentPos, byte[] buffer, PlayerActions pa)
+    {
+        sb.Append($"- Fazer {actionValue} {pa.ToString()}(s)");
+        if (actionValue == 0)
+        {
+            sb.Append($";\n");
+        }
+        else
+        {
+            sb.Append($", que são os monstros:\n");
+            for (var i = 0; i < actionValue; i++)
+            {
+                currentPos += 4;
+                uint monsterValue = BitConverter.ToUInt32(buffer, currentPos);
+                currentPos += 5;
+                uint locationValue = buffer[currentPos];
+                currentPos += 1;
+                uint indexValue = buffer[currentPos];
+                sb.Append($"    -{CardLibrary.GetCard(monsterValue).Name}, que está na sua {((CardLocation)locationValue).ToString()} com indice {indexValue};\n");
+            }
+        }
+        currentPos+=4;
+        return currentPos;
+    }
+    
+    
+    private static bool HandleIdleCmd(byte[] buffer)
+    {
+        byte player = buffer[1];
+        int currentPos = 2;
+        StringBuilder sb = new StringBuilder();
+        sb.Append($"O jogador {player} pode: \n");
+        foreach (PlayerActions value in Enum.GetValues(typeof(PlayerActions)))
+        {
+            uint actionValue = BitConverter.ToUInt32(buffer, currentPos);
+            switch (value)
+            {
+                case PlayerActions.NormalSummon:
+                    currentPos = AddCardAction(sb, actionValue, currentPos, buffer, PlayerActions.NormalSummon);
+                    break;
+                case PlayerActions.SpecialSummon:
+                    sb.Append($"- Fazer {actionValue} Normal Summons");
+                    if (actionValue == 0)
+                    {
+                        sb.Append($";\n");
+                    }
+                    else
+                    {
+                        sb.Append($", que são os monstros:\n");
+                        for (var i = 0; i < actionValue; i++)
+                        {
+                            currentPos += 4;
+                            uint monsterValue = BitConverter.ToUInt32(buffer, currentPos);
+                            currentPos += 5;
+                            uint locationValue = buffer[currentPos];
+                            currentPos += 1;
+                            uint indexValue = buffer[currentPos];
+                            sb.Append($"    -{CardLibrary.GetCard(monsterValue).Name}, que está na sua {((CardLocation)locationValue).ToString()} com indice {indexValue};\n");
+                        }
+                    }
+                    currentPos+=4;
+                    break;
+                case PlayerActions.ChangeCardPosition:
+                    sb.Append($"- Fazer {actionValue} Normal Summons");
+                    if (actionValue == 0)
+                    {
+                        sb.Append($";\n");
+                    }
+                    else
+                    {
+                        sb.Append($", que são os monstros:\n");
+                        for (var i = 0; i < actionValue; i++)
+                        {
+                            currentPos += 4;
+                            uint monsterValue = BitConverter.ToUInt32(buffer, currentPos);
+                            currentPos += 5;
+                            uint locationValue = buffer[currentPos];
+                            currentPos += 1;
+                            uint indexValue = buffer[currentPos];
+                            sb.Append($"    -{CardLibrary.GetCard(monsterValue).Name}, que está na sua {((CardLocation)locationValue).ToString()} com indice {indexValue};\n");
+                        }
+                    }
+                    currentPos+=4;
+                    break;
+                case PlayerActions.Set:
+                    sb.Append($"- Fazer {actionValue} Normal Summons");
+                    if (actionValue == 0)
+                    {
+                        sb.Append($";\n");
+                    }
+                    else
+                    {
+                        sb.Append($", que são os monstros:\n");
+                        for (var i = 0; i < actionValue; i++)
+                        {
+                            currentPos += 4;
+                            uint monsterValue = BitConverter.ToUInt32(buffer, currentPos);
+                            currentPos += 5;
+                            uint locationValue = buffer[currentPos];
+                            currentPos += 1;
+                            uint indexValue = buffer[currentPos];
+                            sb.Append($"    -{CardLibrary.GetCard(monsterValue).Name}, que está na sua {((CardLocation)locationValue).ToString()} com indice {indexValue};\n");
+                        }
+                    }
+                    currentPos+=4;
+                    break;
+                case PlayerActions.SpellOrTrapActivation:
+                    sb.Append($"- Fazer {actionValue} Normal Summons");
+                    if (actionValue == 0)
+                    {
+                        sb.Append($";\n");
+                    }
+                    else
+                    {
+                        sb.Append($", que são os monstros:\n");
+                        for (var i = 0; i < actionValue; i++)
+                        {
+                            currentPos += 4;
+                            uint monsterValue = BitConverter.ToUInt32(buffer, currentPos);
+                            currentPos += 5;
+                            uint locationValue = buffer[currentPos];
+                            currentPos += 1;
+                            uint indexValue = buffer[currentPos];
+                            sb.Append($"    -{CardLibrary.GetCard(monsterValue).Name}, que está na sua {((CardLocation)locationValue).ToString()} com indice {indexValue};\n");
+                        }
+                    }
+                    currentPos+=4;
+                    break;
+                case PlayerActions.ExtraDeckSummon:
+                    sb.Append($"- Fazer {actionValue} Normal Summons");
+                    if (actionValue == 0)
+                    {
+                        sb.Append($";\n");
+                    }
+                    else
+                    {
+                        sb.Append($", que são os monstros:\n");
+                        for (var i = 0; i < actionValue; i++)
+                        {
+                            currentPos += 4;
+                            uint monsterValue = BitConverter.ToUInt32(buffer, currentPos);
+                            currentPos += 5;
+                            uint locationValue = buffer[currentPos];
+                            currentPos += 1;
+                            uint indexValue = buffer[currentPos];
+                            sb.Append($"    -{CardLibrary.GetCard(monsterValue).Name}, que está na sua {((CardLocation)locationValue).ToString()} com indice {indexValue};\n");
+                        }
+                    }
+                    currentPos+=4;
+                    break;
+            }
+        }
+        
+        currentPos += 1;
+        if (buffer[currentPos] == 1)
+        {
+            sb.Append($"- Ir para a BattlePhase;\n");
+        }
+        currentPos += 1;
+        if (buffer[currentPos] == 1)
+        {
+            sb.Append($"- Ir para a EndPhase;\n");
+        }
+        Console.Write(sb.ToString());
+        return false;
+    }
+    
+    // Normal Summon
+    // Special Summon
+    // Change Position
+    // Set
+    // Spell/Trap
+    // ExtraDeck
+    // BattlePhase
+    // EndPhase
+    
     private static void CreateDecks(IntPtr pDuel)
     {
         /*var decks = DummyDeck.CreateDeck(0);
@@ -150,21 +404,13 @@ class Program
         Console.WriteLine($"Cartas detectadas no Deck 1: {quantidadeNoDeck1}");
     }
 
-    public static void CreateDeck(IntPtr pDuel, byte team)
+    private static void CreateDeck(IntPtr pDuel, byte team)
     {
-        
-        for(int i = 1; i<=40; i++)
+        var deck = DummyDeck.CreateDeck(team);
+        foreach (var card in deck)
         {
-            var data = new OCG_NewCardInfo()
-            {
-                team = team,
-                duelist = 0,
-                code = 89631139,
-                con = team,
-                loc = 0x01, 
-                pos = 0x08 
-            };
-            OcgApi.OCG_DuelNewCard(pDuel, ref data);
+            var ocgNewCardInfo = card;
+            OcgApi.OCG_DuelNewCard(pDuel, ref ocgNewCardInfo);
         }
     }
     
@@ -174,85 +420,15 @@ class Program
         Console.WriteLine("--- Duelo Iniciado ---");
 
         ContinueDuel(pDuel);
-        return;
-        bool duelRunning = true;
-        while (duelRunning)
-        {
-            // 1. Processa o próximo passo da engine
-            int status = OcgApi.OCG_DuelProcess(pDuel);
-
-            // 2. Verifica se há mensagens (animações, compras, ataques)
-            uint length;
-            IntPtr messagePtr = OcgApi.OCG_DuelGetMessage(pDuel, out length);
-
-            if (length > 0)
-            {
-                byte[] buffer = new byte[length];
-                Marshal.Copy(messagePtr, buffer, 0, (int)length);
-                AnalisarMensagens(buffer);
-            }
-
-            // 3. Verifica o estado do duelo
-            switch (status)
-            {
-                case 1: // OCG_DUEL_STATUS_CONTINUE
-                    continue; 
-                case 2: // OCG_DUEL_STATUS_AWAITING
-                    Console.WriteLine("Aguardando decisão do jogador...");
-                    // Aqui você enviaria um OCG_DuelSetResponse
-                    duelRunning = false; // Paramos o loop para simular espera
-                    break;
-                case 3: // OCG_DUEL_STATUS_END
-                    Console.WriteLine("O duelo terminou!");
-                    duelRunning = false;
-                    break;
-            }
-        }
-    }
-
-    static void AnalisarMensagens(byte[] buffer)
-    {
-        int offset = 0;
-        while (offset + 4 <= buffer.Length) // Checa se tem pelo menos 4 bytes para o ID da msg
-        {
-            // LEITURA COMO INT32
-            int msgInt = BitConverter.ToInt32(buffer, offset);
-            offset += 4; 
-
-            if (msgInt == 0) continue; // Pula paddings de 4 bytes
-
-            GameMessage msgType = (GameMessage)msgInt;
-
-            switch (msgType)
-            {
-                case GameMessage.Draw:
-                    // 1. Lê o player normalmente
-                    byte drawPlayer = buffer[offset++]; 
-    
-                    // 2. CAÇA O VALOR REAL DO COUNT
-                    // Pulamos todos os zeros até achar o '5' (ou 40, se for o deck todo)
-                    while (offset < buffer.Length && buffer[offset] == 0) offset++;
-    
-                    byte count = buffer[offset++];
-                    Console.WriteLine($"Jogador {drawPlayer} comprou {count} carta(s).");
-
-                    // 3. ALINHAMENTO DE 64-BITS
-                    // O primeiro ID de carta em sistemas 64-bit geralmente começa 
-                    // em um offset múltiplo de 4 ou 8.
-                    offset = (offset + 3) & ~3; 
-
-                    for (int i = 0; i < count; i++)
-                    {
-                        if (offset + 4 <= buffer.Length)
-                        {
-                            uint cardCode = BitConverter.ToUInt32(buffer, offset);
-                            offset += 4;
-                            // Se o ID ainda vier gigante, tente offset += 4 extra aqui (se for 64-bit puro)
-                            Console.WriteLine($" > Carta: {cardCode}");
-                        }
-                    }
-                    break;
-            }
-        }
+        ContinueDuel(pDuel);
+        ContinueDuel(pDuel);
+        ContinueDuel(pDuel);
+        ContinueDuel(pDuel);
+        ContinueDuel(pDuel);
+        ContinueDuel(pDuel);
+        ContinueDuel(pDuel);
+        ContinueDuel(pDuel);
+        ContinueDuel(pDuel);
+        //ContinueDuel(pDuel);
     }
 }
