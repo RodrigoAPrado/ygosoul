@@ -4,12 +4,12 @@ public enum CardLocation
 {
     Deck = 1,
     Hand = 2,
-    MonsterZone = 3,
-    SpellTrapZone = 4,
-    Grave = 5,
-    Banishment = 6,
-    Extra = 7,
-    Overlay = 8
+    MonsterZone = 4,
+    SpellTrapZone = 8,
+    Grave = 10,
+    Banishment = 20,
+    Extra = 40,
+    Overlay = 80
 }
 
 
