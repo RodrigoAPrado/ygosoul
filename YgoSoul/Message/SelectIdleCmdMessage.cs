@@ -5,20 +5,21 @@ using YgoSoul.Message.Enum;
 
 namespace YgoSoul.Message;
 
-public class SelectIdleCmdMessage : BaseMessage
+public class SelectIdleCmdMessage : IMessage
 {
-    public override InputType Input => InputType.Value;
+    public InputType Input => InputType.Value;
+    public int InputCount => _choices.Count;
     
     private readonly List<IIdleCmdChoice> _choices;
-    private readonly int _playerId;
+    private readonly uint _player;
     
-    public SelectIdleCmdMessage(int playerId, List<IIdleCmdChoice> choices)
+    public SelectIdleCmdMessage(uint player, List<IIdleCmdChoice> choices)
     {
         _choices = choices;
-        _playerId = playerId;
+        _player = player;
     }
 
-    public override byte[] GetResponse(int id)
+    public byte[] GetResponse(int id)
     {
         if (id >= _choices.Count)
         {
@@ -34,7 +35,7 @@ public class SelectIdleCmdMessage : BaseMessage
     public override string ToString()
     {
         var sb = new StringBuilder();
-        sb.AppendLine($"Player {_playerId}, input your action:");
+        sb.AppendLine($"Player {_player}, input your action:");
         for (int i = 0; i < _choices.Count; i++)
         {
             sb.AppendLine($"{i} -> {_choices[i]}");

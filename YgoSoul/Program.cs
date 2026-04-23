@@ -7,6 +7,7 @@ using YgoSoul.Handler;
 using YgoSoul.Handler.Enum;
 using YgoSoul.Message;
 using YgoSoul.Message.Component;
+using YgoSoul.Message.Enum;
 using YgoSoul.Parser;
 using YgoSoul.Parser.Abstr;
 
@@ -100,10 +101,8 @@ class Program
         
     }
     
-    private static int ProcessMessages(byte[] buffer)
+    private static void ProcessMessages(byte[] buffer)
     {
-        var resultActions = 0;
-        // 1. Pega o tamanho total (os 4 primeiros bytes do buffer original)
         int offset = 0;
         
         while (offset < buffer.Length) {
@@ -117,10 +116,8 @@ class Program
             offset += msgSize;
 
             // 3. Processa o ID que está no msgData[0]
-            var result = ProcessarUnicaMensagem(msgData);
+            ProcessarUnicaMensagem(msgData);
         }
-
-        return resultActions;
     }
 
     private static MessageHandleEnum ProcessarUnicaMensagem(byte[] buffer)
@@ -133,79 +130,7 @@ class Program
             return MessageHandler.HandleMessage(value.Parse(buffer));
         }
         
-        switch (msgType)
-        {
-            case GameMessage.SelectPlace:
-                _currentGameMessage = msgType;
-                var result2 = HandleSelectPlace(buffer);
-                if (!result2.Item1)
-                {
-                    Console.WriteLine($"Mensagem {msgType.ToString()}, conteúdo: {BitConverter.ToString(buffer)}");
-                    return 0;
-                }
-                return result2.Item2;
-            case GameMessage.Draw:
-                byte player = buffer[1];
-                byte count = buffer[2];
-            
-                int currentPos = 6;
-
-                for (int i = 0; i < count; i++)
-                {
-                    // BitConverter já faz a inversão dos bytes (Little Endian) automaticamente!
-                    uint cardId = BitConverter.ToUInt32(buffer, currentPos);
-                
-                    // Pula 8 bytes: 4 do ID + 4 da localização (o 0x0A que você viu)
-                    currentPos += 8;
-
-                    Console.WriteLine($"Jogador {player} comprou a carta: {CardLibrary.GetCard(cardId).Name}");
-                }
-                return 0;
-            default:
-                return MessageHandler.HandleMessage(_parsers[GameMessage.Unknown].Parse(buffer));
-        }
-    }
-
-    private static (bool, int) HandleSelectPlace(byte[] buffer)
-    {
-        var player = buffer[1];
-        var amount = buffer[2];
-     
-        uint mask = BitConverter.ToUInt32(buffer, 3);
-        Console.WriteLine($"--- Jogador {player}: Escolha {amount} zona(s) ---");
-
-        var actionAmount = 0;
-        
-        for (int i = 0; i < 5; i++)
-        {
-            // Se o bit estiver em 0, a zona está disponível
-            bool disponivel = ((mask >> i) & 1) == 0;
-            if (disponivel)
-            {
-                actionAmount++;
-                Console.WriteLine($"{i} para Zona de Monstro {i}.");
-            }
-        }
-
-        // 2. Validar Spell/Trap Zones (Bits 8 a 12) - Caso fosse uma Magia
-        for (int i = 8; i <= 12; i++)
-        {
-            bool disponivel = ((mask >> i) & 1) == 0;
-            if (disponivel)
-            {
-                actionAmount++;
-                Console.WriteLine($"{i-3} para Zona de Magia/Armadilha {i - 8}.");
-            }
-        }
-    
-        // 3. Validar Field Zone (Bit 13)
-        if (((mask >> 13) & 1) == 0)
-        {
-            actionAmount++;
-            Console.WriteLine("{i-3} para Zona de Campo.");
-        }
-
-        return (true, actionAmount);
+        return MessageHandler.HandleMessage(_parsers[GameMessage.Unknown].Parse(buffer));
     }
     
     private static void CreateDecks(IntPtr pDuel)
@@ -218,9 +143,9 @@ class Program
         
         // 0x01 é LOCATION_DECK
         var quantidadeNoDeck0 = OcgApi.OCG_DuelQueryCount(pDuel, 0, 0x01);
-        Console.WriteLine($"Cartas detectadas no Deck 0: {quantidadeNoDeck0}");
+        Console.WriteLine($"Player 0 MAINDECK Size: {quantidadeNoDeck0}");
         var quantidadeNoDeck1 = OcgApi.OCG_DuelQueryCount(pDuel, 1, 0x01);
-        Console.WriteLine($"Cartas detectadas no Deck 1: {quantidadeNoDeck1}");
+        Console.WriteLine($"Player 1 MAINDECK Size: {quantidadeNoDeck1}");
     }
 
     private static void CreateDeck(IntPtr pDuel, byte team)
@@ -236,7 +161,7 @@ class Program
     static void RodarDuelo(IntPtr pDuel)
     {
         OcgApi.OCG_StartDuel(pDuel);
-        Console.WriteLine("--- Duelo Iniciado ---");
+        Console.WriteLine("--- DUEL STARTED ---");
 
         bool duelando = true;
         int currentDuelist = 0;
@@ -251,81 +176,81 @@ class Program
                 // 1. Criamos um array de bytes no C# com o tamanho que a DLL nos deu
                 byte[] dadosLocais = new byte[length];
                 // 2. Copiamos o que está naquele endereço 0x25d1... para o nosso array
-                System.Runtime.InteropServices.Marshal.Copy(messagePtr, dadosLocais, 0, (int)length);
+                Marshal.Copy(messagePtr, dadosLocais, 0, (int)length);
                 // 3. Agora sim, olhe para os bytes:
-                var result = ProcessMessages(dadosLocais);
+                ProcessMessages(dadosLocais);
 
                 if (status == 1)
                 {
-                    if (result > 0)
+                    if (MessageHandler.MessageRequiringInput != null)
                     {
-                        Console.WriteLine("\n--- AGUARDANDO DECISÃO DO JOGADOR ---");
-                        Console.Write("Digite o número da ação desejada: ");
-                        string input = Console.ReadLine();
-                        if (int.TryParse(input, out int escolha))
-                        {
-                            if (_currentGameMessage == GameMessage.SelectIdleCmd)
-                            {
-                                if (escolha >= _playerChoices.Count)
-                                {
-                                    Console.Write("Escolha invalida...");
-                                    
-                                }
-                                else
-                                {
-                                    var choice = _playerChoices[escolha];
-                                    byte[] response = new byte[]{(byte)choice.PlayerAction,0,(byte)choice.CardIndex,0};
-                                    OcgApi.OCG_DuelSetResponse(pDuel, response, 4); 
-                                }
-                            }
-
-                            if (_currentGameMessage == GameMessage.SelectPlace)
-                            {
-                                //TODO:
-                                byte[] response = { (byte)currentDuelist, 0x04, 0x02 }; 
-                                OcgApi.OCG_DuelSetResponse(pDuel, response, (uint)response.Length);
-                                /*
-                                var placeResult = GetLocationValue(escolha);
-                                byte[] response = new byte[] { (byte)currentDuelist,  };*/
-                            }
-                        }
+                        HandlePlayerInput(pDuel);
+                    }
+                    else
+                    {
+                        Console.WriteLine("--- SOMETHING WENT WROND ---");
+                        duelando = false;
                     }
                 }
                 else if (status == 3)
                 {
-                    Console.WriteLine("--- Fim do Duelo ---");
+                    Console.WriteLine("--- DUEL ENDED ---");
                     duelando = false;
                 }
             }
         }
     }
 
-    private static (int, int) GetLocationValue(int value)
+    private static void HandlePlayerInput(IntPtr pDuel)
     {
-        switch (value)
+        if(MessageHandler.MessageRequiringInput == null)
+            throw new InvalidOperationException("MessageHandler.MessageRequiringInput == null");
+        
+        switch (MessageHandler.MessageRequiringInput.Input)
         {
-           case 0:
-               return ((int)CardLocation.MonsterZone, value);
-           case 1:
-               return ((int)CardLocation.MonsterZone, value);
-           case 2:
-               return ((int)CardLocation.MonsterZone, value);
-           case 3:
-               return ((int)CardLocation.MonsterZone, value);
-           case 4:
-               return ((int)CardLocation.MonsterZone, value);
-           case 5:
-               return ((int)CardLocation.SpellTrapZone, value-5);
-           case 6:
-               return ((int)CardLocation.SpellTrapZone, value-5);
-           case 7:
-               return ((int)CardLocation.SpellTrapZone, value-5);
-           case 8:
-               return ((int)CardLocation.SpellTrapZone, value-5);
-           case 9:
-               return ((int)CardLocation.SpellTrapZone, value-5);
-           default:
-               throw new NotImplementedException();
+            case InputType.Value:
+                HandlePlayerInputValue(pDuel);
+                break;
+            case InputType.Confirmation:
+                HandlePlayerInputConfirmation(pDuel);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
+    }
+
+    private static void HandlePlayerInputValue(IntPtr pDuel)
+    {
+        var responseId = -1;
+        do
+        {
+            Console.WriteLine("\n--- AWAITING PLAYER'S INPUT ---");
+            Console.Write("Input your selected action: ");
+            var input = Console.ReadLine();
+            if (int.TryParse(input, out var choice))
+            {
+                if (choice >= MessageHandler.MessageRequiringInput.InputCount || choice < 0)
+                {
+                    Console.WriteLine("--- INVALID CHOICE ---");
+                    continue;
+                }
+
+                responseId = choice;
+            }
+            else
+            {
+                Console.WriteLine("--- INVALID CHOICE ---");
+            }
+        } while (responseId < 0);
+
+        var response = MessageHandler.MessageRequiringInput.GetResponse(responseId);
+        OcgApi.OCG_DuelSetResponse(pDuel, response, 4); 
+    }
+
+    private static void HandlePlayerInputConfirmation(IntPtr pDuel)
+    {
+        Console.WriteLine("\n--- AWAITING PLAYER'S INPUT ---");
+        Console.Write("Press enter to confirm... ");
+        var input = Console.ReadLine();
     }
 }

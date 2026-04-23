@@ -16,9 +16,14 @@ public static class ParserFactory
             { GameMessage.Retry, unknownParser },
             { GameMessage.Hint, new HintParser() },
             { GameMessage.SelectIdleCmd, new SelectIdleCmdParser() } ,
-            { GameMessage.SelectChain, unknownParser } ,
+            { GameMessage.SelectChain, new SelectChainParser() } ,
+            { GameMessage.SelectPlace, new SelectPlaceParser() } ,
             { GameMessage.NewTurn, basicParser },
-            { GameMessage.NewPhase, basicParser }
+            { GameMessage.NewPhase, basicParser },
+            { GameMessage.Move, new MoveParser() },
+            { GameMessage.Summoning, new SummoningParser() },
+            { GameMessage.Summoned, new SummonedParser() },
+            { GameMessage.Draw, new DrawParser() }
         };
     }
 }

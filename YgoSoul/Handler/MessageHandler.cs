@@ -1,32 +1,31 @@
 ﻿using YgoSoul.Handler.Enum;
 using YgoSoul.Message.Abstr;
+using YgoSoul.Message.Enum;
 
 namespace YgoSoul.Handler;
 
 public class MessageHandler
 {
-    public static IMessage? CurrentMessage => _messagesList.FirstOrDefault();
-    private static readonly List<IMessage> _messagesList = [];
+    public static IMessage? MessageRequiringInput { get; private set; }
     
     public static MessageHandleEnum HandleMessage(IMessage? message)
     {
         if (message == null)
             return MessageHandleEnum.Invalid;
 
-        Console.Write(message.ToString());
-
-        if (!message.RequiresInput) 
-            return MessageHandleEnum.Proceed;
+        Console.WriteLine(message.ToString());
         
-        _messagesList.Add(message);
-        return MessageHandleEnum.RequireInput;
-    }
+        if (message.Input == InputType.Unknown)
+            return MessageHandleEnum.Invalid;
 
-    public static bool ReleaseMessage()
-    {
-        if (_messagesList.Count == 0)
-            return false;
-        _messagesList.RemoveAt(0);
-        return true;
+
+        if (message.Input == InputType.None)
+        {
+            MessageRequiringInput = null;
+            return MessageHandleEnum.Proceed;
+        }
+
+        MessageRequiringInput = message;
+        return MessageHandleEnum.RequireInput;
     }
 }

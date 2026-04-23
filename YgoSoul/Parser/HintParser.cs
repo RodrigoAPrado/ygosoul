@@ -23,6 +23,8 @@ public class HintParser : BaseParser
     {
         switch (buffer[3])
         {
+            case 23:
+                return new HintMessage($"Player {buffer[2]}, the current phase is about to end.");
             case 27:
                 return new HintMessage($"Player {buffer[2]}, it is the Draw Phase.");
             default:

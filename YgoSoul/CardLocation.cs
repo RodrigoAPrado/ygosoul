@@ -1,15 +1,16 @@
 ﻿namespace YgoSoul;
 
-public enum CardLocation
+public enum CardLocation: uint
 {
-    Deck = 1,
-    Hand = 2,
-    MonsterZone = 4,
-    SpellTrapZone = 8,
-    Grave = 10,
-    Banishment = 20,
-    Extra = 40,
-    Overlay = 80
+    Unknown = 0x0,
+    Deck = 0x1,
+    Hand = 0x2,
+    MonsterZone = 0x4,
+    SpellTrapZone = 0x8,
+    Grave = 0x10,
+    Banishment = 0x20,
+    Extra = 0x40,
+    Overlay = 0x80
 }
 
 

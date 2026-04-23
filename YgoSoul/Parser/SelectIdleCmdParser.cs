@@ -9,10 +9,10 @@ namespace YgoSoul.Parser;
 
 public class SelectIdleCmdParser : BaseParser
 {
-    protected override SelectIdleCmdMessage DoParse(byte[] buffer)
+    protected override IMessage DoParse(byte[] buffer)
     {
         var choices = new List<IIdleCmdChoice>();
-        int player = buffer[1];
+        uint player = buffer[1];
         int currentPos = 2;
         foreach (PlayerActions pa in Enum.GetValues(typeof(PlayerActions)))
         {
@@ -47,7 +47,7 @@ public class SelectIdleCmdParser : BaseParser
                 uint locationValue = buffer[currentPos];
                 currentPos += 1;
                 uint positionValue = buffer[currentPos];
-                choices.Add(new IdleCmdChoiceCard(pa, i, (CardLocation)locationValue, (int)positionValue, CardLibrary.GetCard(monsterValue).Name));
+                choices.Add(new IdleCmdChoiceCard(pa, i, (CardLocation)locationValue, positionValue, monsterValue));
             }
         }
         currentPos+=4;
