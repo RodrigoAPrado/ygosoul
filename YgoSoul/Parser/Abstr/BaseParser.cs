@@ -1,10 +1,11 @@
-﻿using YgoSoul.Message.Abstr;
+﻿using YgoSoul.Message;
+using YgoSoul.Message.Abstr;
 
 namespace YgoSoul.Parser.Abstr;
 
 public abstract class BaseParser : IParser
 {
-    public IMessage? Parse(byte[] buffer)
+    public IMessage Parse(byte[] buffer)
     {
         try
         {
@@ -13,7 +14,7 @@ public abstract class BaseParser : IParser
         catch (Exception e)
         {
             Console.WriteLine(e);
-            return null;
+            return new UnknownMessage(buffer);
         }
     }
     

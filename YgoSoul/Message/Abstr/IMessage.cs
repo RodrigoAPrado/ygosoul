@@ -1,7 +1,9 @@
-﻿namespace YgoSoul.Message.Abstr;
+﻿using YgoSoul.Message.Enum;
+
+namespace YgoSoul.Message.Abstr;
 
 public interface IMessage
 {
-    bool RequiresInput { get; }
+    InputType Input { get; }
     byte[] GetResponse(int id);
 }

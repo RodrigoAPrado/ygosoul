@@ -1,12 +1,13 @@
 ﻿using System.Text;
 using YgoSoul.Message.Abstr;
 using YgoSoul.Message.Component.Abstr;
+using YgoSoul.Message.Enum;
 
 namespace YgoSoul.Message;
 
-public class SelectIdleCmdMessage : IMessage
+public class SelectIdleCmdMessage : BaseMessage
 {
-    public bool RequiresInput => true;
+    public override InputType Input => InputType.Value;
     
     private readonly List<IIdleCmdChoice> _choices;
     private readonly int _playerId;
@@ -17,7 +18,7 @@ public class SelectIdleCmdMessage : IMessage
         _playerId = playerId;
     }
 
-    public byte[] GetResponse(int id)
+    public override byte[] GetResponse(int id)
     {
         if (id >= _choices.Count)
         {

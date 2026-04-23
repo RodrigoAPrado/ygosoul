@@ -100,7 +100,7 @@ class Program
         
     }
     
-    private static int ProcessMessage(byte[] buffer)
+    private static int ProcessMessages(byte[] buffer)
     {
         var resultActions = 0;
         // 1. Pega o tamanho total (os 4 primeiros bytes do buffer original)
@@ -135,17 +135,6 @@ class Program
         
         switch (msgType)
         {
-            case GameMessage.Retry:
-                Console.WriteLine($"Mensagem {msgType.ToString()}, conteúdo: {BitConverter.ToString(buffer)}");
-                return 1;
-            case GameMessage.Hint:
-                if(!HandleHint(buffer))
-                    Console.WriteLine($"Mensagem {msgType.ToString()}, conteúdo: {BitConverter.ToString(buffer)}");
-                return 0;
-            case GameMessage.SelectChain:
-                if(!HandleSelectChain(buffer))
-                    Console.WriteLine($"Mensagem {msgType.ToString()}, conteúdo: {BitConverter.ToString(buffer)}");
-                return 0;
             case GameMessage.SelectPlace:
                 _currentGameMessage = msgType;
                 var result2 = HandleSelectPlace(buffer);
@@ -155,12 +144,6 @@ class Program
                     return 0;
                 }
                 return result2.Item2;
-            case GameMessage.NewTurn:
-                Console.WriteLine($"Novo Turno {buffer[1] + 1}");
-                return 0;
-            case GameMessage.NewPhase:
-                Console.WriteLine($"É a {((GamePhases) buffer[1]).ToString()}");
-                return 0;
             case GameMessage.Draw:
                 byte player = buffer[1];
                 byte count = buffer[2];
@@ -181,50 +164,6 @@ class Program
             default:
                 return MessageHandler.HandleMessage(_parsers[GameMessage.Unknown].Parse(buffer));
         }
-    }
-
-    private static bool HandleHint(byte[] buffer)
-    {
-        switch ((GameHintType) buffer[1])
-        {
-            case GameHintType.HintEvent:
-                return HandleHintEvent(buffer);
-            case GameHintType.HintSelectMsg:
-                Console.WriteLine($"Jogador escolheu a carta {CardLibrary.GetCard(BitConverter.ToUInt32(buffer, 3)).Name}.");
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    private static bool HandleHintEvent(byte[] buffer)
-    {
-        switch (buffer[3])
-        {
-            case 27:
-                Console.WriteLine($"Jogador {buffer[2]}, é a Draw Phase.");
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    private static bool HandleSelectChain(byte[] buffer)
-    {
-        var player = buffer[1];
-        var availableEffects = buffer[2];
-        var mandatoryEffects = buffer[3];
-        if (availableEffects == 0 && mandatoryEffects == 0)
-        {
-            if (buffer[6] == 33 && buffer[10] == 33)
-            {
-                Console.WriteLine($"Jogador {player}, você tem {availableEffects} efeitos opcionais e {mandatoryEffects} obrigatórios. Vou passar a vez.");
-                return true;
-            }
-            return false;
-        }
-
-        return false;
     }
 
     private static (bool, int) HandleSelectPlace(byte[] buffer)
@@ -314,7 +253,7 @@ class Program
                 // 2. Copiamos o que está naquele endereço 0x25d1... para o nosso array
                 System.Runtime.InteropServices.Marshal.Copy(messagePtr, dadosLocais, 0, (int)length);
                 // 3. Agora sim, olhe para os bytes:
-                var result = ProcessMessage(dadosLocais);
+                var result = ProcessMessages(dadosLocais);
 
                 if (status == 1)
                 {
