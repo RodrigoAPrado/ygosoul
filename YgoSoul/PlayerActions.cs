@@ -10,4 +10,5 @@ public enum PlayerActions
     EffectActivation = 5,
     GoToBattlePhase = 6,
     GotoEndPhase = 7,
+    ShuffleDeck = 8,
 }

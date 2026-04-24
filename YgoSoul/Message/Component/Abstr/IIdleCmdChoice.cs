@@ -3,5 +3,6 @@
 public interface IIdleCmdChoice
 {
     PlayerActions PlayerAction { get; }
-    int ValueIndex { get; }
+    byte Player { get; }
+    uint ValueIndex { get; }
 }

@@ -7,17 +7,17 @@ namespace YgoSoul.Message;
 
 public class MoveMessage : BaseMessage
 {
-    private readonly uint _cardCode;
-    private readonly uint _oldPlayer;
-    private readonly CardLocation _oldLocation;
-    private readonly uint _oldSequence;
-    private readonly CardPosition _oldPosition;
-    private readonly uint _newPlayer;
-    private readonly CardLocation _newLocation;
-    private readonly uint _newSequence;
-    private readonly CardPosition _newPosition;
-    private readonly Reason _reason;
-    
+    public uint CardCode { get; }
+    public uint OldPlayer { get; }
+    public CardLocation OldLocation { get; }
+    public uint OldSequence { get; }
+    public CardPosition OldPosition { get; }
+    public uint NewPlayer { get; }
+    public CardLocation NewLocation { get; }
+    public uint NewSequence { get; }
+    public CardPosition NewPosition { get; }
+    public Reason Reason { get; }
+
     public MoveMessage(
         uint cardCode, 
         uint oldPlayer, 
@@ -30,25 +30,25 @@ public class MoveMessage : BaseMessage
         uint newSequence, 
         CardPosition newPosition)
     {
-        _cardCode = cardCode;
-        _oldPlayer = oldPlayer;
-        _oldLocation = oldLocation;
-        _oldSequence = oldSequence;
-        _oldPosition = oldPosition;
-        _newPlayer = newPlayer;
-        _newLocation = newLocation;
-        _newSequence = newSequence;
-        _newPosition = newPosition;
-        _reason = reason;
+        CardCode = cardCode;
+        OldPlayer = oldPlayer;
+        OldLocation = oldLocation;
+        OldSequence = oldSequence;
+        OldPosition = oldPosition;
+        NewPlayer = newPlayer;
+        NewLocation = newLocation;
+        NewSequence = newSequence;
+        NewPosition = newPosition;
+        Reason = reason;
     }
 
     public override string ToString()
     {
         var sb = new StringBuilder();
-        sb.AppendLine($"Card {CardLibrary.GetCard(_cardCode).Name} was with player {_oldPlayer} on the " +
-                      $"{_oldLocation}, in sequence {_oldSequence} and position {_oldPosition}.");
-        sb.AppendLine($"It moved to {_newLocation}, in sequence {_newSequence} and position " +
-                      $"{_newPosition}, and is now controlled by {_newPlayer}, because of {_reason.ToString()}");
+        sb.AppendLine($"Card {CardLibrary.GetCard(CardCode).Name} was with player {OldPlayer} on the " +
+                      $"{OldLocation}, in sequence {OldSequence} and position {OldPosition}.");
+        sb.AppendLine($"It moved to {NewLocation}, in sequence {NewSequence} and position " +
+                      $"{NewPosition}, and is now controlled by {NewPlayer}, because of {Reason.ToString()}");
         return sb.ToString();
     }
 }

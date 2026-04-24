@@ -1,51 +1,53 @@
 ﻿using System.Text;
+using YgoSoul.Flag;
 using YgoSoul.Message.Abstr;
 using YgoSoul.Message.Enum;
 using YgoSoul.Parser;
+using YgoSoul.Util;
 
 namespace YgoSoul.Message;
 
 public class SelectPlaceMessage : IMessage
 {
     public InputType Input => InputType.Value;
-    public int InputCount => _choices.Count;
+    public int InputCount => Choices.Count;
     
-    private readonly uint _player;
-    private readonly uint _amount;
-    private readonly List<SelectPlaceParser.Zone> _choices;
+    public byte Player { get; }
+    public uint Amount { get; }
+    public IReadOnlyList<Zone> Choices { get; }
 
-    public SelectPlaceMessage(uint player, uint amount, List<SelectPlaceParser.Zone> choices)
+    public SelectPlaceMessage(byte player, uint amount, List<Zone> choices)
     {
-        _player = player;
-        _amount = amount;
-        _choices = choices;
+        Player = player;
+        Amount = amount;
+        Choices = choices;
     }
 
     public byte[] GetResponse(int id)
     {
-        if(id < 0 || id >= _choices.Count)
+        if(id < 0 || id >= Choices.Count)
             return [0xFF, 0xFF, 0xFF];
         
-        var zone = _choices[id];
-        if(!SelectPlaceParser.ZoneLocation.ContainsKey(zone) 
-           || !SelectPlaceParser.ZoneIndex.ContainsKey(zone))
+        var zone = Choices[id];
+        if(!ZoneUtils.ZoneLocation.ContainsKey(zone) 
+           || !ZoneUtils.ZoneIndex.ContainsKey(zone))
             return [0xFF, 0xFF, 0xFF];
         
         var response = new byte[3];
-        response[0] = (byte)_player;
-        response[1] = (byte)SelectPlaceParser.ZoneLocation[zone];
-        response[2] = (byte)SelectPlaceParser.ZoneIndex[zone];
+        response[0] = (byte)Player;
+        response[1] = (byte)ZoneUtils.ZoneLocation[zone];
+        response[2] = (byte)ZoneUtils.ZoneIndex[zone];
         return response;
     }
 
     public override string ToString()
     {
         var sb = new StringBuilder();
-        sb.AppendLine($"Player {_player}, you need to select {_amount} places.");
+        sb.AppendLine($"Player {Player}, you need to select {Amount} places.");
         sb.AppendLine("Please input your action:");
-        for (int i = 0; i < _choices.Count; i++)
+        for (int i = 0; i < Choices.Count; i++)
         {
-            sb.AppendLine($"{i} -> Place card on {_choices[i]}");
+            sb.AppendLine($"{i} -> Place card on {Choices[i]}");
         }
         return sb.ToString();
     }

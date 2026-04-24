@@ -7,19 +7,19 @@ namespace YgoSoul.Message;
 
 public class DrawMessage : BaseMessage
 {
-    private readonly uint _player;
-    private readonly List<DrawnCard> _cards;
+    public uint Player { get; }
+    public List<DrawnCard> Cards { get; }
     public DrawMessage(uint player, List<DrawnCard> cards)
     {
-        _player = player;
-        _cards = cards;
+        Player = player;
+        Cards = cards;
     }
 
     public override string ToString()
     {
         var sb = new StringBuilder();
-        sb.AppendLine($"Player {_player} drew the following cards:");
-        foreach (var card in _cards)
+        sb.AppendLine($"Player {Player} drew the following cards:");
+        foreach (var card in Cards)
         {
             sb.AppendLine($"- {card.ToString()}");
         }

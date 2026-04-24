@@ -8,26 +8,26 @@ namespace YgoSoul.Message;
 public class SelectIdleCmdMessage : IMessage
 {
     public InputType Input => InputType.Value;
-    public int InputCount => _choices.Count;
+    public int InputCount => Choices.Count;
+    public IReadOnlyList<IIdleCmdChoice> Choices { get; }
+    public byte Player { get; }
     
-    private readonly List<IIdleCmdChoice> _choices;
-    private readonly uint _player;
-    
-    public SelectIdleCmdMessage(uint player, List<IIdleCmdChoice> choices)
+    public SelectIdleCmdMessage(byte player, List<IIdleCmdChoice> choices)
     {
-        _choices = choices;
-        _player = player;
+        Choices = choices;
+        Player = player;
     }
 
     public byte[] GetResponse(int id)
     {
-        if (id >= _choices.Count)
+        if (id >= Choices.Count)
         {
             return [0xFF, 0xFF, 0xFF, 0xFF];
         }
-        var choice = _choices[id];
+        var choice = Choices[id];
         byte[] response = new byte[4];
         response[0] = (byte)choice.PlayerAction;
+        response[1] = choice.Player;
         response[2] = (byte)choice.ValueIndex;
         return response;
     }
@@ -35,10 +35,10 @@ public class SelectIdleCmdMessage : IMessage
     public override string ToString()
     {
         var sb = new StringBuilder();
-        sb.AppendLine($"Player {_player}, input your action:");
-        for (int i = 0; i < _choices.Count; i++)
+        sb.AppendLine($"Player {Player}, input your action:");
+        for (int i = 0; i < Choices.Count; i++)
         {
-            sb.AppendLine($"{i} -> {_choices[i]}");
+            sb.AppendLine($"{i} -> {Choices[i]}");
         }
         return sb.ToString();
     }

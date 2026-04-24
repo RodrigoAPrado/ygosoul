@@ -29,6 +29,5 @@ public enum Reason : uint
     Replace         = 0x1000000,
     Draw            = 0x2000000,
     Redirect        = 0x4000000,
-    Link            = 0x10000000,
-    NormalSummonOrSetByRule = Rule | Draw
+    Link            = 0x10000000
 }
