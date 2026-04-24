@@ -1,9 +1,11 @@
 ﻿using System.Text;
+using YgoSoul.Flag;
 using YgoSoul.Message;
 using YgoSoul.Message.Abstr;
 using YgoSoul.Message.Component;
 using YgoSoul.Message.Component.Abstr;
 using YgoSoul.Parser.Abstr;
+using YgoSoul.Util;
 
 namespace YgoSoul.Parser;
 
@@ -11,46 +13,63 @@ public class SelectIdleCmdParser : BaseParser
 {
     protected override IMessage DoParse(byte[] buffer)
     {
-        var choices = new List<IIdleCmdChoice>();
-        uint player = buffer[1];
-        int currentPos = 2;
-        foreach (PlayerActions pa in Enum.GetValues(typeof(PlayerActions)))
-        {
-            if (pa is PlayerActions.GoToBattlePhase or PlayerActions.GotoEndPhase)
-                continue;
-            
-            uint actionValue = BitConverter.ToUInt32(buffer, currentPos);
-            var result = AddCardAction(actionValue, currentPos, buffer, choices, pa);
-            currentPos = result;
-        }
-        
-        currentPos += 1;
-        if(buffer[currentPos] == 1)
-            choices.Add(new IdleCmdChoiceOther(PlayerActions.GoToBattlePhase));
+        var reader = new PacketReader(buffer);
 
-        currentPos += 1;
-        if(buffer[currentPos] == 1)
-            choices.Add(new IdleCmdChoiceOther(PlayerActions.GotoEndPhase));
-        
-        return new SelectIdleCmdMessage(player, choices);
-    }
-    
-    private static int AddCardAction(uint actionCount, int currentPos, byte[] buffer, List<IIdleCmdChoice> choices, PlayerActions pa)
-    {
-        if (actionCount > 0)
+        reader.ReadByte(); // msg id
+
+        byte player = reader.ReadByte();
+
+        var choices = new List<IIdleCmdChoice>();
+
+        // helper local
+        void ReadCardList(PlayerActions action, bool hasDescription = false)
         {
-            for (var i = 0; i < actionCount; i++)
+            var count = reader.ReadInt32();
+
+            var index = 0;
+            for (var i = count; i > 0; i--)
             {
-                currentPos += 4;
-                uint monsterValue = BitConverter.ToUInt32(buffer, currentPos);
-                currentPos += 5;
-                uint locationValue = buffer[currentPos];
-                currentPos += 1;
-                uint positionValue = buffer[currentPos];
-                choices.Add(new IdleCmdChoiceCard(pa, i, (CardLocation)locationValue, positionValue, monsterValue));
+                uint code = reader.ReadUInt32();
+                byte controller = reader.ReadByte();
+                var location = (CardLocation)reader.ReadByte();
+                byte sequence = reader.ReadByte();
+
+                int description = 0;
+                if (hasDescription)
+                {
+                    description = reader.ReadInt32();
+                }
+                else
+                {
+                    reader.Skip(3);
+                }
+
+                choices.Add(new IdleCmdChoiceCard(
+                    action,
+                    index,
+                    location,
+                    sequence,
+                    code
+                ));
+                index++;
             }
         }
-        currentPos+=4;
-        return currentPos;
+
+        // ordem FIXA do protocolo
+        ReadCardList(PlayerActions.NormalSummon);
+        ReadCardList(PlayerActions.SpecialSummon);
+        ReadCardList(PlayerActions.ChangeCardPosition);
+        ReadCardList(PlayerActions.Set);
+        ReadCardList(PlayerActions.SpellOrTrapSet);
+        ReadCardList(PlayerActions.EffectActivation, hasDescription: true);
+
+        // fases
+        if (reader.ReadByte() == 1)
+            choices.Add(new IdleCmdChoiceOther(PlayerActions.GoToBattlePhase));
+
+        if (reader.ReadByte() == 1)
+            choices.Add(new IdleCmdChoiceOther(PlayerActions.GotoEndPhase));
+
+        return new SelectIdleCmdMessage(player, choices);
     }
 }

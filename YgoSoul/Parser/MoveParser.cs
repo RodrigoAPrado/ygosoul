@@ -1,6 +1,8 @@
-﻿using YgoSoul.Message;
+﻿using YgoSoul.Flag;
+using YgoSoul.Message;
 using YgoSoul.Message.Abstr;
 using YgoSoul.Parser.Abstr;
+using YgoSoul.Util;
 
 namespace YgoSoul.Parser;
 
@@ -8,36 +10,35 @@ public class MoveParser : BaseParser
 {
     protected override IMessage DoParse(byte[] buffer)
     {
-        var cardCode = BitConverter.ToUInt32(buffer, 1);
-        var currentPos = 5;
-        var currentController = buffer[currentPos++];
-        var currentLocation = (CardLocation) buffer[currentPos++];
-        var currentSequence = buffer[currentPos++];
-        var currentPosition = buffer[currentPos++];
-        currentPos += 2;
-        currentPos += 4;
-        var newController = buffer[currentPos++];
-        var newLocation = (CardLocation) buffer[currentPos++];
-        var newSequence = buffer[currentPos++];
-        var newPosition = buffer[currentPos++];
-        var reason = (MoveReason) BitConverter.ToUInt32(buffer, currentPos);
-        //TODO: Tem mais alguns bytes aqui que não estão sendo lidos;
-        
-        return new MoveMessage(cardCode, 
-            currentController, 
-            currentLocation, 
-            currentSequence, 
-            currentPosition, 
-            newController, 
-            newLocation, newSequence, 
-            newPosition, 
-            reason
-            );
-    }
+        var reader = new PacketReader(buffer);
 
-    public enum MoveReason : uint
-    {
-        Unknown = 0,
-        NormalSummon = 0x10,
+        reader.ReadByte(); // MSG_MOVE
+
+        var cardCode = reader.ReadUInt32();
+
+        var prevController = reader.ReadByte();
+        var prevLocation = (CardLocation)reader.ReadByte();
+        var prevSequence = reader.ReadUInt32();
+        var prevPosition = (CardPosition) reader.ReadUInt32();
+
+        var newController = reader.ReadByte();
+        var newLocation = (CardLocation)reader.ReadByte();
+        var newSequence = reader.ReadUInt32();
+        var newPosition = (CardPosition) reader.ReadUInt32();
+
+        var reason = (Reason) reader.ReadUInt32();
+
+        return new MoveMessage(
+            cardCode,
+            prevController,
+            prevLocation,
+            prevSequence,
+            prevPosition,
+            reason,
+            newController,
+            newLocation,
+            newSequence,
+            newPosition
+        );
     }
 }

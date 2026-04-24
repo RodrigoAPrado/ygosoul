@@ -13,7 +13,7 @@ public static class ParserFactory
         return new Dictionary<GameMessage, IParser> 
         {
             { GameMessage.Unknown, unknownParser },
-            { GameMessage.Retry, unknownParser },
+            { GameMessage.Retry, new RetryParser() },
             { GameMessage.Hint, new HintParser() },
             { GameMessage.SelectIdleCmd, new SelectIdleCmdParser() } ,
             { GameMessage.SelectChain, new SelectChainParser() } ,

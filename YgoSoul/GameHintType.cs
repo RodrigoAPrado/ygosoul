@@ -1,6 +1,6 @@
 ﻿namespace YgoSoul;
 
-public enum GameHintType
+public enum GameHintType : uint
 {
     HintEvent = 1,
     HintMessage = 2,

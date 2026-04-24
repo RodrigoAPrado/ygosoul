@@ -1,6 +1,8 @@
-﻿using YgoSoul.Message;
+﻿using YgoSoul.Flag;
+using YgoSoul.Message;
 using YgoSoul.Message.Abstr;
 using YgoSoul.Parser.Abstr;
+using YgoSoul.Util;
 
 namespace YgoSoul.Parser;
 
@@ -8,17 +10,19 @@ public class SelectPlaceParser : BaseParser
 {
     protected override IMessage DoParse(byte[] buffer)
     {
-        var player = buffer[1];
-        var amount = buffer[2];
-        var mask = BitConverter.ToUInt32(buffer, 3);
+        var reader = new PacketReader(buffer);
+        reader.ReadByte(); //msg
+        var player = reader.ReadByte();
+        var amount = reader.ReadByte();
+        var mask = reader.ReadUInt32();
 
         var zones = new List<Zone>();
         
-        foreach (Zone z in Enum.GetValues(typeof(Zone)))
+        for (int i = 0; i < 32; i++)
         {
-            if ((mask & (uint)z) == 0)
+            if ((mask & (1u << i)) == 0)
             {
-                zones.Add(z);
+                zones.Add((Zone)(1u << i));
             }
         }
         

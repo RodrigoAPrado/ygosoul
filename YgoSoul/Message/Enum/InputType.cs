@@ -5,5 +5,6 @@ public enum InputType
     Unknown = 0,
     None = 1,
     Value = 2,
-    Confirmation
+    Confirmation = 3,
+    Retry = 4,
 }

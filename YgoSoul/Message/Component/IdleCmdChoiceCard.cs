@@ -1,4 +1,5 @@
-﻿using YgoSoul.Message.Component.Abstr;
+﻿using YgoSoul.Flag;
+using YgoSoul.Message.Component.Abstr;
 
 namespace YgoSoul.Message.Component;
 

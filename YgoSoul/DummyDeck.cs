@@ -1,4 +1,6 @@
-﻿namespace YgoSoul;
+﻿using YgoSoul.Flag;
+
+namespace YgoSoul;
 
 public static class DummyDeck
 {
@@ -70,8 +72,8 @@ public static class DummyDeck
             duelist = 0,
             code = cardNumber,
             con = team,
-            loc = 0x01,
-            pos = 0x8
+            loc = (uint) CardLocation.Deck,
+            pos = (uint) CardPosition.FaceDown
         };
     }
 }

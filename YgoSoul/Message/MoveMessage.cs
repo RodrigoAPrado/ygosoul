@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using YgoSoul.Flag;
 using YgoSoul.Message.Abstr;
 using YgoSoul.Parser;
 
@@ -10,24 +11,24 @@ public class MoveMessage : BaseMessage
     private readonly uint _oldPlayer;
     private readonly CardLocation _oldLocation;
     private readonly uint _oldSequence;
-    private readonly uint _oldPosition;
+    private readonly CardPosition _oldPosition;
     private readonly uint _newPlayer;
     private readonly CardLocation _newLocation;
     private readonly uint _newSequence;
-    private readonly uint _newPosition;
-    private readonly MoveParser.MoveReason _reason;
+    private readonly CardPosition _newPosition;
+    private readonly Reason _reason;
     
     public MoveMessage(
         uint cardCode, 
         uint oldPlayer, 
         CardLocation oldLocation, 
         uint oldSequence, 
-        uint oldPosition,
+        CardPosition oldPosition,
+        Reason reason,
         uint newPlayer, 
         CardLocation newLocation, 
         uint newSequence, 
-        uint newPosition,
-        MoveParser.MoveReason reason)
+        CardPosition newPosition)
     {
         _cardCode = cardCode;
         _oldPlayer = oldPlayer;

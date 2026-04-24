@@ -1,6 +1,7 @@
 ﻿using YgoSoul.Message;
 using YgoSoul.Message.Abstr;
 using YgoSoul.Parser.Abstr;
+using YgoSoul.Util;
 
 namespace YgoSoul.Parser;
 
@@ -8,27 +9,23 @@ public class HintParser : BaseParser
 {
     protected override IMessage DoParse(byte[] buffer)
     {
-        switch ((GameHintType) buffer[1])
+        var reader = new PacketReader(buffer);
+        reader.ReadByte();
+        var hintType = (GameHintType) reader.ReadByte();
+        
+        return hintType switch
         {
-            case GameHintType.HintEvent:
-                return HandleHintEvent(buffer);
-            case GameHintType.HintSelectMsg:
-                return new HintMessage($"Player selected {CardLibrary.GetCard(BitConverter.ToUInt32(buffer, 3)).Name}");
-            default:
-                return new UnknownMessage(buffer);
-        }
+            GameHintType.HintEvent => HandleHintEvent(reader),
+            GameHintType.HintSelectMsg => new HintMessage(
+                $"Player selected {CardLibrary.GetCard(BitConverter.ToUInt32(buffer, 3)).Name}"),
+            _ => new UnknownMessage(buffer)
+        };
     }
 
-    private static IMessage HandleHintEvent(byte[] buffer)
+    private static IMessage HandleHintEvent(PacketReader reader)
     {
-        switch (buffer[3])
-        {
-            case 23:
-                return new HintMessage($"Player {buffer[2]}, the current phase is about to end.");
-            case 27:
-                return new HintMessage($"Player {buffer[2]}, it is the Draw Phase.");
-            default:
-                return new UnknownMessage(buffer);
-        }
+        var player = reader.ReadByte();
+        var hintMessage = (GameHintEvent) reader.ReadUInt64();
+        return new HintMessage($"Player {player}, it is {hintMessage}.");
     }
 }
