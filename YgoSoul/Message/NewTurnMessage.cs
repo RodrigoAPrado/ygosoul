@@ -2,9 +2,11 @@
 
 namespace YgoSoul.Message;
 
-public class NewTurnMessage : SimpleTextMessage
+public class NewTurnMessage : HintMessage
 {
-    public NewTurnMessage(string hint) : base(hint)
+    public byte Player { get; }
+    public NewTurnMessage(byte player) : base($"Your turn, {player}")
     {
+        Player = player;
     }
 }

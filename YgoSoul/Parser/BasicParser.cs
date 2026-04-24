@@ -12,9 +12,9 @@ public class BasicParser : BaseParser
         switch (msgType)
         {
             case GameMessage.NewTurn:
-                return new NewTurnMessage($"New Turn {buffer[1]}");
+                return new NewTurnMessage(buffer[1]);
             case GameMessage.NewPhase:
-                return new NewPhaseMessage($"It is the {((GamePhases)buffer[1]).ToString()}");
+                return new NewPhaseMessage((GamePhases) buffer[1]);
             default:
                 return new UnknownMessage(buffer);
         }

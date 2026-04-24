@@ -19,8 +19,6 @@ public class SummoningParser : BaseParser
         var sequence = reader.ReadUInt32();
         var position = (CardPosition) reader.ReadUInt32();
 
-        return new SummoningMessage($"{CardLibrary.GetCard(cardCode).Name} is being summoned for " +
-                                    $"{player} on {location} in sequence {sequence} and position {position}");
-
+        return new SummoningMessage(cardCode, player, location, sequence, position);
     }
 }
