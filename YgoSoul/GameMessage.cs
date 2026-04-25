@@ -23,11 +23,11 @@ public enum GameMessage : byte
     SelectTribute = 20,
     SortChain = 21,
     SelectCounter = 22,
-    SelectSum = 23,
+    SelectSum = 23, // voltar depois
     SelectDisfield = 24,
     SortCard = 25,
     SelectUnselectCard = 26,
-    ConfirmDecktop = 30,
+    ConfirmDeckTop = 30,
     ConfirmCards = 31,
     ShuffleDeck = 32,
     ShuffleHand = 33,
