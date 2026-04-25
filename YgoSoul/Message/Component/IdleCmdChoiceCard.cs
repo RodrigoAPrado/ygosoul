@@ -5,27 +5,25 @@ namespace YgoSoul.Message.Component;
 
 public class IdleCmdChoiceCard : IIdleCmdChoice
 {
-    public PlayerActions PlayerAction { get; }
+    public PlayerIdleAction Action { get; }
     public byte Player { get; }
-    public uint ValueIndex { get; }
+    public uint Index { get; }
+    public uint Sequence { get; }
+    public CardLocation Location { get; }
+    public uint CardCode { get; }
 
-    private readonly CardLocation _location;
-    private readonly uint _sequence;
-    private readonly uint _cardCode;
-
-    public IdleCmdChoiceCard(PlayerActions playerAction, byte player, uint valueIndex, CardLocation location, uint sequence, uint cardCode)
+    public IdleCmdChoiceCard(PlayerIdleAction playerIdleAction, uint cardCode, byte player, CardLocation location, uint sequence, uint index)
     {
-        PlayerAction = playerAction;
+        Action = playerIdleAction;
         Player = player;
-        ValueIndex = valueIndex;
-        _location = location;
-        _sequence = sequence;
-        _cardCode = cardCode;
-        
+        Sequence = sequence;
+        Location = location;
+        CardCode = cardCode;
+        Index = index;
     }
 
     public override string ToString()
     {
-        return $"to {PlayerAction.ToString()} {CardLibrary.GetCard(_cardCode).Name}, from {_location.ToString()} at sequence {_sequence}...";
+        return $"to {Action.ToString()} {CardLibrary.GetCard(CardCode).Name}, from {Location.ToString()} at sequence {Sequence}, Index {Index}...";
     }
 }

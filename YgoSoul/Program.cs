@@ -244,7 +244,7 @@ class Program
         } while (responseId < 0);
 
         var response = MessageHandler.MessageRequiringInput.GetResponse(responseId);
-        OcgApi.OCG_DuelSetResponse(pDuel, response, 4); 
+        OcgApi.OCG_DuelSetResponse(pDuel, response, (uint) response.Length); 
     }
 
     private static void HandlePlayerInputConfirmation(IntPtr pDuel)

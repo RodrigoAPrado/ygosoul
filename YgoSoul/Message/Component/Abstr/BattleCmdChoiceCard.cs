@@ -10,7 +10,14 @@ public abstract class BattleCmdChoiceCard : BattleCmdChoice
     public uint Sequence { get; }
     
     
-    protected BattleCmdChoiceCard(uint index, uint cardCode, byte controller, CardLocation location, uint sequence) : base(index)
+    protected BattleCmdChoiceCard(
+        PlayerBattleAction action, 
+        uint index, 
+        uint cardCode, 
+        byte controller, 
+        CardLocation location, 
+        uint sequence) 
+        : base(action, index)
     {
         CardCode = cardCode;
         Controller = controller;

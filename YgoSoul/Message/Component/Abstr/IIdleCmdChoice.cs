@@ -2,7 +2,7 @@
 
 public interface IIdleCmdChoice
 {
-    PlayerActions PlayerAction { get; }
+    PlayerIdleAction Action { get; }
     byte Player { get; }
-    uint ValueIndex { get; }
+    uint Index { get; }
 }

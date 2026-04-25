@@ -5,21 +5,22 @@ using YgoSoul.Message.Enum;
 
 namespace YgoSoul.Message;
 
-public class SelectIdleCmdMessage : IMessage
+public class SelectBattleCmdMessage : IMessage
 {
     public InputType Input => InputType.Value;
     public int InputCount => Choices.Count;
-    public IReadOnlyList<IIdleCmdChoice> Choices { get; }
     public byte Player { get; }
-    
-    public SelectIdleCmdMessage(byte player, List<IIdleCmdChoice> choices)
-    {
-        Choices = choices;
-        Player = player;
-    }
+    public IReadOnlyList<BattleCmdChoice> Choices { get; }
 
+    public SelectBattleCmdMessage(byte player, List<BattleCmdChoice> choices)
+    {
+        Player = player;
+        Choices = choices;
+    }
+    
     public byte[] GetResponse(int id)
     {
+        
         if (id >= Choices.Count)
             return new byte[] { 0xFF, 0xFF, 0xFF, 0xFF };
 

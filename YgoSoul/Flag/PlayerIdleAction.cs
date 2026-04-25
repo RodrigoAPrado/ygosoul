@@ -1,6 +1,7 @@
 ﻿namespace YgoSoul;
 
-public enum PlayerActions
+[Flags]
+public enum PlayerIdleAction : uint
 {
     NormalSummon = 0,
     SpecialSummon = 1,
@@ -10,5 +11,5 @@ public enum PlayerActions
     EffectActivation = 5,
     GoToBattlePhase = 6,
     GotoEndPhase = 7,
-    ShuffleDeck = 8,
+    ShuffleHand = 8,
 }

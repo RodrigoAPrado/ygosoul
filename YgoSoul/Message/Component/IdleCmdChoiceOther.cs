@@ -4,19 +4,18 @@ namespace YgoSoul.Message.Component;
 
 public class IdleCmdChoiceOther : IIdleCmdChoice
 {
-    public PlayerActions PlayerAction { get; }
+    public PlayerIdleAction Action { get; }
     public byte Player { get; }
-    public uint ValueIndex { get; }
+    public uint Index => 0;
 
-    public IdleCmdChoiceOther(PlayerActions playerAction, byte player)
+    public IdleCmdChoiceOther(PlayerIdleAction playerIdleAction, byte player)
     {
-        PlayerAction = playerAction;
+        Action = playerIdleAction;
         Player = player;
-        ValueIndex = 0;
     }
 
     public override string ToString()
     {
-        return $"to {PlayerAction.ToString()}...";
+        return $"to {Action.ToString()}...";
     }
 }

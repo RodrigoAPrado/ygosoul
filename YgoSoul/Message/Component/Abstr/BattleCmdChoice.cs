@@ -4,10 +4,12 @@ namespace YgoSoul.Message.Component.Abstr;
 
 public abstract class BattleCmdChoice
 {
+    public PlayerBattleAction Action { get; }
     public uint Index { get; }
 
-    protected BattleCmdChoice(uint index)
+    protected BattleCmdChoice(PlayerBattleAction action, uint sequence)
     {
-        Index = index;
+        Action = action;
+        Index = sequence;
     }
 }

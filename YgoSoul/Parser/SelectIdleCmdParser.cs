@@ -22,7 +22,7 @@ public class SelectIdleCmdParser : BaseParser
         var choices = new List<IIdleCmdChoice>();
 
         // helper local
-        void ReadCardList(PlayerActions action)
+        void ReadCardList(PlayerIdleAction action)
         {
             var count = reader.ReadInt32();
 
@@ -35,40 +35,40 @@ public class SelectIdleCmdParser : BaseParser
                 uint sequence = reader.ReadUInt32();
 
                 ulong description = 0;
-                if (action == PlayerActions.EffectActivation)
+                if (action == PlayerIdleAction.EffectActivation)
                 {
                     description = reader.ReadUInt64();
                     reader.Skip(1);// client mode
                 }
                 choices.Add(new IdleCmdChoiceCard(
                     action,
+                    code,
                     controller,
-                    index,
                     location,
                     sequence,
-                    code
+                    index
                 ));
                 index++;
             }
         }
 
         // ordem FIXA do protocolo
-        ReadCardList(PlayerActions.NormalSummon);
-        ReadCardList(PlayerActions.SpecialSummon);
-        ReadCardList(PlayerActions.ChangeCardPosition);
-        ReadCardList(PlayerActions.Set);
-        ReadCardList(PlayerActions.SpellOrTrapSet);
-        ReadCardList(PlayerActions.EffectActivation);
+        ReadCardList(PlayerIdleAction.NormalSummon);
+        ReadCardList(PlayerIdleAction.SpecialSummon);
+        ReadCardList(PlayerIdleAction.ChangeCardPosition);
+        ReadCardList(PlayerIdleAction.Set);
+        ReadCardList(PlayerIdleAction.SpellOrTrapSet);
+        ReadCardList(PlayerIdleAction.EffectActivation);
 
         // fases
         if (reader.ReadByte() == 1)
-            choices.Add(new IdleCmdChoiceOther(PlayerActions.GoToBattlePhase, player));
+            choices.Add(new IdleCmdChoiceOther(PlayerIdleAction.GoToBattlePhase, player));
 
         if (reader.ReadByte() == 1)
-	        choices.Add(new IdleCmdChoiceOther(PlayerActions.GotoEndPhase, player));
+	        choices.Add(new IdleCmdChoiceOther(PlayerIdleAction.GotoEndPhase, player));
         
         if (reader.ReadByte() == 1)
-	        choices.Add(new IdleCmdChoiceOther(PlayerActions.ShuffleDeck, player));
+	        choices.Add(new IdleCmdChoiceOther(PlayerIdleAction.ShuffleHand, player));
 
         return new SelectIdleCmdMessage(player, choices);
     }
