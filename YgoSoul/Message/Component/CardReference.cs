@@ -11,6 +11,7 @@ public class CardReference
     public CardPosition Position { get; }
     public uint Index { get; }
     public byte ReleaseValue { get; set; }
+    public ushort CounterAmount { get; set; }
 
     public CardReference(
         uint cardCode,
