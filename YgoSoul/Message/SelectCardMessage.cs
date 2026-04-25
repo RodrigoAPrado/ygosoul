@@ -32,6 +32,11 @@ public class SelectCardMessage : ISelectionsMessage
 
     public byte[] GetResponse(List<int> ids)
     {
+        var invalid = ids.Any(x => x >= Cards.Count || x < 0);
+
+        if (invalid)
+            return [];
+        
         if (ids.Count < Min)
             return [];
         if(ids.Count > Max)

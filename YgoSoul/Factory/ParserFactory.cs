@@ -25,6 +25,8 @@ public static class ParserFactory
             { GameMessage.SelectPlace, new SelectPlaceParser() } ,
             //Select Position
             { GameMessage.SelectTribute, new SelectTributeParser() },
+            { GameMessage.SortChain, new SortChainCardParser() },
+            { GameMessage.SortCard, new SortChainCardParser() },
             { GameMessage.ShuffleHand, new ShuffleHandParser() },
             { GameMessage.NewTurn, basicParser },
             { GameMessage.NewPhase, basicParser },

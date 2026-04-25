@@ -32,6 +32,11 @@ public class SelectTributeMessage : ISelectionsMessage
 
     public byte[] GetResponse(List<int> ids)
     {
+        var invalid = ids.Any(x => x >= Cards.Count || x < 0);
+
+        if (invalid)
+            return [];
+        
         var value = ids.Sum(x => Cards[x].ReleaseValue);
         
         if (value < Min)

@@ -8,4 +8,5 @@ public enum InputType
     Confirmation = 3,
     Retry = 4,
     Selections = 5,
+    Sort = 6,
 }

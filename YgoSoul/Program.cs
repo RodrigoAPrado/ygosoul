@@ -218,6 +218,9 @@ class Program
             case InputType.Selections:
                 HandlePlayerInputSelections(pDuel);
                 break;
+            case InputType.Sort:
+                HandlePlayerInputSort(pDuel);
+                break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -252,6 +255,54 @@ class Program
         Console.WriteLine("\n--- AWAITING PLAYER'S INPUT ---");
         Console.Write("Press enter to confirm... ");
         var input = Console.ReadLine();
+    }
+
+    private static void HandlePlayerInputSort(IntPtr pDuel)
+    {
+        var message = (ISelectionsMessage)MessageHandler.MessageRequiringInput;
+        byte[] response = [];
+        do
+        {
+            Console.WriteLine("\n--- AWAITING PLAYER'S INPUT ---");
+            Console.Write("Input your selected action: ");
+            var input = Console.ReadLine();
+            
+            if (input == null)
+            {
+                Console.WriteLine("--- INVALID CHOICE ---");
+                continue;
+            }
+
+            if (input.ToLower() == "cancel" && message.CanCancel)
+            {
+                response = message.Cancel();
+                continue;
+            }
+
+            var a = input.Split(",");
+            var ints = new List<int>();
+            var invalid = false;
+
+            for(var i = 0; i < ints.Count; i++)
+            {
+                if (int.TryParse(a[i], out var j))
+                {
+                    ints.Add(j);
+                }
+                else
+                {
+                    Console.WriteLine("--- INVALID CHOICE ---");
+                    invalid = true;
+                }
+            }
+
+            response = message.GetResponse(ints);
+            if (response.Length != 0 && !invalid) 
+                continue;
+            Console.WriteLine("--- INVALID CHOICE ---");
+        } while (response.Length > 0);
+
+        OcgApi.OCG_DuelSetResponse(pDuel, response, (uint) response.Length); 
     }
 
     private static void HandlePlayerInputSelections(IntPtr pDuel)
