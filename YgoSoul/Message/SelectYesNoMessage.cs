@@ -22,9 +22,7 @@ public class SelectYesNoMessage : IMessage
     public byte[] GetResponse(int id)
     {
         if (id != 0 && id != 1)
-        {
-            return [0xFF, 0xFF, 0xFF, 0xFF];
-        }
+            return [];
 
         return BitConverter.GetBytes(id);
     }

@@ -9,6 +9,7 @@ public class SelectTributeMessage : ISelectionsMessage
 {
     public InputType Input => InputType.Selections;
     public int InputCount { get; }
+    public bool CanCancel => Cancelable;
     public byte Player { get; }
     public bool Cancelable { get; }
     public uint Min { get; }

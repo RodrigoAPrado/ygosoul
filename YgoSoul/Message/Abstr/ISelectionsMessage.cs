@@ -2,6 +2,7 @@
 
 public interface ISelectionsMessage : IMessage
 {
+    bool CanCancel { get; }
     byte[] GetResponse(List<int> ids);
     byte[] Cancel();
 }

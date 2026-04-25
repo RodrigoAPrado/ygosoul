@@ -9,6 +9,7 @@ public class SelectCardMessage : ISelectionsMessage
 {
     public InputType Input => InputType.Selections;
     public int InputCount => Cards.Count;
+    public bool CanCancel => Cancelable;
     public byte Player { get; }
     public bool Cancelable { get; }
     public uint Min { get; }
@@ -32,9 +33,9 @@ public class SelectCardMessage : ISelectionsMessage
     public byte[] GetResponse(List<int> ids)
     {
         if (ids.Count < Min)
-            return Cancel();
+            return [];
         if(ids.Count > Max)
-            return Cancel();
+            return [];
         
         var response = new byte[8 + ids.Count * 4];
         var offset = 0;

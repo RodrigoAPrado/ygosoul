@@ -20,8 +20,8 @@ public class SelectIdleCmdMessage : IMessage
 
     public byte[] GetResponse(int id)
     {
-        if (id >= Choices.Count)
-            return new byte[] { 0xFF, 0xFF, 0xFF, 0xFF };
+        if (id < 0 || id >= Choices.Count)
+            return [];
 
         var choice = Choices[id];
 

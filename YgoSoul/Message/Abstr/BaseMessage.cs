@@ -6,5 +6,5 @@ public abstract class BaseMessage : IMessage
 {
     public virtual InputType Input => InputType.None;
     public virtual int InputCount => 0;
-    public virtual byte[] GetResponse(int id) => [0xFF];
+    public virtual byte[] GetResponse(int id) => [];
 }

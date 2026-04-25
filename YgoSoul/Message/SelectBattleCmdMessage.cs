@@ -20,9 +20,9 @@ public class SelectBattleCmdMessage : IMessage
     
     public byte[] GetResponse(int id)
     {
-        
+
         if (id >= Choices.Count)
-            return new byte[] { 0xFF, 0xFF, 0xFF, 0xFF };
+            return [];
 
         var choice = Choices[id];
 

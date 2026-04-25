@@ -26,12 +26,12 @@ public class SelectPlaceMessage : IMessage
     public byte[] GetResponse(int id)
     {
         if(id < 0 || id >= Choices.Count)
-            return [0xFF, 0xFF, 0xFF];
+            return [];
         
         var zone = Choices[id];
         if(!ZoneUtils.ZoneLocation.ContainsKey(zone) 
            || !ZoneUtils.ZoneIndex.ContainsKey(zone))
-            return [0xFF, 0xFF, 0xFF];
+            return [];
         
         var response = new byte[3];
         response[0] = (byte)Player;

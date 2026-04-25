@@ -19,9 +19,7 @@ public class SelectOptionMessage : IMessage
     public byte[] GetResponse(int id)
     {
         if (id < 0 || id >= Options.Count)
-        {
-            return [0xFF,0xFF,0xFF,0xFF];
-        }
+            return [];
 
         return BitConverter.GetBytes(id);
     }

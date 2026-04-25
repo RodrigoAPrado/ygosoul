@@ -6,6 +6,7 @@ using YgoSoul.Factory;
 using YgoSoul.Handler;
 using YgoSoul.Handler.Enum;
 using YgoSoul.Message;
+using YgoSoul.Message.Abstr;
 using YgoSoul.Message.Component;
 using YgoSoul.Message.Enum;
 using YgoSoul.Parser;
@@ -214,6 +215,9 @@ class Program
             case InputType.Confirmation:
                 HandlePlayerInputConfirmation(pDuel);
                 break;
+            case InputType.Selections:
+                HandlePlayerInputSelections(pDuel);
+                break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -221,7 +225,8 @@ class Program
 
     private static void HandlePlayerInputValue(IntPtr pDuel)
     {
-        var responseId = -1;
+        var message = MessageHandler.MessageRequiringInput;
+        byte[] response = [];
         do
         {
             Console.WriteLine("\n--- AWAITING PLAYER'S INPUT ---");
@@ -229,21 +234,16 @@ class Program
             var input = Console.ReadLine();
             if (int.TryParse(input, out var choice))
             {
-                if (choice >= MessageHandler.MessageRequiringInput.InputCount || choice < 0)
-                {
+                response = message.GetResponse(choice);
+                if (response.Length == 0) ;
                     Console.WriteLine("--- INVALID CHOICE ---");
-                    continue;
-                }
-
-                responseId = choice;
             }
             else
             {
                 Console.WriteLine("--- INVALID CHOICE ---");
             }
-        } while (responseId < 0);
+        } while (response.Length > 0);
 
-        var response = MessageHandler.MessageRequiringInput.GetResponse(responseId);
         OcgApi.OCG_DuelSetResponse(pDuel, response, (uint) response.Length); 
     }
 
@@ -252,5 +252,67 @@ class Program
         Console.WriteLine("\n--- AWAITING PLAYER'S INPUT ---");
         Console.Write("Press enter to confirm... ");
         var input = Console.ReadLine();
+    }
+
+    private static void HandlePlayerInputSelections(IntPtr pDuel)
+    {
+        var responseIds = new List<int>();
+        var enter = false;
+        var message = (ISelectionsMessage)MessageHandler.MessageRequiringInput;
+        byte[] response = [];
+        do
+        {
+            Console.WriteLine("\n--- AWAITING PLAYER'S INPUT ---");
+            Console.Write("Input your selections: ");
+            var input = Console.ReadLine();
+
+            if (input == null)
+            {
+                Console.WriteLine("--- INVALID CHOICE ---");
+                continue;
+            }
+            
+            if (input.ToLower() == "enter")
+            {
+                response = message.GetResponse(responseIds);
+                if (response.Length == 0)
+                {
+                    Console.WriteLine("--- INVALID CHOICES, REDOING ---");
+                    responseIds = [];
+                    Console.WriteLine(message.ToString());
+                    continue;
+                }
+                enter = true;
+            }
+
+            if (input.ToLower() == "cancel" && message.CanCancel)
+            {
+                enter = true;
+                response = message.Cancel();
+                continue;
+            }
+            
+            if (int.TryParse(input, out var choice))
+            {
+                if (responseIds.Contains(choice))
+                {
+                    Console.WriteLine("--- OPTION ALREADY CHOSEN ---");
+                    continue;
+                }
+                responseIds.Add(choice);
+            }
+            else
+            {
+                Console.WriteLine("--- INVALID CHOICE ---");
+            }
+        } while (!enter);
+
+        if (response.Length == 0)
+        {
+            Console.WriteLine("--- INVALID OPTIONS ---");
+            HandlePlayerInputSelections(pDuel);
+            return;
+        }
+        OcgApi.OCG_DuelSetResponse(pDuel, response, (uint) response.Length); 
     }
 }
