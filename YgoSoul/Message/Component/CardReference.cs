@@ -10,6 +10,7 @@ public class CardReference
     public uint Sequence { get; }
     public CardPosition Position { get; }
     public uint Index { get; }
+    public byte ReleaseValue { get; set; }
 
     public CardReference(
         uint cardCode,

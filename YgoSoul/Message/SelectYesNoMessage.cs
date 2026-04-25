@@ -4,15 +4,15 @@ using YgoSoul.Message.Enum;
 
 namespace YgoSoul.Message;
 
-public class SelectEffectYesNoMessage : IMessage
+public class SelectYesNoMessage : IMessage
 {
     public InputType Input => InputType.Value;
     public int InputCount => 1;
     public byte Player { get; }
-    public CardReference Card { get; }
+    public CardReference? Card { get; }
     public ulong Description { get; }
 
-    public SelectEffectYesNoMessage(byte player, CardReference card, ulong description)
+    public SelectYesNoMessage(byte player, CardReference? card, ulong description)
     {
         Player = player;
         Card = card;
@@ -31,6 +31,8 @@ public class SelectEffectYesNoMessage : IMessage
 
     public override string ToString()
     {
-        return $"\nCard effect for card {CardLibrary.GetCard(Card.CardCode).Name}. 0 - No, 1 - Yes";
+        if (Card == null)
+            return $"Player {Player}, 0 - No, 1 - Yes";
+        return $"\nPlayer {Player}, card effect for card {CardLibrary.GetCard(Card.CardCode).Name}. 0 - No, 1 - Yes";
     }
 }

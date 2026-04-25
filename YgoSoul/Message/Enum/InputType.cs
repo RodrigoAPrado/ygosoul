@@ -7,4 +7,5 @@ public enum InputType
     Value = 2,
     Confirmation = 3,
     Retry = 4,
+    Selections = 5,
 }
