@@ -7,12 +7,12 @@ using YgoSoul.Util;
 
 namespace YgoSoul.Parser;
 
-public class ConfirmDeckTopParser : BaseParser
+public class ConfirmCardParser : BaseParser
 {
     protected override IMessage DoParse(byte[] buffer)
     {
         var reader = new PacketReader(buffer);
-        reader.ReadByte();//msg;
+        var msg = (GameMessage) reader.ReadByte();
         var player = reader.ReadByte();
         var count = reader.ReadUInt32();
 
@@ -27,6 +27,14 @@ public class ConfirmDeckTopParser : BaseParser
             cards.Add(new CardReference(cardCode, controller, location, sequence, 0, count -i));
         }
 
-        return new ConfirmDeckTopMessage(player, cards);
+        switch (msg)
+        {
+            case GameMessage.ConfirmDeckTop:
+                return new ConfirmDeckTopMessage(player, cards);
+            case GameMessage.ConfirmCards:
+                return new ConfirmCardsMessage(player, cards);
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 }

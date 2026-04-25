@@ -245,7 +245,7 @@ class Program
             {
                 Console.WriteLine("--- INVALID CHOICE ---");
             }
-        } while (response.Length > 0);
+        } while (response.Length == 0);
 
         OcgApi.OCG_DuelSetResponse(pDuel, response, (uint) response.Length); 
     }
@@ -300,7 +300,7 @@ class Program
             if (response.Length != 0 && !invalid) 
                 continue;
             Console.WriteLine("--- INVALID CHOICE ---");
-        } while (response.Length > 0);
+        } while (response.Length == 0);
 
         OcgApi.OCG_DuelSetResponse(pDuel, response, (uint) response.Length); 
     }
@@ -334,6 +334,7 @@ class Program
                     continue;
                 }
                 enter = true;
+                continue;
             }
 
             if (input.ToLower() == "cancel" && message.CanCancel)

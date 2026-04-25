@@ -32,7 +32,7 @@ public class SelectIdleCmdParser : BaseParser
                 uint code = reader.ReadUInt32();
                 byte controller = reader.ReadByte();
                 var location = (CardLocation)reader.ReadByte();
-                uint sequence = reader.ReadUInt32();
+                uint sequence = action == PlayerIdleAction.ChangeCardPosition ? reader.ReadByte() : reader.ReadUInt32();
 
                 ulong description = 0;
                 if (action == PlayerIdleAction.EffectActivation)

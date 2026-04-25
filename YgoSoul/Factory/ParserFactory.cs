@@ -9,6 +9,11 @@ public static class ParserFactory
     {
         var unknownParser = new UnknownParser();
         var basicParser = new BasicParser();
+        var selectPlaceParser = new SelectPlaceParser();
+        var selectYesNoParser = new SelectYesNoParser();
+        var sortChainCardParser = new SortChainCardParser();
+        var confirmCardParser = new ConfirmCardParser();
+        var shuffleCardsParser = new ShuffleCardsParser();
         
         return new Dictionary<GameMessage, IParser> 
         {
@@ -17,27 +22,34 @@ public static class ParserFactory
             { GameMessage.Hint, new HintParser() },
             { GameMessage.SelectBattleCmd, new SelectBattleCmdParser() } ,
             { GameMessage.SelectIdleCmd, new SelectIdleCmdParser() } ,
-            { GameMessage.SelectEffectYn, new SelectYesNoParser() },
-            { GameMessage.SelectYesNo, new SelectYesNoParser() },
+            { GameMessage.SelectEffectYn, selectYesNoParser },
+            { GameMessage.SelectYesNo, selectYesNoParser },
             { GameMessage.SelectOption, new SelectOptionParser() },
             { GameMessage.SelectCard, new SelectCardParser() },
             { GameMessage.SelectChain, new SelectChainParser() } ,
-            { GameMessage.SelectPlace, new SelectPlaceParser() } ,
+            { GameMessage.SelectPlace, selectPlaceParser } ,
             //Select Position
             { GameMessage.SelectTribute, new SelectTributeParser() },
-            { GameMessage.SortChain, new SortChainCardParser() },
+            { GameMessage.SortChain, sortChainCardParser },
             { GameMessage.SelectCounter, new SelectCounterParser() },
             //{ GameMessage.SelectSum, new SelectSumParser() },
-            { GameMessage.SelectDisfield, new SelectPlaceParser() },
-            { GameMessage.SortCard, new SortChainCardParser() },
+            { GameMessage.SelectDisfield, selectPlaceParser },
+            { GameMessage.SortCard, sortChainCardParser },
             { GameMessage.SelectUnselectCard, new SelectUnselectedCardParser() },
-            { GameMessage.ConfirmDeckTop, new ConfirmDeckTopParser() },
-            { GameMessage.ShuffleHand, new ShuffleHandParser() },
+            { GameMessage.ConfirmDeckTop, confirmCardParser },
+            { GameMessage.ConfirmCards, confirmCardParser },
+            { GameMessage.ShuffleDeck, basicParser },
+            { GameMessage.ShuffleHand,  shuffleCardsParser},
+            //Swapgrave
+            //shuffle setcard
+            { GameMessage.ReverseDeck, basicParser },
+            { GameMessage.DeckTop, basicParser},
+            { GameMessage.ShuffleExtra, shuffleCardsParser },
             { GameMessage.NewTurn, basicParser },
             { GameMessage.NewPhase, basicParser },
             { GameMessage.Move, new MoveParser() },
             { GameMessage.Summoning, new SummoningParser() },
-            { GameMessage.Summoned, new SummonedParser() },
+            { GameMessage.Summoned, basicParser },
             { GameMessage.Draw, new DrawParser() }
         };
     }

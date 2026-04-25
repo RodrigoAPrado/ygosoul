@@ -1,15 +1,14 @@
-﻿using System.Text;
-using YgoSoul.Message.Abstr;
+﻿using YgoSoul.Message.Abstr;
 using YgoSoul.Message.Component;
 
 namespace YgoSoul.Message;
 
-public class ConfirmDeckTopMessage : BaseMessage
+public class ConfirmCardsMessage : BaseMessage
 {
     public byte Player { get; }
     public IReadOnlyList<CardReference> Cards { get; }
 
-    public ConfirmDeckTopMessage(byte player, List<CardReference> cards)
+    public ConfirmCardsMessage(byte player, List<CardReference> cards)
     {
         Player = player;
         Cards = cards;
@@ -17,6 +16,6 @@ public class ConfirmDeckTopMessage : BaseMessage
 
     public override string ToString()
     {
-        return $"Confirm TopDeck - Player: {Player}, Cards: {string.Join(", ", Cards)}";
+        return $"Confirm Cards - Player: {Player}, Cards: {string.Join(", ", Cards)}";
     }
 }

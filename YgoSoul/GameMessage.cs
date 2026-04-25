@@ -32,8 +32,8 @@ public enum GameMessage : byte
     ShuffleDeck = 32,
     ShuffleHand = 33,
     //RefreshDeck = 34,
-    SwapGraveDeck = 35,
-    ShuffleSetCard = 36,
+    SwapGraveDeck = 35, // voltar depois
+    ShuffleSetCard = 36, // voltar depois
     ReverseDeck = 37,
     DeckTop = 38,
     ShuffleExtra = 39,
