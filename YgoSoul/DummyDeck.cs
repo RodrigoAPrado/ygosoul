@@ -66,6 +66,69 @@ public static class DummyDeck
         78397661, // 14 Ecclesia
         53971455, // 15 Lulu
     ];
+
+    private static List<uint> _kewlTuneMain =
+    [
+        16387555, // 01 Kewl Tune Cue
+        16387555, // 02 Kewl Tune Cue
+        16387555, // 03 Kewl Tune Cue
+        16509007, // 04 Kewl Tune Mix
+        16509007, // 05 Kewl Tune Mix
+        16509007, // 06 Kewl Tune Mix
+        89392810, // 07 Kewl Tune Reco
+        89392810, // 08 Kewl Tune Reco
+        89392810, // 09 Kewl Tune Reco
+        43904702, // 10 Kewl Tune Clip
+        43904702, // 11 Kewl Tune Clip
+        43904702, // 12 Kewl Tune Clip
+        78058681, // 13 Kewl Tune Synchro
+        78058681, // 14 Kewl Tune Synchro
+        78058681, // 15 Kewl Tune Synchro
+        14442329, // 16 JJ "Kewl Tune"
+        14442329, // 17 JJ "Kewl Tune"
+        14442329, // 18 JJ "Kewl Tune"
+        40847034, // 19 Kewl Tune Playlist
+        40847034, // 20 Kewl Tune Playlist
+        77202120, // 21 Assault Synchron
+        21142671, // 22 Red Nova
+        38814750, // 23 Gamma
+        38814750, // 24 Gamma
+        49036338, // 25 Driver
+        97268402, // 26 Veiler
+        97268402, // 27 Veiler
+        97268402, // 28 Veiler
+        59438930, // 29 Ghost Ogre
+        59438930, // 30 Ghost Ogre
+        59438930, // 31 Ghost Ogre
+        52038441, // 32 Mourner
+        52038441, // 33 Mourner
+        52038441, // 34 Mourner
+        99243014, // 35 Overtake
+        99243014, // 36 Overtake
+        99243014, // 37 Overtake
+        97474300, // 38 Duelist Genesis
+        97474300, // 39 Duelist Genesis
+        18158393, // 40 Mannadium
+    ];
+    
+    private static List<uint> _kewlTuneExtra =
+    [
+        42781164, // 01 Track Maker
+        42781164, // 02 Track Maker
+        42781164, // 03 Track Maker
+        15665977, // 04 RS
+        15665977, // 05 RS
+        15665977, // 06 RS
+        88170262, // 07 Remix
+        88170262, // 08 Remix
+        88170262, // 09 Remix
+        41069676, // 10 Loudness War
+        41069676, // 11 Loudness War
+        41069676, // 12 Loudness War
+        4891376, // 13 Zalen
+        4891376, // 14 Zalen
+        821049, // 15 Visas Amritara
+    ];
     
     private static List<uint> _cards =
     [
@@ -110,6 +173,8 @@ public static class DummyDeck
         80141480,
         80770678
     ];
+    
+    
     
     public static List<OCG_NewCardInfo> CreateDeck(byte team)
     {
