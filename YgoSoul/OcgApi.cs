@@ -49,12 +49,10 @@ public struct OCG_NewCardInfo
     [FieldOffset(0)] public byte team;
     [FieldOffset(1)] public byte duelist;
     
-    // O C++ pula os bytes 2 e 3 (Padding). O 'code' DEVE começar no 4.
     [FieldOffset(4)] public uint code; 
     
     [FieldOffset(8)] public byte con;
     
-    // O C++ pula os bytes 9, 10 e 11. O 'loc' DEVE começar no 12.
     [FieldOffset(12)] public uint loc; 
     
     [FieldOffset(16)] public uint seq;

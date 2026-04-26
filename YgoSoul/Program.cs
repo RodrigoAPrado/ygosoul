@@ -36,24 +36,8 @@ class Program
         
         // 2. Configure os delegates (Importante: manter referências static)
         _dataReader = MyCardReader;
-        
-        _scriptReader = (payload, duel, name) => {
-            string path = Path.Combine("script", name);
-            byte[] content;
 
-            if (!File.Exists(path)) {
-                // Pega o ID da carta pelo nome do arquivo (ex: c46986414.lua -> 46986414)
-                string codeStr = name.Replace("c", "").Replace(".lua", "");
-        
-                // Retorna um script que define a função initial_effect vazia
-                string dummyScript = $@"function c{codeStr}.initial_effect(c)end";
-                content = System.Text.Encoding.UTF8.GetBytes(dummyScript);
-            } else {
-                content = File.ReadAllBytes(path);
-            }
-
-            return OcgApi.OCG_LoadScript(duel, content, (uint)content.Length, name);
-        };
+        _scriptReader = LoadScript;
 
         _logHandler = OnLogReceived;
         _readerDone = OnReaderDone;
@@ -62,7 +46,7 @@ class Program
         var options = new OCG_DuelOptions
         {
             seed0 = 0x12345,
-            flags = OcgConstants.DUEL_MODE_MR2,
+            flags = OcgConstants.DUEL_MODE_MR5,
             team1 = new OCG_Player { startingLP = 8000, startingDrawCount = 5, drawCountPerTurn = 1 },
             team2 = new OCG_Player { startingLP = 8000, startingDrawCount = 5, drawCountPerTurn = 1 },
             cardReader = Marshal.GetFunctionPointerForDelegate(_dataReader),
@@ -78,10 +62,46 @@ class Program
         IntPtr pDuel;
         if (OcgApi.OCG_CreateDuel(out pDuel, ref options) == 0)
         {
+            LoadBaseScripts(pDuel);
             CreateDecks(pDuel);
             RodarDuelo(pDuel);
             OcgApi.OCG_DestroyDuel(pDuel);
         }
+    }
+
+    private static void LoadBaseScripts(IntPtr pDuel)
+    {
+        LoadScript(IntPtr.Zero, pDuel, "constant.lua");
+        LoadScript(IntPtr.Zero, pDuel, "utility.lua");
+        LoadScript(IntPtr.Zero, pDuel, "rankup_functions.lua");
+    }
+
+    private static int LoadScript(IntPtr payload, IntPtr pDuel, string name)
+    {
+        string normalizedName = name.Replace("\\", "/");
+
+        if (!normalizedName.StartsWith("script/"))
+            normalizedName = "script/" + normalizedName;
+
+        string fileName = Path.GetFileName(normalizedName);
+        string path = Path.Combine("scripts", fileName);
+
+        if (!File.Exists(path))
+        {
+            Console.WriteLine($"[ERROR] Script not found: {normalizedName}");
+            return 0;
+        }
+
+        byte[] content = File.ReadAllBytes(path);
+
+        Console.WriteLine($"[LOAD] {normalizedName}");
+
+        return OcgApi.OCG_LoadScript(
+            pDuel,
+            content,
+            (uint)content.Length,
+            normalizedName
+        );
     }
     
     private static void MyCardReader(IntPtr payload, uint code, IntPtr data)
@@ -136,8 +156,8 @@ class Program
     
     private static void CreateDecks(IntPtr pDuel)
     {
-        CreateDeck(pDuel, 0);
-        CreateDeck(pDuel, 1);
+        CreateDeck(pDuel, 0, 0);
+        CreateDeck(pDuel, 1, 2);
         
         // 0x01 é LOCATION_DECK
         var quantidadeNoDeck0 = OcgApi.OCG_DuelQueryCount(pDuel, 0, 0x01);
@@ -146,9 +166,9 @@ class Program
         Console.WriteLine($"Player 1 MAINDECK Size: {quantidadeNoDeck1}");
     }
 
-    private static void CreateDeck(IntPtr pDuel, byte team)
+    private static void CreateDeck(IntPtr pDuel, byte team, int d)
     {
-        var deck = DummyDeck.CreateDeck(team);
+        var deck = DummyDeck.CreateDeck(team, d);
         foreach (var card in deck)
         {
             var ocgNewCardInfo = card;

@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using System.Runtime.InteropServices;
+using Microsoft.Data.Sqlite;
 
 namespace YgoSoul;
 
@@ -23,11 +24,16 @@ public class CardDatabase
         using var reader = command.ExecuteReader();
         if (reader.Read())
         {
+            
+            ulong setCodeValue = (ulong)reader.GetInt64(3);
+
+            IntPtr setcodePtr = Marshal.AllocHGlobal(sizeof(ulong));
+            Marshal.WriteInt64(setcodePtr, (long)setCodeValue);
             var ocgCardData = new OCG_CardData
             {
                 code = (uint)reader.GetInt32(0),
                 alias = (uint)reader.GetInt32(2),
-                setcode = IntPtr.Zero,
+                setcode = setcodePtr,
                 type = (uint)reader.GetInt32(4),
                 attack = reader.GetInt32(5),  // Coluna 'atk'
                 defense = reader.GetInt32(6), // Coluna 'def'
@@ -38,11 +44,11 @@ public class CardDatabase
                 rscale = 0,
                 link_marker = 0
             };
-
-            CardLibrary.AddCard(ocgCardData, reader.GetString(12), reader.GetString(13));
             
+            CardLibrary.AddCard(ocgCardData, reader.GetString(12), reader.GetString(13));
+            connection.Close();
             return ocgCardData;
         }
-        return new OCG_CardData { code = code }; // Retorna vazio se não achar
+        return new OCG_CardData { code = code }; 
     }
 }

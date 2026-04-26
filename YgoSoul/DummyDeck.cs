@@ -129,6 +129,69 @@ public static class DummyDeck
         4891376, // 14 Zalen
         821049, // 15 Visas Amritara
     ];
+
+    private static List<uint> _utopiaMain = 
+    [
+        62880279, // 01 W. Dodododo
+        62880279, // 02 W. Dodododo
+        62880279, // 03 W. Dodododo
+        9491461, // 04 Gagaga Ganbara
+        9491461, // 05 Gagaga Ganbara
+        9491461, // 06 Gagaga Ganbara
+        62006866, // 07 Zubababa Knight
+        62006866, // 08 Zubababa Knight
+        62006866, // 09 Zubababa Knight
+        35886170, // 10 Gogogo Goblin
+        35886170, // 11 Gogogo Goblin
+        35886170, // 12 Gogogo Goblin
+        55088578, // 13 Onomatokage
+        55088578, // 14 Onomatokage
+        55088578, // 15 Onomatokage
+        59724555, // 16 Dodododwarf
+        59724555, // 17 Dodododwarf
+        8512558, // 18 Utopic Onomat
+        8512558, // 19 Utopic Onomat
+        23720856, // 20 Zubababancho
+        19667590, // 21 Gogogo Gigas
+        4647954, // 22 ZS Sage
+        6595475, // 23 Onomatopaira
+        6595475, // 24 Onomatopaira
+        6595475, // 25 Onomatopaira
+        85119159, // 26 Onomatopickup
+        85119159, // 27 Onomatopickup
+        85119159, // 28 Onomatopickup
+        11705261, // 29 Xyz Tactics
+        67517351, // 30 Rank-up
+        96004535, // 31 Barrier
+        59438930, // 32 Ghost Ogre
+        59438930, // 33 Ghost Ogre
+        14558127, // 34 Ash Blossom
+        14558127, // 35 Ash Blossom
+        94145021, // 36 Droll & Lock Bird
+        94145021, // 37 Droll & Lock Bird
+        32807846, // 38 ROTA
+        24224830, // 39 Called by
+        65681983, // 40 Crossout Designator
+    ];
+
+    private static List<uint> _utopiaExtra =
+    [
+        88917691, // 01 Gagagaga Girl
+        88917691, // 02 Gagagaga Girl
+        86331741, // 03 Gagagaga Magician
+        66011101, // 04 Dugares
+        16643334, // 05 Starliege
+        8165596, // 06 Number 90
+        26973555, // 07 F0 Draco
+        65305468, // 08 F0 
+        41522092, // 09 F0 Zexal
+        45852939, // 10 Eclipse Twins
+        86532744, // 11 Utopia Prime
+        31123642, // 12 ZS Utopic Sage
+        84013237, // 13 Utopia
+        95134948, // 14 Dragonar Utopia
+        63767246, // 15 38 Habinger
+    ];
     
     private static List<uint> _cards =
     [
@@ -176,9 +239,23 @@ public static class DummyDeck
     
     
     
-    public static List<OCG_NewCardInfo> CreateDeck(byte team)
+    public static List<OCG_NewCardInfo> CreateDeck(byte team, int deck)
     {
-        var list = _cards.Select(card => CreateCard(team, card)).ToList();
+        var m = deck switch
+        {
+            0 => _brandedMain,
+            1 => _utopiaMain,
+            _ => _kewlTuneMain
+        };
+        
+        var e = deck switch
+        {
+            0 => _brandedExtra,
+            1 => _utopiaExtra,
+            _ => _kewlTuneExtra
+        };
+        
+        var list = m.Select(card => CreateCard(team, card)).ToList();
         
         var rng = new Random();
 
@@ -186,6 +263,11 @@ public static class DummyDeck
         {
             var j = rng.Next(0, i + 1);
             (list[i], list[j]) = (list[j], list[i]);
+        }
+
+        foreach (var card in e)
+        {
+            list.Add(CreateCard(team, card));
         }
 
         return list;
@@ -204,22 +286,3 @@ public static class DummyDeck
         };
     }
 }
-
-
-
-/*
-
-
-[StructLayout(LayoutKind.Sequential)]
-public struct OCG_NewCardInfo
-{
-    public byte team;    /* 0 ou 1 * /
-    public byte duelist; /* Índice do dono original * /
-    public uint code;    /* ID da carta (ex: 24096301) * /
-    public byte con;     /* Controlador atual (0 ou 1) * /
-    public uint loc;     /* LOCATION (Deck, Hand, etc) * /
-    public uint seq;     /* Sequência/Slot no campo * /
-    public uint pos;     /* POSITION (Face-up, Face-down, etc) * /
-}
-
-*/
