@@ -50,7 +50,10 @@ public static class ParserFactory
             { GameMessage.Move, new MoveParser() },
             { GameMessage.Summoning, new SummoningParser() },
             { GameMessage.Summoned, basicParser },
-            { GameMessage.Draw, new DrawParser() }
+            { GameMessage.Draw, new DrawParser()},
+            { GameMessage.Damage, new DamageParser() },
+            { GameMessage.Attack, new AttackParser() },
+            { GameMessage.Battle, new BattleParser() },
         };
     }
 }

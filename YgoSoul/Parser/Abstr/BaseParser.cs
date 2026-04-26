@@ -9,6 +9,8 @@ public abstract class BaseParser : IParser
     {
         try
         {
+            Console.WriteLine("");
+            Console.WriteLine($"Raw: {(GameMessage) buffer[0]} {BitConverter.ToString(buffer)}");
             return DoParse(buffer);
         }
         catch (Exception e)

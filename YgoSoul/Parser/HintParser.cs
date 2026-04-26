@@ -10,22 +10,28 @@ public class HintParser : BaseParser
     protected override IMessage DoParse(byte[] buffer)
     {
         var reader = new PacketReader(buffer);
-        reader.ReadByte();
+        reader.ReadByte();//msg
         var hintType = (GameHintType) reader.ReadByte();
+        var player = reader.ReadByte();
         
         return hintType switch
         {
-            GameHintType.HintEvent => HandleHintEvent(reader),
-            GameHintType.HintSelectMsg => new HintMessage(
-                $"Player selected {CardLibrary.GetCard(BitConverter.ToUInt32(buffer, 3)).Name}"),
+            GameHintType.HintEvent => HandleHintEvent(reader, player),
+            GameHintType.HintSelectMsg => new HintMessage($"Player {player}, {GetHintText(reader.ReadUInt64())}..."),
             _ => new UnknownMessage(buffer)
         };
     }
 
-    private static IMessage HandleHintEvent(PacketReader reader)
+    private static IMessage HandleHintEvent(PacketReader reader, byte player)
     {
-        var player = reader.ReadByte();
         var hintMessage = (GameHintEvent) reader.ReadUInt64();
         return new HintMessage($"Player {player}, it is {hintMessage}.");
+    }
+
+    private static string GetHintText(ulong hint)
+    {
+        return Enum.IsDefined(typeof(GameHintEvent), hint) 
+            ? ((GameHintEvent)hint).ToString() 
+            : CardLibrary.GetCard((uint)hint).Name;
     }
 }

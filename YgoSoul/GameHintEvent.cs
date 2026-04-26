@@ -4,7 +4,14 @@
 public enum GameHintEvent : ulong
 {
     EndOfMainPhase = 0x17,
+    StartOfABattle = 0x18,
     BeforeTheNormalDraw = 0x1B,
+    StartOfDamageStep = 0x28,
+    StartOfDamageCalculation = 0x29,
+    DuringDamageCalculation = 0x2A,
+    AfterDamageCalculation = 0x2B,
+    EbdOfDamageStep = 0x2C,
+    SelectAnAttackTarget = 0x225
 }
 
 /*
