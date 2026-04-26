@@ -37,7 +37,7 @@ public class SelectBattleCmdMessage : IMessage
         sb.AppendLine($"Player {Player}, input your action:");
         for (int i = 0; i < Choices.Count; i++)
         {
-            sb.AppendLine($"{i} -> {Choices[i]}");
+            sb.AppendLine($"[{i}] => {Choices[i]}");
         }
         return sb.ToString();
     }

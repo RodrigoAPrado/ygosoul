@@ -1,4 +1,5 @@
-﻿using YgoSoul.Message.Abstr;
+﻿using System.Text;
+using YgoSoul.Message.Abstr;
 using YgoSoul.Message.Enum;
 
 namespace YgoSoul.Message;
@@ -26,6 +27,13 @@ public class SelectOptionMessage : IMessage
 
     public override string ToString()
     {
-        return $"Player: {Player}, Options: {string.Join("\n-", Options)}";
+        var sb = new StringBuilder();
+        sb.AppendLine($"Player: {Player}, here are your options:");
+
+        for (var i = 0; i < Options.Count; i++)
+        {
+            sb.AppendLine($"[{i}] => {Options[i]}");
+        }
+        return sb.ToString();
     }
 }

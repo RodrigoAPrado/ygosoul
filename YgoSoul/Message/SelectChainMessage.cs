@@ -91,7 +91,7 @@ public class SelectChainMessage : BaseMessage
             var e = Effects[i];
 
             sb.AppendLine(
-                $"[{i}] CardCode={CardLibrary.GetCard(e.Code).Name}, Controller={e.Controller}, " +
+                $"[{i}] => {CardLibrary.GetCard(e.Code).Name}'s effect, Controller={e.Controller}, " +
                 $"Location={e.Location}, Seq={e.Sequence}, Desc={e.Description}"
             );
         }

@@ -67,7 +67,7 @@ public class SelectCardMessage : ISelectionsMessage
         sb.AppendLine($"Select at least {Min} cards at most {Max} cards:");
         foreach (var c in Cards)
         {
-            sb.AppendLine($"{c.Index} => {CardLibrary.GetCard(c.CardCode).Name} that is in {c.Location}...");
+            sb.AppendLine($"[{c.Index}] => {CardLibrary.GetCard(c.CardCode).Name} that is in {c.Location}...");
         }
 
         if (Cancelable)

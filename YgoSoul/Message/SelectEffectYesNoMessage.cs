@@ -4,16 +4,18 @@ using YgoSoul.Message.Enum;
 
 namespace YgoSoul.Message;
 
-public class SelectYesNoMessage : IMessage
+public class SelectEffectYesNoMessage : IMessage
 {
     public InputType Input => InputType.Value;
     public int InputCount => 1;
     public byte Player { get; }
+    public CardReference Card { get; }
     public ulong Description { get; }
 
-    public SelectYesNoMessage(byte player, ulong description)
+    public SelectEffectYesNoMessage(byte player, CardReference card, ulong description)
     {
         Player = player;
+        Card = card;
         Description = description;
     }
     
@@ -27,6 +29,6 @@ public class SelectYesNoMessage : IMessage
 
     public override string ToString()
     {
-        return $"Player {Player}, activate effect:\n[0] - No\n[1] - Yes";
+        return $"\nPlayer {Player}, card effect for card {CardLibrary.GetCard(Card.CardCode).Name}.\n[0] - No\n[1] - Yes";
     }
 }

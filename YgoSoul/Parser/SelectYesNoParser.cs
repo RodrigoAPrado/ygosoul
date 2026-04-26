@@ -35,13 +35,13 @@ public class SelectYesNoParser : BaseParser
         var position = (CardPosition) reader.ReadUInt32();
         var description = reader.ReadULong64();
         var card = new CardReference(cardCode, controller, location, sequence, position, 0);
-        return new SelectYesNoMessage(player, card, description);
+        return new SelectEffectYesNoMessage(player, card, description);
     }
 
     private IMessage GetYesNo(PacketReader reader)
     {
         var player = reader.ReadByte();
         var description = reader.ReadULong64();
-        return new SelectYesNoMessage(player, null, description);
+        return new SelectYesNoMessage(player, description);
     }
 }

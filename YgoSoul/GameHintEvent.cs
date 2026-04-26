@@ -3,22 +3,24 @@
 [Flags]
 public enum GameHintEvent : ulong
 {
-    EndOfMainPhase = 0x17,
-    StartOfABattle = 0x18,
-    BeforeTheNormalDraw = 0x1B,
-    StartOfDamageStep = 0x28,
-    StartOfDamageCalculation = 0x29,
-    DuringDamageCalculation = 0x2A,
-    AfterDamageCalculation = 0x2B,
-    EbdOfDamageStep = 0x2C,
-    SelectCardsToTribute = 0x1F4,
-    SelectTheCardsToBanish = 0x1F7,
-    SelectTheCardsToSendToTheGrave = 0x1F8,
-    SelectTheCardsToAddToYourHand = 0x1FA,
-    SelectTheCardsToUseAsFusionMaterial = 0x1FF,
-    SelectTheCardsToSpecialSummon = 0x1FD,
-    SelectAFaceUpCards = 0x202,
-    SelectAnAttackTarget = 0x225
+    EndOfMainPhase = 0x17, //23
+    StartOfABattle = 0x18, //24
+    BeforeTheNormalDraw = 0x1B, //27
+    StartOfDamageStep = 0x28, //40
+    StartOfDamageCalculation = 0x29, //41
+    DuringDamageCalculation = 0x2A, //42
+    AfterDamageCalculation = 0x2B, //43
+    EbdOfDamageStep = 0x2C, //44
+    SelectCardsToTribute = 0x1F4, //500
+    SelectCardsToDiscard = 0x1F5, //501
+    SelectTheCardsToBanish = 0x1F7, //503
+    SelectTheCardsToSendToTheGrave = 0x1F8, //504
+    SelectTheCardsToAddToYourHand = 0x1FA, //506
+    SelectTheCardsToSpecialSummon = 0x1FD, //509
+    SelectTheCardsToUseAsFusionMaterial = 0x1FF, //511
+    SelectAFaceUpCards = 0x202, //514
+    SelectTheCardsToPlaceOnTheField = 0x20F, //527
+    SelectAnAttackTarget = 0x225 //549
 }
 
 /*

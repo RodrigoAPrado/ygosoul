@@ -7,24 +7,32 @@ using YgoSoul.Util;
 
 namespace YgoSoul.Parser;
 
-public class BecomeTargetParser : BaseParser
+public class PositionListParser : BaseParser
 {
     protected override IMessage DoParse(byte[] buffer)
     {
         var reader = new PacketReader(buffer);
-        reader.ReadByte();//msg
+        var msgType = (GameMessage) reader.ReadByte();//msg
         var size = reader.ReadByte();
 
-        var targets = new List<FullLocationReference>();
+        var cards = new List<FullLocationReference>();
         for (int i = size; i > 0; i--)
         {
-            targets.Add(new FullLocationReference(
+            cards.Add(new FullLocationReference(
                 reader.ReadByte(), 
                 (CardLocation) reader.ReadByte(),
                 reader.ReadUInt32(),
                 (CardPosition) reader.ReadByte()));
         }
 
-        return new BecomeTargetMessage(targets);
+        switch (msgType)
+        {
+            case GameMessage.CardSelected:
+                return new CardSelectedMessage(cards);
+            case GameMessage.BecomeTarget:
+                return new BecomeTargetMessage(cards);
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 }
