@@ -26,6 +26,12 @@ public class BasicParser : BaseParser
                 return new SummonedMessage();
             case GameMessage.Chained:
                 return new ChainedMessage(reader.ReadByte());
+            case GameMessage.ChainSolving:
+                return new ChainSolvingMessage(reader.ReadByte());
+            case GameMessage.ChainSolved:
+                return new ChainSolvedMessage(reader.ReadByte());
+            case GameMessage.ChainEnd:
+                return new ChainEndMessage("Chain End.");
             case GameMessage.DeckTop:
                 var player = reader.ReadByte();
                 reader.ReadUInt32();//vazio

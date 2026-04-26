@@ -30,7 +30,7 @@ public static class ParserFactory
             { GameMessage.SelectCard, new SelectCardParser() },
             { GameMessage.SelectChain, new SelectChainParser() } ,
             { GameMessage.SelectPlace, selectPlaceParser } ,
-            //Select Position
+            { GameMessage.SelectPosition, new SelectPositionParser() },
             { GameMessage.SelectTribute, new SelectTributeParser() },
             { GameMessage.SortChain, sortChainCardParser },
             { GameMessage.SelectCounter, new SelectCounterParser() },
@@ -56,6 +56,9 @@ public static class ParserFactory
             { GameMessage.Summoned, basicParser },
             { GameMessage.Chaining, new ChainingParser() },
             { GameMessage.Chained, basicParser },
+            { GameMessage.ChainSolving, basicParser },
+            { GameMessage.ChainSolved, basicParser },
+            { GameMessage.ChainEnd, basicParser },
             { GameMessage.Draw, new DrawParser()},
             { GameMessage.Damage, new DamageParser() },
             { GameMessage.Attack, new AttackParser() },

@@ -18,32 +18,32 @@ public class SelectUnselectedCardParser : BaseParser
         var cancelable = reader.ReadByte() == 1;
         var min = reader.ReadUInt32();
         var max = reader.ReadUInt32();
-        var count = reader.ReadUInt32();
+        var cardsToSelectSize = reader.ReadUInt32();
 
-        var cards = new List<CardReference>();
-        for (var i = count; i > 0; i--)
+        var cardsToSelect = new List<CardReference>();
+        for (var i = cardsToSelectSize; i > 0; i--)
         {
             var cardCode = reader.ReadUInt32();
             var controller = reader.ReadByte();
             var location = (CardLocation)reader.ReadByte();
             var sequence = reader.ReadUInt32();
             var position = (CardPosition) reader.ReadUInt32();
-            cards.Add(new CardReference(cardCode, controller, location, sequence, position, count -i));
+            cardsToSelect.Add(new CardReference(cardCode, controller, location, sequence, position, cardsToSelectSize -i));
         }
         
-        var unselectedCount = reader.ReadUInt32();
-        var unselectedCards = new List<CardReference>();
+        var cardsToUnselectSize = reader.ReadUInt32();
+        var cardsToUnselect = new List<CardReference>();
         
-        for (var i = unselectedCount; i > 0; i--)
+        for (var i = cardsToUnselectSize; i > 0; i--)
         {
             var cardCode = reader.ReadUInt32();
             var controller = reader.ReadByte();
             var location = (CardLocation)reader.ReadByte();
             var sequence = reader.ReadUInt32();
             var position = (CardPosition) reader.ReadUInt32();
-            unselectedCards.Add(new CardReference(cardCode, controller, location, sequence, position, unselectedCount -i));
+            cardsToUnselect.Add(new CardReference(cardCode, controller, location, sequence, position, cardsToUnselectSize -i));
         }
 
-        return new UnselectedCardMessage(player, finishable, cancelable, min, max, cards, unselectedCards);
+        return new SelectUnselectedCardMessage(player, finishable, cancelable, min, max, cardsToSelect, cardsToUnselect);
     }
 }

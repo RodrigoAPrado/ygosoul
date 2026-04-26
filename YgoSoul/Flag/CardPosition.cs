@@ -1,7 +1,7 @@
 ﻿namespace YgoSoul.Flag;
 
 [Flags]
-public enum CardPosition : uint
+public enum CardPosition : byte
 {
     FaceUpAttack = 0x1,
     FaceDownAttack = 0x2,
