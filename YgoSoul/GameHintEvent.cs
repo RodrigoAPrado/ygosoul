@@ -13,8 +13,11 @@ public enum GameHintEvent : ulong
     EbdOfDamageStep = 0x2C,
     SelectCardsToTribute = 0x1F4,
     SelectTheCardsToBanish = 0x1F7,
+    SelectTheCardsToSendToTheGrave = 0x1F8,
+    SelectTheCardsToAddToYourHand = 0x1FA,
     SelectTheCardsToUseAsFusionMaterial = 0x1FF,
     SelectTheCardsToSpecialSummon = 0x1FD,
+    SelectAFaceUpCards = 0x202,
     SelectAnAttackTarget = 0x225
 }
 

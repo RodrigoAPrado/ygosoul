@@ -19,7 +19,7 @@ public class FullLocationReference
 
     public bool IsLocationEmpty()
     {
-        return Location == 0 && Sequence == 0 && Position == 0;
+        return Location == CardLocation.Unknown;
     }
 
     public override string ToString()

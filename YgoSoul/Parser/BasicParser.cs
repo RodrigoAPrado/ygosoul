@@ -1,6 +1,7 @@
 ﻿using YgoSoul.Flag;
 using YgoSoul.Message;
 using YgoSoul.Message.Abstr;
+using YgoSoul.Message.Component;
 using YgoSoul.Parser.Abstr;
 using YgoSoul.Util;
 
@@ -24,6 +25,8 @@ public class BasicParser : BaseParser
                 return new ReverseDeckMessage();
             case GameMessage.Summoned:
                 return new SummonedMessage();
+            case GameMessage.SpSummoned:
+                return new SpecialSummonedMessage();
             case GameMessage.Chained:
                 return new ChainedMessage(reader.ReadByte());
             case GameMessage.ChainSolving:
@@ -32,6 +35,8 @@ public class BasicParser : BaseParser
                 return new ChainSolvedMessage(reader.ReadByte());
             case GameMessage.ChainEnd:
                 return new ChainEndMessage("Chain End.");
+            case GameMessage.ChainDisabled:
+                return new ChainDisabledMessage(reader.ReadByte());
             case GameMessage.DeckTop:
                 var player = reader.ReadByte();
                 reader.ReadUInt32();//vazio
@@ -48,6 +53,14 @@ public class BasicParser : BaseParser
                 return new DamageStepStartMessage();
             case GameMessage.DamageStepEnd:
                 return new DamageStepEndMessage();
+            case GameMessage.CardHint:
+                return new CardHintMessage(new FullLocationReference(
+                    reader.ReadByte(), 
+                    (CardLocation) reader.ReadByte(),
+                    reader.ReadUInt32(),
+                    (CardPosition) reader.ReadUInt32()),
+                    (CardHint) reader.ReadByte(),
+                    reader.ReadULong64());
             default:
                 return new UnknownMessage(buffer);
         }

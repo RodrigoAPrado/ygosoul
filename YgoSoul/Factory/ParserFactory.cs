@@ -54,17 +54,22 @@ public static class ParserFactory
             { GameMessage.Set, summoningParser },
             { GameMessage.Summoning, summoningParser },
             { GameMessage.Summoned, basicParser },
+            { GameMessage.SpSummoning, summoningParser },
+            { GameMessage.SpSummoned, basicParser },
             { GameMessage.Chaining, new ChainingParser() },
             { GameMessage.Chained, basicParser },
             { GameMessage.ChainSolving, basicParser },
             { GameMessage.ChainSolved, basicParser },
             { GameMessage.ChainEnd, basicParser },
+            { GameMessage.ChainDisabled, basicParser },
+            { GameMessage.BecomeTarget, new BecomeTargetParser() },
             { GameMessage.Draw, new DrawParser()},
             { GameMessage.Damage, new DamageParser() },
             { GameMessage.Attack, new AttackParser() },
             { GameMessage.Battle, new BattleParser() },
             { GameMessage.DamageStepStart, basicParser },
             { GameMessage.DamageStepEnd, basicParser },
+            { GameMessage.CardHint, basicParser },
             { GameMessage.PlayerHint, new PlayerHintParser() }
         };
     }
