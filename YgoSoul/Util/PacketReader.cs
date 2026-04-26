@@ -41,21 +41,9 @@ public class PacketReader
         return value;
     }
 
-    public ulong ReadUInt64()
+    public ulong ReadULong64()
     {
         var value = BitConverter.ToUInt64(_buffer, _pos);
-        _pos += 8;
-        return value;
-    }
-
-    public string ReadString64()
-    {
-        var buffer = new byte[8];
-        for (var i = 0; i < 8; i++)
-        {
-            buffer[i] = _buffer[_pos+i];
-        }
-        var value = BitConverter.ToString(buffer, 0);
         _pos += 8;
         return value;
     }

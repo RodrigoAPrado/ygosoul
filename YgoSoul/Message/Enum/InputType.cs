@@ -9,5 +9,6 @@ public enum InputType
     Retry = 4,
     Selections = 5,
     Sort = 6,
+    SelectChain = 7,
     Win = 99
 }

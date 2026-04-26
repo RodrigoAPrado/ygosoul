@@ -37,7 +37,7 @@ public class SelectIdleCmdParser : BaseParser
                 ulong description = 0;
                 if (action == PlayerIdleAction.EffectActivation)
                 {
-                    description = reader.ReadUInt64();
+                    description = reader.ReadULong64();
                     reader.Skip(1);// client mode
                 }
                 choices.Add(new IdleCmdChoiceCard(

@@ -32,7 +32,7 @@ public class SelectChainParser : BaseParser
             var location = (CardLocation)reader.ReadByte();
             var sequence = reader.ReadUInt32();
             var position = (CardPosition) reader.ReadUInt32();
-            var description = reader.ReadString64();
+            var description = reader.ReadULong64();
             reader.Skip(1); // client mode
 
             chains.Add(new ChainOption

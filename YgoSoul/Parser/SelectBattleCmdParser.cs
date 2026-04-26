@@ -30,7 +30,7 @@ public class SelectBattleCmdParser : BaseParser
                 if (action == PlayerBattleAction.ActivateEffect)
                 {
                     var sequence = reader.ReadUInt32();
-                    var description = reader.ReadString64();
+                    var description = reader.ReadULong64();
                     reader.Skip(1); // client mode
                     choices.Add(new BattleCmdEffectChoice(action, index, cardCode, controller, location, sequence, description));
                 }

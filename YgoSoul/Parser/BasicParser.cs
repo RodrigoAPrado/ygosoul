@@ -24,6 +24,8 @@ public class BasicParser : BaseParser
                 return new ReverseDeckMessage();
             case GameMessage.Summoned:
                 return new SummonedMessage();
+            case GameMessage.Chained:
+                return new ChainedMessage(reader.ReadByte());
             case GameMessage.DeckTop:
                 var player = reader.ReadByte();
                 reader.ReadUInt32();//vazio

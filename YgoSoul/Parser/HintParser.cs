@@ -17,14 +17,14 @@ public class HintParser : BaseParser
         return hintType switch
         {
             GameHintType.HintEvent => HandleHintEvent(reader, player),
-            GameHintType.HintSelectMsg => new HintMessage($"Player {player}, {GetHintText(reader.ReadUInt64())}..."),
+            GameHintType.HintSelectMsg => new HintMessage($"Player {player}, {GetHintText(reader.ReadULong64())}..."),
             _ => new UnknownMessage(buffer)
         };
     }
 
     private static IMessage HandleHintEvent(PacketReader reader, byte player)
     {
-        var hintMessage = (GameHintEvent) reader.ReadUInt64();
+        var hintMessage = (GameHintEvent) reader.ReadULong64();
         return new HintMessage($"Player {player}, it is {hintMessage}.");
     }
 

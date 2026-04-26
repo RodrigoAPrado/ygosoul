@@ -238,6 +238,9 @@ class Program
             case InputType.Sort:
                 HandlePlayerInputSort(pDuel);
                 break;
+            case InputType.SelectChain:
+                HandlePlayerSelectChain(pDuel);
+                break;
             case InputType.Win:
                 Console.WriteLine("--- DUEL WIN! ---");
                 return false;
@@ -259,7 +262,7 @@ class Program
             if (int.TryParse(input, out var choice))
             {
                 response = message.GetResponse(choice);
-                if (response.Length == 0) ;
+                if (response.Length == 0)
                     Console.WriteLine("--- INVALID CHOICE ---");
             }
             else
@@ -276,6 +279,36 @@ class Program
         Console.WriteLine("\n--- AWAITING PLAYER'S INPUT ---");
         Console.Write("Press enter to confirm... ");
         var input = Console.ReadLine();
+    }
+
+    private static void HandlePlayerSelectChain(IntPtr pDuel)
+    {
+        var message = (SelectChainMessage)MessageHandler.MessageRequiringInput;
+        byte[] response = [];
+        do
+        {
+            Console.WriteLine("\n--- AWAITING PLAYER'S INPUT ---");
+            Console.Write("Input your selected action, or just press enter to skip: ");
+            var input = Console.ReadLine();
+            
+            if (input == "")
+            {
+                Console.WriteLine("\nSkipping chain... ");
+                return;
+            }
+            if (int.TryParse(input, out var choice))
+            {
+                response = message.GetResponse(choice);
+                if (response.Length == 0)
+                    Console.WriteLine("--- INVALID CHOICE ---");
+            }
+            else
+            {
+                Console.WriteLine("--- INVALID CHOICE ---");
+            }
+        } while (response.Length == 0);
+
+        OcgApi.OCG_DuelSetResponse(pDuel, response, (uint) response.Length); 
     }
 
     private static void HandlePlayerInputSort(IntPtr pDuel)

@@ -9,7 +9,7 @@ public class ChainOption
     public CardLocation Location { get; set; }
     public uint Sequence { get; set; }
     public CardPosition Position { get; set; }
-    public string Description { get; set; }
+    public ulong Description { get; set; }
 
     public override string ToString()
     {

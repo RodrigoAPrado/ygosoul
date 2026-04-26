@@ -5,7 +5,7 @@ namespace YgoSoul.Message.Component;
 
 public class BattleCmdEffectChoice : BattleCmdChoiceCard
 {
-    public string Description { get; }
+    public ulong Description { get; }
     public BattleCmdEffectChoice(
         PlayerBattleAction action, 
         uint index, 
@@ -13,7 +13,7 @@ public class BattleCmdEffectChoice : BattleCmdChoiceCard
         byte controller, 
         CardLocation location, 
         uint sequence, 
-        string description) 
+        ulong description) 
         : base(action, index, cardCode, controller, location, sequence)
     {
         Description = description;
@@ -21,6 +21,6 @@ public class BattleCmdEffectChoice : BattleCmdChoiceCard
 
     public override string ToString()
     {
-        return $"to activate {CardLibrary.GetCard(CardCode).Name}'s effect...";
+        return $"to activate {CardLibrary.GetCard(CardCode).Name}'s effect, description={Description}";
     }
 }

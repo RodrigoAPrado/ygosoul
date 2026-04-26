@@ -8,8 +8,7 @@ namespace YgoSoul.Message;
 
 public class SelectChainMessage : BaseMessage
 {
-    public override InputType Input => InputType.Confirmation;
-
+    public override InputType Input => InputType.SelectChain;
     public byte Player { get; }
     public bool Cancelable { get; }
     public bool Forced { get; }
@@ -32,6 +31,13 @@ public class SelectChainMessage : BaseMessage
         TimingMask = timingMask;
         TimingOtherMask = timingOtherMask;
         Effects = effects;
+    }
+
+    public override byte[] GetResponse(int id)
+    {
+        if (id < Effects.Count || id >= Effects.Count)
+            return [];
+        return BitConverter.GetBytes(id);
     }
 
     public override string ToString()
@@ -85,8 +91,8 @@ public class SelectChainMessage : BaseMessage
             var e = Effects[i];
 
             sb.AppendLine(
-                $"[{i}] CardCode={e.Code}, Controller={e.Controller}, " +
-                $"Location=0x{e.Location:X}, Seq={e.Sequence}, Desc={e.Description}"
+                $"[{i}] CardCode={CardLibrary.GetCard(e.Code).Name}, Controller={e.Controller}, " +
+                $"Location={e.Location}, Seq={e.Sequence}, Desc={e.Description}"
             );
         }
 

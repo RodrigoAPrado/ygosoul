@@ -16,7 +16,7 @@ public class SelectOptionParser : BaseParser
         var options = new List<ulong>();
         for(int i = count; i > 0; i--)
         {
-            options.Add(reader.ReadUInt64());
+            options.Add(reader.ReadULong64());
         }
 
         return new SelectOptionMessage(player, options);

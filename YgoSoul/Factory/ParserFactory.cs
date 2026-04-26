@@ -1,4 +1,5 @@
-﻿using YgoSoul.Parser;
+﻿using YgoSoul.Message;
+using YgoSoul.Parser;
 using YgoSoul.Parser.Abstr;
 
 namespace YgoSoul.Factory;
@@ -53,12 +54,15 @@ public static class ParserFactory
             { GameMessage.Set, summoningParser },
             { GameMessage.Summoning, summoningParser },
             { GameMessage.Summoned, basicParser },
+            { GameMessage.Chaining, new ChainingParser() },
+            { GameMessage.Chained, basicParser },
             { GameMessage.Draw, new DrawParser()},
             { GameMessage.Damage, new DamageParser() },
             { GameMessage.Attack, new AttackParser() },
             { GameMessage.Battle, new BattleParser() },
             { GameMessage.DamageStepStart, basicParser },
             { GameMessage.DamageStepEnd, basicParser },
+            { GameMessage.PlayerHint, new PlayerHintParser() }
         };
     }
 }
