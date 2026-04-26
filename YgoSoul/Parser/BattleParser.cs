@@ -20,7 +20,7 @@ public class BattleParser : BaseParser
             (CardPosition)reader.ReadUInt32());
         var attackerAttack = reader.ReadUInt32();
         var attackerDefense = reader.ReadUInt32();
-        var attackerDestroyed = reader.ReadUInt32() == 1;
+        var attackerDestroyed = reader.ReadByte() == 1;
         var fullDefenserLocation = new FullLocationReference(
             reader.ReadByte(), 
             (CardLocation)reader.ReadByte(),
@@ -28,7 +28,7 @@ public class BattleParser : BaseParser
             (CardPosition)reader.ReadUInt32());
         var defenderAttack = reader.ReadUInt32();
         var defenderDefense = reader.ReadUInt32();
-        var defenderDestroyed = reader.ReadUInt32() == 1;
+        var defenderDestroyed = reader.ReadByte() == 1;
 
         return new BattleMessage(
             fullAttackerLocation,

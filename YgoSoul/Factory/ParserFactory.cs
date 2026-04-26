@@ -14,6 +14,7 @@ public static class ParserFactory
         var sortChainCardParser = new SortChainCardParser();
         var confirmCardParser = new ConfirmCardParser();
         var shuffleCardsParser = new ShuffleCardsParser();
+        var summoningParser = new SummoningParser();
         
         return new Dictionary<GameMessage, IParser> 
         {
@@ -48,7 +49,8 @@ public static class ParserFactory
             { GameMessage.NewTurn, basicParser },
             { GameMessage.NewPhase, basicParser },
             { GameMessage.Move, new MoveParser() },
-            { GameMessage.Summoning, new SummoningParser() },
+            { GameMessage.Set, summoningParser },
+            { GameMessage.Summoning, summoningParser },
             { GameMessage.Summoned, basicParser },
             { GameMessage.Draw, new DrawParser()},
             { GameMessage.Damage, new DamageParser() },

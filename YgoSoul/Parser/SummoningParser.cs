@@ -11,7 +11,7 @@ public class SummoningParser : BaseParser
     protected override IMessage DoParse(byte[] buffer)
     {
         var reader = new PacketReader(buffer);
-        reader.ReadByte(); //msg
+        var messageType = (GameMessage)reader.ReadByte(); //msg
         var cardCode = reader.ReadUInt32();
         
         var player = reader.ReadByte();
@@ -19,6 +19,15 @@ public class SummoningParser : BaseParser
         var sequence = reader.ReadUInt32();
         var position = (CardPosition) reader.ReadUInt32();
 
-        return new SummoningMessage(cardCode, player, location, sequence, position);
+        switch (messageType)
+        {
+            case GameMessage.Summoning:
+                return new SummoningMessage(cardCode, player, location, sequence, position);
+            case GameMessage.Set:
+                return new SetMessage(cardCode, player, location, sequence, position);
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
     }
 }
