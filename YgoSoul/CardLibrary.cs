@@ -4,11 +4,11 @@ public static class CardLibrary
 {
     private static readonly Dictionary<uint, CardData> Cards = new ();
 
-    public static void AddCard(OCG_CardData data, string cardName, string cardText)
+    public static void AddCard(OCG_CardData data, string cardName, string cardText, List<string> strings)
     {
         if (Cards.ContainsKey(data.code))
             return;
-        Cards.Add(data.code, new CardData(data, cardName, cardText));
+        Cards.Add(data.code, new CardData(data, cardName, cardText, strings));
     }
 
     public static CardData GetCard(uint code)
@@ -32,8 +32,9 @@ public class CardData
     public uint LinkMarker { get; }
     public string Name { get; }
     public string Description { get; }
+    public IReadOnlyList<string> Strings { get; }
 
-    public CardData(OCG_CardData data, string name, string description)
+    public CardData(OCG_CardData data, string name, string description, List<string> strings)
     {
         Code = data.code;
         Alias = data.alias;
@@ -48,6 +49,7 @@ public class CardData
         LinkMarker = data.link_marker;
         Name = name;
         Description = description;
+        Strings = strings;
     }
 }
 

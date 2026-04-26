@@ -1,4 +1,5 @@
 ﻿using YgoSoul.Flag;
+using YgoSoul.Handler;
 using YgoSoul.Message.Abstr;
 
 namespace YgoSoul.Message;
@@ -18,6 +19,6 @@ public class PlayerHintMessage : BaseMessage
 
     public override string ToString()
     {
-        return $"Player={Player}, Hint={Hint}, Description={Description}";
+        return $"Player={Player}, Hint={Hint}, Description={DescriptionHandler.GetDescription(Description)}";
     }
 }

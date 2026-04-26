@@ -1,4 +1,5 @@
 ﻿using YgoSoul.Flag;
+using YgoSoul.Handler;
 
 namespace YgoSoul.Message.Component;
 
@@ -13,6 +14,7 @@ public class ChainOption
 
     public override string ToString()
     {
-        return $"Card={CardLibrary.GetCard(Code).Name}, Ctrl={Controller}, Loc={Location}, Seq={Sequence}, SubSeq={Position}. \nDesc={Description}";
+        return $"Card={CardLibrary.GetCard(Code).Name}, Ctrl={Controller}, Loc={Location}, Seq={Sequence}, SubSeq={Position}. " +
+               $"\nDesc={DescriptionHandler.GetDescription(Description)}";
     }
 }

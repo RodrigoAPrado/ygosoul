@@ -1,4 +1,5 @@
 ﻿using YgoSoul.Flag;
+using YgoSoul.Handler;
 using YgoSoul.Message.Abstr;
 using YgoSoul.Message.Enum;
 
@@ -37,6 +38,6 @@ public class ChainingMessage : BaseMessage
         return $"Card {CardLibrary.GetCard(CardCode).Name} from " +
                $"Player={Player}, Location={Location}, Sequence={Sequence}, Position={Position}, " +
                $"\nwas activated by Player={ActivationPlayer}, Location={ActivationLocation}, Sequence={ActivationSequence}, " +
-               $"\nwith Description={Description>>32}, Chain Size={ChainSize}";
+               $"\nwith Description={DescriptionHandler.GetDescription(Description)}, Chain Size={ChainSize}";
     }
 }

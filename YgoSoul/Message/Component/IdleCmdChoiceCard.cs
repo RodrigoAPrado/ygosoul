@@ -1,4 +1,5 @@
 ﻿using YgoSoul.Flag;
+using YgoSoul.Handler;
 using YgoSoul.Message.Component.Abstr;
 
 namespace YgoSoul.Message.Component;
@@ -11,8 +12,9 @@ public class IdleCmdChoiceCard : IIdleCmdChoice
     public uint Sequence { get; }
     public CardLocation Location { get; }
     public uint CardCode { get; }
+    public ulong Description { get; }
 
-    public IdleCmdChoiceCard(PlayerIdleAction playerIdleAction, uint cardCode, byte player, CardLocation location, uint sequence, uint index)
+    public IdleCmdChoiceCard(PlayerIdleAction playerIdleAction, uint cardCode, byte player, CardLocation location, uint sequence, uint index, ulong description)
     {
         Action = playerIdleAction;
         Player = player;
@@ -20,10 +22,17 @@ public class IdleCmdChoiceCard : IIdleCmdChoice
         Location = location;
         CardCode = cardCode;
         Index = index;
+        Description = description;
     }
 
     public override string ToString()
     {
-        return $"to {Action.ToString()} {CardLibrary.GetCard(CardCode).Name}, from {Location.ToString()} at sequence {Sequence}, Index {Index}...";
+        var description = "";
+        if (Description > 0)
+        {
+            description = $", Description={DescriptionHandler.GetDescription(Description)}";
+        }
+            
+        return $"to {Action.ToString()} {CardLibrary.GetCard(CardCode).Name}, Location={Location.ToString()}, Sequence={Sequence}, Index={Index}{description}...";
     }
 }

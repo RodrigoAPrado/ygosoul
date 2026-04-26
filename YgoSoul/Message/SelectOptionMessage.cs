@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using YgoSoul.Handler;
 using YgoSoul.Message.Abstr;
 using YgoSoul.Message.Enum;
 
@@ -32,7 +33,7 @@ public class SelectOptionMessage : IMessage
 
         for (var i = 0; i < Options.Count; i++)
         {
-            sb.AppendLine($"[{i}] => {Options[i]}");
+            sb.AppendLine($"[{i}] => {DescriptionHandler.GetDescription(Options[i])}");
         }
         return sb.ToString();
     }

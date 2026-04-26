@@ -46,7 +46,8 @@ public class SelectIdleCmdParser : BaseParser
                     controller,
                     location,
                     sequence,
-                    index
+                    index,
+                    description
                 ));
                 index++;
             }

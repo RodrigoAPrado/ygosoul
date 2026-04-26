@@ -44,8 +44,15 @@ public class CardDatabase
                 rscale = 0,
                 link_marker = 0
             };
+
+            var strings = new List<string>();
             
-            CardLibrary.AddCard(ocgCardData, reader.GetString(12), reader.GetString(13));
+            for (int i = 1; i <= 16; i++)
+            {
+                strings.Add(reader.GetString(13+i));
+            }
+            
+            CardLibrary.AddCard(ocgCardData, reader.GetString(12), reader.GetString(13), strings);
             connection.Close();
             return ocgCardData;
         }

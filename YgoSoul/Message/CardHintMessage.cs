@@ -1,4 +1,5 @@
 ﻿using YgoSoul.Flag;
+using YgoSoul.Handler;
 using YgoSoul.Message.Abstr;
 using YgoSoul.Message.Component;
 
@@ -19,6 +20,6 @@ public class CardHintMessage : BaseMessage
 
     public override string ToString()
     {
-        return $"{FullLocationReference}. Hint={CardHint}, Description={Description}";
+        return $"{FullLocationReference}. Hint={CardHint}, Description={DescriptionHandler.GetDescription(Description)}";
     }
 }
