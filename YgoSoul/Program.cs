@@ -136,9 +136,6 @@ class Program
     
     private static void CreateDecks(IntPtr pDuel)
     {
-        /*var decks = DummyDeck.CreateDeck(0);
-        decks.AddRange(DummyDeck.CreateDeck(1));
-        */
         CreateDeck(pDuel, 0);
         CreateDeck(pDuel, 1);
         
@@ -185,7 +182,7 @@ class Program
                 {
                     if (MessageHandler.MessageRequiringInput != null)
                     {
-                        HandlePlayerInput(pDuel);
+                        duelando = HandlePlayerInput(pDuel);
                     }
                     else
                     {
@@ -202,7 +199,7 @@ class Program
         }
     }
 
-    private static void HandlePlayerInput(IntPtr pDuel)
+    private static bool HandlePlayerInput(IntPtr pDuel)
     {
         if(MessageHandler.MessageRequiringInput == null)
             throw new InvalidOperationException("MessageHandler.MessageRequiringInput == null");
@@ -221,9 +218,13 @@ class Program
             case InputType.Sort:
                 HandlePlayerInputSort(pDuel);
                 break;
+            case InputType.Win:
+                Console.WriteLine("--- DUEL WIN! ---");
+                return false;
             default:
                 throw new ArgumentOutOfRangeException();
         }
+        return true;
     }
 
     private static void HandlePlayerInputValue(IntPtr pDuel)

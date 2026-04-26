@@ -49,6 +49,7 @@ public static class ParserFactory
             { GameMessage.NewTurn, basicParser },
             { GameMessage.NewPhase, basicParser },
             { GameMessage.Move, new MoveParser() },
+            { GameMessage.PosChange, basicParser },
             { GameMessage.Set, summoningParser },
             { GameMessage.Summoning, summoningParser },
             { GameMessage.Summoned, basicParser },
@@ -56,6 +57,8 @@ public static class ParserFactory
             { GameMessage.Damage, new DamageParser() },
             { GameMessage.Attack, new AttackParser() },
             { GameMessage.Battle, new BattleParser() },
+            { GameMessage.DamageStepStart, basicParser },
+            { GameMessage.DamageStepEnd, basicParser },
         };
     }
 }

@@ -11,6 +11,7 @@ public enum GameHintEvent : ulong
     DuringDamageCalculation = 0x2A,
     AfterDamageCalculation = 0x2B,
     EbdOfDamageStep = 0x2C,
+    SelectCardsToTribute = 0x1F4,
     SelectAnAttackTarget = 0x225
 }
 

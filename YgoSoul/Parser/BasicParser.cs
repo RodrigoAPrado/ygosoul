@@ -27,9 +27,19 @@ public class BasicParser : BaseParser
             case GameMessage.DeckTop:
                 var player = reader.ReadByte();
                 reader.ReadUInt32();//vazio
-                var cardCode = reader.ReadUInt32();
-                var position = (CardPosition) reader.ReadUInt32();
-                return new DeckTopMessage(player, cardCode, position);
+                return new DeckTopMessage(player, reader.ReadUInt32(), (CardPosition) reader.ReadUInt32());
+            case GameMessage.PosChange:
+                return new PosChangeMessage(
+                    reader.ReadUInt32(), 
+                    reader.ReadByte(), 
+                    (CardLocation) reader.ReadByte(),
+                    reader.ReadByte(),
+                    (CardPosition) reader.ReadByte(),
+                    (CardPosition) reader.ReadByte());
+            case GameMessage.DamageStepStart:
+                return new DamageStepStartMessage();
+            case GameMessage.DamageStepEnd:
+                return new DamageStepEndMessage();
             default:
                 return new UnknownMessage(buffer);
         }

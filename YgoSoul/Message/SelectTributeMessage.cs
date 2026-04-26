@@ -45,17 +45,14 @@ public class SelectTributeMessage : ISelectionsMessage
             return Cancel();
         
         var response = new byte[8 + ids.Count * 4];
-        var offset = 0;
-        
-        BitConverter.GetBytes(0).CopyTo(response, offset);
-        offset += 4;
+        var offset = 4;
         
         BitConverter.GetBytes(ids.Count).CopyTo(response, offset);
         offset += 4;
         
         foreach (var i in ids)
         {
-            BitConverter.GetBytes(Cards[i].CardCode).CopyTo(response, offset);
+            BitConverter.GetBytes(i).CopyTo(response, offset);
             offset += 4;
         }
         return response;
