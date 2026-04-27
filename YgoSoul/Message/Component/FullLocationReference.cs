@@ -24,6 +24,6 @@ public class FullLocationReference
 
     public override string ToString()
     {
-        return IsLocationEmpty() ? $"Player {Player} directly." : $"Player {Player} at {Location}, sequence {Sequence}, position {Position}.";
+        return $"Player {Player} at {Location}, sequence {Sequence}, position {Position}.";
     }
 }

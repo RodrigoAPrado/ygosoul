@@ -33,6 +33,8 @@ public class ConfirmCardParser : BaseParser
                 return new ConfirmDeckTopMessage(player, cards);
             case GameMessage.ConfirmCards:
                 return new ConfirmCardsMessage(player, cards);
+            case GameMessage.ConfirmExtraTop:
+                return new ConfirmExtraDeckTopMessage(player, cards);
             default:
                 throw new ArgumentOutOfRangeException();
         }

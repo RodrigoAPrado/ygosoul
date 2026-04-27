@@ -19,15 +19,7 @@ public class AttackMessage : BaseMessage
     {
         var sb = new StringBuilder();
         sb.AppendLine($"Player {Attacker.Player} declares attack on Player {Target.Player}");
-        if (Target.IsLocationEmpty())
-        {
-            sb.Append($"in {Target.Sequence}, that is {Target.Position}, and on {Target.Location}, with ");
-        }
-        else
-        {
-            sb.Append("DIRECTLY! With ");
-        }
-
+        sb.Append($"in {Target.Sequence}, that is {Target.Position}, and on {Target.Location}, with ");
         sb.Append($"a card in {Attacker.Sequence}, that is {Attacker.Position}, and on {Attacker.Location}");
         return sb.ToString();
     }

@@ -27,6 +27,8 @@ public class SummoningParser : BaseParser
                 return new SetMessage(cardCode, player, location, sequence, position);
             case GameMessage.SpSummoning:
                 return new SpecialSummoningMessage(cardCode, player, location, sequence, position);
+            case GameMessage.FlipSummoning:
+                return new FlipSummoningMessage(cardCode, player, location, sequence, position);
             default:
                 throw new ArgumentOutOfRangeException();
         }
