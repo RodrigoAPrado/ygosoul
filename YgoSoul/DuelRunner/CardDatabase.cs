@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using Microsoft.Data.Sqlite;
 
-namespace YgoSoul;
+namespace YgoSoul.DuelRunner;
 
 public class CardDatabase
 {
@@ -53,9 +53,9 @@ public class CardDatabase
             }
             
             CardLibrary.AddCard(ocgCardData, reader.GetString(12), reader.GetString(13), strings);
-            connection.Close();
             return ocgCardData;
         }
+        connection.Close();
         return new OCG_CardData { code = code }; 
     }
 }

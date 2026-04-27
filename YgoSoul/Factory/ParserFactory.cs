@@ -1,4 +1,5 @@
-﻿using YgoSoul.Message;
+﻿using YgoSoul.DuelRunner;
+using YgoSoul.Message;
 using YgoSoul.Parser;
 using YgoSoul.Parser.Abstr;
 

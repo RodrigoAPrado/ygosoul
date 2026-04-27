@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using YgoSoul.DuelRunner;
 using YgoSoul.Message.Abstr;
 using YgoSoul.Message.Component;
 using YgoSoul.Message.Enum;

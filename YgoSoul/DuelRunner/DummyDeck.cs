@@ -1,6 +1,6 @@
 ﻿using YgoSoul.Flag;
 
-namespace YgoSoul;
+namespace YgoSoul.DuelRunner;
 
 public static class DummyDeck
 {

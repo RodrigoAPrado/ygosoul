@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace YgoSoul;
+namespace YgoSoul.DuelRunner;
 
 [StructLayout(LayoutKind.Sequential)]
 public struct OCG_CardData

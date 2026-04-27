@@ -1,4 +1,4 @@
-﻿namespace YgoSoul;
+﻿namespace YgoSoul.DuelRunner;
 
 public enum GamePhases
 {

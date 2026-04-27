@@ -1,4 +1,5 @@
-﻿using YgoSoul.Message.Abstr;
+﻿using YgoSoul.DuelRunner;
+using YgoSoul.Message.Abstr;
 using YgoSoul.Message.Component;
 
 namespace YgoSoul.Message;

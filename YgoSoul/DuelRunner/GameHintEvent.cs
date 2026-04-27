@@ -1,4 +1,4 @@
-﻿namespace YgoSoul;
+﻿namespace YgoSoul.DuelRunner;
 
 [Flags]
 public enum GameHintEvent : ulong

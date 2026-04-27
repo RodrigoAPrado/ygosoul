@@ -1,4 +1,5 @@
-﻿using YgoSoul.Flag;
+﻿using YgoSoul.DuelRunner;
+using YgoSoul.Flag;
 
 namespace YgoSoul.Message.Component;
 

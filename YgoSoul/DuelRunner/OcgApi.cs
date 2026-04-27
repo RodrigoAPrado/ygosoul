@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace YgoSoul;
+namespace YgoSoul.DuelRunner;
 
 public static class OcgApi
 {

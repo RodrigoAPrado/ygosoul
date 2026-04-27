@@ -1,5 +1,6 @@
-﻿namespace YgoSoul;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
+
+namespace YgoSoul.DuelRunner;
 
 // void (*OCG_DataReader)(void* payload, uint32_t code, OCG_CardData* data)
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

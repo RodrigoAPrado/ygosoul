@@ -1,4 +1,4 @@
-﻿namespace YgoSoul;
+﻿namespace YgoSoul.DuelRunner;
 
 public static class OcgConstants
 {
