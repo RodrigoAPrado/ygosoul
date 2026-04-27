@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using YgoSoul.Flag;
+using YgoSoul.Handler;
 using YgoSoul.Message.Abstr;
 using YgoSoul.Message.Component;
 using YgoSoul.Message.Enum;
@@ -89,10 +90,10 @@ public class SelectChainMessage : BaseMessage
         for (int i = 0; i < Effects.Count; i++)
         {
             var e = Effects[i];
-
+            var description = DescriptionHandler.GetDescription(e.Description);
             sb.AppendLine(
                 $"[{i}] => {CardLibrary.GetCard(e.Code).Name}'s effect, Controller={e.Controller}, " +
-                $"Location={e.Location}, Seq={e.Sequence}, Desc={e.Description}"
+                $"Location={e.Location}, Seq={e.Sequence}, Desc={description}"
             );
         }
 

@@ -257,6 +257,7 @@ public static class DummyDeck
         
         var list = m.Select(card => CreateCard(team, card)).ToList();
         
+        
         var rng = new Random();
 
         for (var i = list.Count - 1; i > 0; i--)

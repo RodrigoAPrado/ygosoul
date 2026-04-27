@@ -28,7 +28,7 @@ public class IdleCmdChoiceCard : IIdleCmdChoice
     public override string ToString()
     {
         var description = "";
-        if (Description > 0)
+        if (Action == PlayerIdleAction.EffectActivation)
         {
             description = $", Description={DescriptionHandler.GetDescription(Description)}";
         }

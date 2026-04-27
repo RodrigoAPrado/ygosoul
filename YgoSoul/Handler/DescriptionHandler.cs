@@ -1,16 +1,26 @@
-﻿namespace YgoSoul.Handler;
+﻿using YgoSoul.Util;
+
+namespace YgoSoul.Handler;
 
 public class DescriptionHandler
 {
     public static string GetDescription(ulong value)
     {
-        if (System.Enum.IsDefined(typeof(GameHintEvent), value))
+        var buffer = BitConverter.GetBytes(value);
+        var reader = new PacketReader(buffer);
+        var stringId = reader.ReadUInt16();
+        
+        if (System.Enum.IsDefined(typeof(GameHintEvent), (ulong)stringId))
         {
             return ((GameHintEvent)value).ToString();
         }
+        
+        var cardIdRaw = reader.ReadUInt32();
+        var cardId = cardIdRaw >> 4;
 
-        var cardId = (uint)(value >> 32);
-        var stringId = (int)(value & 0xFFFFFFFF);
+        if (cardId == 0)
+            return "Activate";
+        
         return CardLibrary.GetCard(cardId).Strings[stringId];
     }
 }

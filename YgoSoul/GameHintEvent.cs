@@ -11,6 +11,7 @@ public enum GameHintEvent : ulong
     DuringDamageCalculation = 0x2A, //42
     AfterDamageCalculation = 0x2B, //43
     EbdOfDamageStep = 0x2C, //44
+    ActivateTheTriggerEffect = 0xDD, //221
     SelectCardsToTribute = 0x1F4, //500
     SelectCardsToDiscard = 0x1F5, //501
     SelectCardsToDestroy = 0x1F6, //502
@@ -19,10 +20,13 @@ public enum GameHintEvent : ulong
     SelectTheCardsToAddToYourHand = 0x1FA, //506
     SelectTheCardsToSpecialSummon = 0x1FD, //509
     SelectTheCardsToUseAsFusionMaterial = 0x1FF, //511
+    SelectTheCardsToUseAsSynchroMaterial = 0x200, //512
+    SelectTheCardsToUseAsXyzMaterial = 0x201, //513
     SelectAFaceUpCards = 0x202, //514
     SelectTheCardsToPlaceOnTheField = 0x20F, //527
     SelectAnAttackTarget = 0x225, //549
-    AddTheCardsToYourHand = 0x23D //573
+    AddTheCardsToYourHand = 0x23D, //573
+    FusionSummon = 0x492, //1170
 }
 
 /*
