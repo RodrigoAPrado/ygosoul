@@ -83,8 +83,8 @@ public enum GameMessage : byte
     //ReleaseRelation = 123,
     TossCoin = 130,
     TossDice = 131,
-    RockPaperScissors = 132,
-    HandRes = 133,
+    RockPaperScissors = 132, // voltar depois
+    HandRes = 133, // voltar depois
     AnnounceRace = 140,
     AnnounceAttrib = 141,
     AnnounceCard = 142,

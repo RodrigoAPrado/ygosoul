@@ -18,6 +18,7 @@ public static class ParserFactory
         var summoningParser = new SummoningParser();
         var positionListParser = new PositionListParser();
         var changeCounterParser = new ChangeCounterParser();
+        var tossCoinDiceParser = new TossCoinDiceParser();
         
         return new Dictionary<GameMessage, IParser> 
         {
@@ -85,6 +86,9 @@ public static class ParserFactory
             { GameMessage.AttackDisabled, basicParser},
             { GameMessage.DamageStepStart, basicParser },
             { GameMessage.DamageStepEnd, basicParser },
+            { GameMessage.MissedEffect, basicParser },
+            { GameMessage.TossCoin, tossCoinDiceParser },
+            { GameMessage.TossDice, tossCoinDiceParser },
             { GameMessage.CardHint, basicParser },
             { GameMessage.PlayerHint, new PlayerHintParser() }
         };

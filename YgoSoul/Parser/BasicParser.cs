@@ -118,6 +118,14 @@ public class BasicParser : BaseParser
                 return new DamageStepStartMessage();
             case GameMessage.DamageStepEnd:
                 return new DamageStepEndMessage();
+            case GameMessage.MissedEffect:
+                return new MissedEffectMessage(new FullLocationReference(
+                    reader.ReadByte(), 
+                    (CardLocation) reader.ReadByte(), 
+                    reader.ReadUInt32(), 
+                    (CardPosition) reader.ReadUInt32()), 
+                    reader.ReadUInt32()
+                    );
             case GameMessage.CardHint:
                 return new CardHintMessage(new FullLocationReference(
                     reader.ReadByte(), 

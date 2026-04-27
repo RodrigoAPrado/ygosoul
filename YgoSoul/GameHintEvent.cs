@@ -195,7 +195,8 @@ any line that doesn't start with the above keywords is ignored
 !system 1014 LIGHT
 !system 1015 DARK
 !system 1016 DIVINE
-!system 1020 Warrior
+!system 1020 
+Warrior
 !system 1021 Spellcaster
 !system 1022 Fairy
 !system 1023 Fiend
