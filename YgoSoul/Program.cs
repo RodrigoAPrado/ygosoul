@@ -2,6 +2,7 @@
 using System.Text;
 using Microsoft.Data.Sqlite;
 using YgoSoul;
+using YgoSoul.CardDownloader;
 using YgoSoul.DuelRunner;
 using YgoSoul.Factory;
 using YgoSoul.Handler;
@@ -33,6 +34,7 @@ class Program
                     DuelRunner.RunDuel();
                     break;
                 case 1:
+                    CardImgDownloader.Download();
                     break;
             }
         }
