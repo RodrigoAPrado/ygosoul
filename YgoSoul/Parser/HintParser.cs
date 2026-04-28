@@ -25,14 +25,14 @@ public class HintParser : BaseParser
 
     private static IMessage HandleHintEvent(PacketReader reader, byte player)
     {
-        var hintMessage = (GameHintEvent) reader.ReadULong64();
+        var hintMessage = (GameStrings) reader.ReadULong64();
         return new HintMessage($"Player {player}, it is {hintMessage}.");
     }
 
     private static string GetHintText(ulong hint)
     {
-        return Enum.IsDefined(typeof(GameHintEvent), hint) 
-            ? ((GameHintEvent)hint).ToString() 
+        return Enum.IsDefined(typeof(GameStrings), hint) 
+            ? ((GameStrings)hint).ToString() 
             : CardLibrary.GetCard((uint)hint).Name;
     }
 }

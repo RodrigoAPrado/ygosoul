@@ -204,7 +204,7 @@ public class DuelRunner
                     }
                     else
                     {
-                        Console.WriteLine("--- SOMETHING WENT WROND ---");
+                        Console.WriteLine("--- SOMETHING WENT WRONG ---");
                         duelando = false;
                     }
                 }
@@ -238,6 +238,9 @@ public class DuelRunner
                 break;
             case InputType.SelectChain:
                 HandlePlayerSelectChain(pDuel);
+                break;
+            case InputType.AnnounceCard:
+                HandleAnnounceCard(pDuel);
                 break;
             case InputType.Win:
                 Console.WriteLine("--- DUEL WIN! ---");
@@ -277,6 +280,49 @@ public class DuelRunner
         Console.WriteLine("\n--- AWAITING PLAYER'S INPUT ---");
         Console.Write("Press enter to confirm... ");
         var input = Console.ReadLine();
+    }
+
+    private static void HandleAnnounceCard(IntPtr pDuel)
+    {
+        var message = (AnnounceCardMessage)MessageHandler.MessageRequiringInput;
+        byte[] response = [];
+        do
+        {
+            Console.WriteLine("\n--- AWAITING PLAYER'S INPUT ---");
+            Console.Write("Press input a value... ");
+            var input = Console.ReadLine();
+
+            if (input == null)
+            {
+                Console.WriteLine("--- INVALID CHOICE ---");
+                continue;
+            }
+            
+            if (int.TryParse(input, out var choice))
+            {
+                response = message.GetResponse(choice);
+                if (response.Length == 0)
+                    Console.WriteLine("--- INVALID CHOICE ---");
+            }
+            else
+            {
+                var query = message.Query(input);
+                if (query.Count == 0)
+                {
+                    Console.WriteLine("--- NO CARD MATCHING QUERY ---");
+                    Console.ReadLine();
+                    Console.WriteLine(message.ToString());
+                    continue;
+                }
+                
+                Console.WriteLine("The following cards matches your query: ");
+                foreach (var q in query)
+                {
+                    Console.WriteLine($"[{q.Item1}] => {q.Item2}");
+                }
+            }
+        } while (response.Length == 0);
+        OcgApi.OCG_DuelSetResponse(pDuel, response, (uint) response.Length); 
     }
 
     private static void HandlePlayerSelectChain(IntPtr pDuel)

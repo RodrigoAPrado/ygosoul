@@ -54,7 +54,7 @@ public class CardDatabase
                 strings.Add(reader.GetString(13+i));
             }
             
-            CardLibrary.AddCard(ocgCardData, reader.GetString(12), reader.GetString(13), strings);
+            CardLibrary.AddCard(ocgCardData, reader.GetString(12), reader.GetString(13), strings, (ulong)reader.GetInt64(10));
             cardsLoaded++;
         }
         Console.WriteLine($"{cardsLoaded} cards loaded...");

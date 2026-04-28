@@ -3,6 +3,7 @@
 [Flags]
 public enum AnnounceCardOpcode : ulong
 {
+    None = 0,
     // Operadores Aritméticos e Lógicos
     Add           = 0x4000000000000000,
     Sub           = 0x4000000100000000,

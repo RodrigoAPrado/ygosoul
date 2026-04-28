@@ -195,7 +195,7 @@ public static class DummyDeck
     
     private static List<uint> _cards =
     [
-        00032864,
+        74677422,
         00032864,
         00032864,
         00549481,
@@ -214,8 +214,8 @@ public static class DummyDeck
         02483611,
         02483611,
         06740720,
-        06740720,
-        06740720,
+        25131968,
+        25131968,
         60862676,
         60862676,
         60862676,
@@ -230,14 +230,72 @@ public static class DummyDeck
         97590747,
         46986414,
         46986414,
-        46986414,
-        80141480,
-        80141480,
-        80141480,
-        29417188
+        17484499,
+        74191942,
+        74191942,
+        74191942,
+        79571449
     ];
+    
+    private static List<uint> _extra =
+    [
+        37818794,
+        37818794,
+        37818794,
+        45231177,
+        45231177,
+        45231177
+    ];
+    
+    //Pot of Duality - Decktop -                          98645731
+    //Pot of Extravagance - Y/N -                         49238328
+    //Gen - Invocar no campo do cara -                    52126602
+    //Ken - Invocar no campo do cara -                    25131968
+    //Number 67 - SelectDisfield -                        35772782
+    //Mind Crush - Confirm Cards -                        15800838
+    //Convulsion of Nature - ReverseDeck -                62966332
+    //Exchange of the Spirit - SwapGraveDeck -            17484499
+    //Ookazi - Damage -                                   19523799
+    //Dian Keto the Cure Master - recover -               84257639
+    //Time Wizard - toss coin -                           71625222
+    //Snipe Hunter - TossDice -                           84290642
+    //Gamble - Announce Number -                          37313786
+    //DNA Surgery - AnnounceRace -                        74701381
+    //DNA Transplant - AnounceAttrib -                    56769674
+    //Psi-Blocker/Crossout Designator - AnnounceCard -    29417188 / 65681983
+    //Pot of Desires - RemoveCards -                      35261759
+    //Victory Dragon - MatchKill -                        44910027
+    //Red-eyes fusion - 6172122
+    //Dark Magician - 46986414
+    //Red-eyes black dragon - 74677422
+    //Red-eyes dark Dragoon - 37818794
+    //Card of Demise - 59750328
+    //Foolish Burial - 81439173
+    //Painful Choice - 74191942
+    //Graceful Charity - 79571449
+    
+    /*
+     *
+     *Raw: Hint 02-04-00-00-00-80-13-F5-2E-00-00
+Hint message. Content: 02-04-00-00-00-80-13-F5-2E-00-00
 
+Raw: Hint 02-03-01-01-00-60-44-C1-46-00-00
+System.Collections.Generic.KeyNotFoundException: The given key '1147142145' was not present in the dictionary.
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at YgoSoul.DuelRunner.CardLibrary.GetCard(UInt32 code) in C:\Users\rodri\RiderProjects\YgoSoul\YgoSoul\DuelRunner\CardLibrary.cs:line 21
+   at YgoSoul.Parser.HintParser.GetHintText(UInt64 hint) in C:\Users\rodri\RiderProjects\YgoSoul\YgoSoul\Parser\HintParser.cs:line 34
+   at YgoSoul.Parser.HintParser.DoParse(Byte[] buffer) in C:\Users\rodri\RiderProjects\YgoSoul\YgoSoul\Parser\HintParser.cs:line 21
+   at YgoSoul.Parser.Abstr.BaseParser.Parse(Byte[] buffer) in C:\Users\rodri\RiderProjects\YgoSoul\YgoSoul\Parser\Abstr\BaseParser.cs:line 15
+Hint message. Content: 02-03-01-01-00-60-44-C1-46-00-00
+2
 
+     * 
+     */
+    
+    
+    
+    
+    
     public static List<OCG_NewCardInfo> CreateDeck(byte team, bool randomize)
     {
         var list = _cards.Select(card => CreateCard(team, card)).ToList();
@@ -251,6 +309,11 @@ public static class DummyDeck
                 var j = rng.Next(0, i + 1);
                 (list[i], list[j]) = (list[j], list[i]);
             }
+        }
+
+        foreach (var card in _extra)
+        {
+            list.Add(CreateCard(team, card));
         }
         
         return list;

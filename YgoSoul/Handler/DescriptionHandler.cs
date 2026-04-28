@@ -1,4 +1,5 @@
 ﻿using YgoSoul.DuelRunner;
+using YgoSoul.Flag;
 using YgoSoul.Util;
 
 namespace YgoSoul.Handler;
@@ -7,21 +8,55 @@ public class DescriptionHandler
 {
     public static string GetDescription(ulong value)
     {
-        var buffer = BitConverter.GetBytes(value);
-        var reader = new PacketReader(buffer);
-        var stringId = reader.ReadUInt16();
-        
-        if (System.Enum.IsDefined(typeof(GameHintEvent), (ulong)stringId))
+        try
         {
-            return ((GameHintEvent)value).ToString();
-        }
-        
-        var cardIdRaw = reader.ReadUInt32();
-        var cardId = cardIdRaw >> 4;
+            var buffer = BitConverter.GetBytes(value);
+            var reader = new PacketReader(buffer);
+            var stringId = reader.ReadUInt16();
 
-        if (cardId == 0)
-            return "Activate";
-        
-        return CardLibrary.GetCard(cardId).Strings[stringId];
+            var cardIdRaw = reader.ReadUInt32();
+            var cardId = cardIdRaw >> 4;
+            
+            if (CardLibrary.HasCard(cardId))
+            {
+                if (cardId == 0)
+                    return "Activate";
+                
+                return CardLibrary.GetCard(cardId).Strings[stringId];
+            }
+
+            if (System.Enum.IsDefined(typeof(GameStrings), (ulong)stringId))
+            {
+                return ((GameStrings)value).ToString();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        return $"{value:x16}";
+    }
+
+    public static string GetDescription(ulong value, CardHint hint)
+    {
+        switch (hint)
+        {
+            case CardHint.Card:
+                var cardCode = (uint)value;
+                return CardLibrary.GetCard(cardCode).Name;
+                break;
+            case CardHint.Turn:
+            case CardHint.Race:
+                return $"{(MonsterRaces)value}";
+            case CardHint.Attribute:
+                return $"{(MonsterAttributes)value}";
+            case CardHint.Number:
+            case CardHint.DescAdd:
+                return $"{(GameStrings)value}";
+            case CardHint.DescRemove:
+            default:
+                throw new ArgumentOutOfRangeException(nameof(hint), hint, null);
+        }
     }
 }

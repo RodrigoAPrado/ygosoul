@@ -4,16 +4,26 @@ public static class CardLibrary
 {
     private static readonly Dictionary<uint, CardData> Cards = new ();
 
-    public static void AddCard(OCG_CardData data, string cardName, string cardText, List<string> strings)
+    public static void AddCard(OCG_CardData data, string cardName, string cardText, List<string> strings, ulong category)
     {
         if (Cards.ContainsKey(data.code))
             return;
-        Cards.Add(data.code, new CardData(data, cardName, cardText, strings));
+        Cards.Add(data.code, new CardData(data, cardName, cardText, strings, category));
+    }
+
+    public static bool HasCard(uint code)
+    {
+        return Cards.ContainsKey(code);
     }
 
     public static CardData GetCard(uint code)
     {
         return Cards[code];
+    }
+
+    public static IReadOnlyDictionary<uint, CardData> AllCards()
+    {
+        return Cards;
     }
 }
 
@@ -23,12 +33,14 @@ public class CardData
     public string Name { get; }
     public string Description { get; }
     public IReadOnlyList<string> Strings { get; }
+    public ulong Category { get; }
 
-    public CardData(OCG_CardData data, string name, string description, List<string> strings)
+    public CardData(OCG_CardData data, string name, string description, List<string> strings, ulong category)
     {
         Data = data;
         Name = name;
         Description = description;
         Strings = strings;
+        Category = category;
     }
 }

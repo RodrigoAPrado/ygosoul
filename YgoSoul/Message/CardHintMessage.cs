@@ -20,6 +20,6 @@ public class CardHintMessage : BaseMessage
 
     public override string ToString()
     {
-        return $"{FullLocationReference}. Hint={CardHint}, Description={DescriptionHandler.GetDescription(Description)}";
+        return $"{FullLocationReference}. Hint={CardHint}, Description={DescriptionHandler.GetDescription(Description, CardHint)}, DescriptionDex={Description:x16}";
     }
 }

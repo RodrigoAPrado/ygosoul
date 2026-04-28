@@ -93,6 +93,7 @@ public static class ParserFactory
             { GameMessage.TossDice, tossCoinDiceParser },
             { GameMessage.AnnounceRace, announceRaceAttributeParser },
             { GameMessage.AnnounceAttrib, announceRaceAttributeParser },
+            { GameMessage.AnnounceCard, new AnnounceCardParser() },
             { GameMessage.CardHint, basicParser },
             { GameMessage.PlayerHint, new PlayerHintParser() }
         };

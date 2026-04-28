@@ -33,7 +33,7 @@ public class SelectOptionMessage : IMessage
 
         for (var i = 0; i < Options.Count; i++)
         {
-            sb.AppendLine($"[{i}] => {DescriptionHandler.GetDescription(Options[i])}");
+            sb.AppendLine($"[{i}] => {DescriptionHandler.GetDescription(Options[i])}, {Options[i]:x16}");
         }
         return sb.ToString();
     }

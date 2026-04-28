@@ -10,5 +10,6 @@ public enum InputType
     Selections = 5,
     Sort = 6,
     SelectChain = 7,
+    AnnounceCard = 8,
     Win = 99
 }
