@@ -30,6 +30,7 @@ public class DuelRunner
 
         // Inicializa banco de dados
         CardDatabase.Initialize("cards.cdb");
+        CardDatabase.LoadCards();
         
         // 2. Configure os delegates (Importante: manter referências static)
         _dataReader = MyCardReader;
@@ -153,8 +154,8 @@ public class DuelRunner
     
     private static void CreateDecks(IntPtr pDuel)
     {
-        CreateDeck(pDuel, 0, 0);
-        CreateDeck(pDuel, 1, 2);
+        CreateDeck(pDuel, 0, -1, false);
+        CreateDeck(pDuel, 1, -1, false);
         
         // 0x01 é LOCATION_DECK
         var quantidadeNoDeck0 = OcgApi.OCG_DuelQueryCount(pDuel, 0, 0x01);
@@ -163,9 +164,9 @@ public class DuelRunner
         Console.WriteLine($"Player 1 MAINDECK Size: {quantidadeNoDeck1}");
     }
 
-    private static void CreateDeck(IntPtr pDuel, byte team, int d)
+    private static void CreateDeck(IntPtr pDuel, byte team, int d, bool randomize)
     {
-        var deck = DummyDeck.CreateDeck(team, d);
+        var deck = DummyDeck.CreateDeck(team, d, randomize);
         foreach (var card in deck)
         {
             var ocgNewCardInfo = card;

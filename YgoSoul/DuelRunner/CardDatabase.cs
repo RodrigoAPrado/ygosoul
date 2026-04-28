@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using Microsoft.Data.Sqlite;
+using YgoSoul.Flag;
 
 namespace YgoSoul.DuelRunner;
 
@@ -12,37 +13,38 @@ public class CardDatabase
         _connString = $"Data Source={dbPath}";
     }
 
-    public static OCG_CardData GetCardData(uint code)
+    public static void LoadCards()
     {
         using var connection = new SqliteConnection(_connString);
         connection.Open();
-
         var command = connection.CreateCommand();
-        command.CommandText = "SELECT * FROM datas JOIN texts ON datas.id = texts.id WHERE datas.id = $id";
-        command.Parameters.AddWithValue("$id", code);
-
+        command.CommandText = "SELECT * FROM datas JOIN texts ON datas.id = texts.id";
         using var reader = command.ExecuteReader();
-        if (reader.Read())
+        var cardsLoaded = 0;
+        while (reader.Read())
         {
-            
             ulong setCodeValue = (ulong)reader.GetInt64(3);
 
             IntPtr setcodePtr = Marshal.AllocHGlobal(sizeof(ulong));
             Marshal.WriteInt64(setcodePtr, (long)setCodeValue);
+            var rawLevel = (uint)reader.GetInt32(7);
+            var type = (uint)reader.GetInt32(4);
+            var isLink = (type & (uint)CardType.Link) != 0;
+            var rawDefense = (uint)reader.GetInt32(6);
             var ocgCardData = new OCG_CardData
             {
                 code = (uint)reader.GetInt32(0),
                 alias = (uint)reader.GetInt32(2),
                 setcode = setcodePtr,
-                type = (uint)reader.GetInt32(4),
-                attack = reader.GetInt32(5),  // Coluna 'atk'
-                defense = reader.GetInt32(6), // Coluna 'def'
-                level = (uint)reader.GetInt32(7),
+                type = type,
+                attack = reader.GetInt32(5),
+                defense = isLink ? 0 : (int)rawDefense,
+                level = rawLevel & 0xFF,
                 race = (ulong)reader.GetInt64(8),
                 attribute = (uint)reader.GetInt32(9),
-                lscale = 0,
-                rscale = 0,
-                link_marker = 0
+                lscale = (rawLevel >> 24) & 0xFF,
+                rscale = (rawLevel >> 16) & 0xFF,
+                link_marker = isLink ? rawDefense : 0
             };
 
             var strings = new List<string>();
@@ -53,9 +55,15 @@ public class CardDatabase
             }
             
             CardLibrary.AddCard(ocgCardData, reader.GetString(12), reader.GetString(13), strings);
-            return ocgCardData;
+            cardsLoaded++;
         }
+        Console.WriteLine($"{cardsLoaded} cards loaded...");
         connection.Close();
-        return new OCG_CardData { code = code }; 
+    }
+
+    public static OCG_CardData GetCardData(uint code)
+    {
+        var card = CardLibrary.GetCard(code);
+        return card.Data;
     }
 }

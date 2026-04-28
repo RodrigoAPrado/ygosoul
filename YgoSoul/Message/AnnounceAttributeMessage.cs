@@ -5,20 +5,20 @@ using YgoSoul.Message.Enum;
 
 namespace YgoSoul.Message;
 
-public class AnnounceRaceMessage : ISelectionsMessage
+public class AnnounceAttributeMessage : ISelectionsMessage
 {
     public InputType Input => InputType.Selections;
     public int InputCount { get; }
     public byte Player { get; }
     public byte Count { get; }
-    public List<MonsterRaces> Races { get; }
+    public List<MonsterAttributes> Attributes { get; }
     public bool CanCancel => false;
     
-    public AnnounceRaceMessage(byte player, byte count, List<MonsterRaces> races)
+    public AnnounceAttributeMessage(byte player, byte count, List<MonsterAttributes> attributes)
     {
         Player = player;
         Count = count;
-        Races = races;
+        Attributes = attributes;
     }
 
     public byte[] GetResponse(int id)
@@ -28,7 +28,7 @@ public class AnnounceRaceMessage : ISelectionsMessage
     
     public byte[] GetResponse(List<int> ids)
     {
-        var invalid = ids.Any(x => x >= Races.Count || x < 0);
+        var invalid = ids.Any(x => x >= Attributes.Count || x < 0);
         
         if (invalid)
             return [];
@@ -36,11 +36,11 @@ public class AnnounceRaceMessage : ISelectionsMessage
         if (ids.Count != Count)
             return [];
 
-        ulong response = 0;
+        uint response = 0;
 
         foreach (var id in ids)
         {
-            response |= (ulong) Races[id];
+            response |= (uint) Attributes[id];
         }
 
         return BitConverter.GetBytes(response);
@@ -54,10 +54,10 @@ public class AnnounceRaceMessage : ISelectionsMessage
     public override string ToString()
     {
         var sb = new StringBuilder();
-        sb.AppendLine($"AnnounceRace, \nPlayer={Player}, Select {Count} Races:");
-        for (var i = 0; i< Races.Count; i++)
+        sb.AppendLine($"AnnounceAttribute, \nPlayer={Player}, Select {Count} Races:");
+        for (var i = 0; i< Attributes.Count; i++)
         {
-            sb.AppendLine($"[{i}] => {Races[i]}");
+            sb.AppendLine($"[{i}] => {Attributes[i]}");
         }
         return sb.ToString();
     }

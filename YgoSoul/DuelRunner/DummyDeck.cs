@@ -234,36 +234,58 @@ public static class DummyDeck
         80141480,
         80141480,
         80141480,
-        80770678
+        29417188
     ];
-    
-    
-    
-    public static List<OCG_NewCardInfo> CreateDeck(byte team, int deck)
+
+
+    public static List<OCG_NewCardInfo> CreateDeck(byte team, bool randomize)
     {
+        var list = _cards.Select(card => CreateCard(team, card)).ToList();
+
+        if (randomize)
+        {
+            var rng = new Random();
+
+            for (var i = list.Count - 1; i > 0; i--)
+            {
+                var j = rng.Next(0, i + 1);
+                (list[i], list[j]) = (list[j], list[i]);
+            }
+        }
+        
+        return list;
+    }
+    
+    public static List<OCG_NewCardInfo> CreateDeck(byte team, int deck, bool randomize)
+    {
+        if (deck is > 2 or < 0)
+            return CreateDeck(team, randomize);
+        
         var m = deck switch
         {
             0 => _brandedMain,
             1 => _utopiaMain,
-            _ => _kewlTuneMain
+            2 => _kewlTuneMain
         };
         
         var e = deck switch
         {
             0 => _brandedExtra,
             1 => _utopiaExtra,
-            _ => _kewlTuneExtra
+            2 => _kewlTuneExtra
         };
         
         var list = m.Select(card => CreateCard(team, card)).ToList();
-        
-        
-        var rng = new Random();
 
-        for (var i = list.Count - 1; i > 0; i--)
+        if (randomize)
         {
-            var j = rng.Next(0, i + 1);
-            (list[i], list[j]) = (list[j], list[i]);
+            var rng = new Random();
+
+            for (var i = list.Count - 1; i > 0; i--)
+            {
+                var j = rng.Next(0, i + 1);
+                (list[i], list[j]) = (list[j], list[i]);
+            }
         }
 
         foreach (var card in e)

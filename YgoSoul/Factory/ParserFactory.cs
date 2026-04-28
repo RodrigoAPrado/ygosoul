@@ -20,6 +20,7 @@ public static class ParserFactory
         var positionListParser = new PositionListParser();
         var changeCounterParser = new ChangeCounterParser();
         var tossCoinDiceParser = new TossCoinDiceParser();
+        var announceRaceAttributeParser = new AnnounceRaceAttributeParser();
         
         return new Dictionary<GameMessage, IParser> 
         {
@@ -90,6 +91,8 @@ public static class ParserFactory
             { GameMessage.MissedEffect, basicParser },
             { GameMessage.TossCoin, tossCoinDiceParser },
             { GameMessage.TossDice, tossCoinDiceParser },
+            { GameMessage.AnnounceRace, announceRaceAttributeParser },
+            { GameMessage.AnnounceAttrib, announceRaceAttributeParser },
             { GameMessage.CardHint, basicParser },
             { GameMessage.PlayerHint, new PlayerHintParser() }
         };
