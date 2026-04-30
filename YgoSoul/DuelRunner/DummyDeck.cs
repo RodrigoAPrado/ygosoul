@@ -198,7 +198,7 @@ public static class DummyDeck
         74677422,
         00032864,
         00032864,
-        00549481,
+        23431858,
         00549481,
         00549481,
         01184620,
@@ -206,11 +206,11 @@ public static class DummyDeck
         01184620,
         01784619,
         01784619,
-        01784619,
+        56465981,
         02118022,
         02118022,
         02118022,
-        02483611,
+        6728559,
         02483611,
         02483611,
         06740720,
@@ -230,11 +230,11 @@ public static class DummyDeck
         97590747,
         46986414,
         46986414,
-        17484499,
-        74191942,
-        74191942,
-        74191942,
-        79571449
+        93490856,
+        20001443,
+        52854600,
+        55761792,
+        5405694
     ];
     
     private static List<uint> _extra =
@@ -244,8 +244,30 @@ public static class DummyDeck
         37818794,
         45231177,
         45231177,
-        45231177
+        45231177,
+        32519092,
+        32519092,
+        32519092,
+        69248256,
+        96633955,
+        78917791
     ];
+    
+    //Gold Sarcophagus - 75500286
+    //Archnemesis Protos - 6728559
+    //Tenyi Vishuda - 23431858
+    //Tenyi Ashuna - 87052196
+    //Tenyi Adhara - 98159737
+    //Tenyi Suruya - 52854600
+    //Shaman of the Tenyi - 78917791
+    //Monk of the Tenyi - 32519092
+    //Swordsoul of Mo Ye - 20001443
+    //Swordsoul Emergency - 56465981
+    //Swordsoul Grandmaster - Chixiao - 69248256
+    //Swordsoul of Taia - 56495147
+    //Swordsoul Longyuan - 93490856
+    //Swordsoul Supreme Soverign - 96633955
+    //Swordsoul Sinister Soverign - 47710198
     
     //Pot of Duality - Decktop -                          98645731
     //Pot of Extravagance - Y/N -                         49238328
@@ -273,6 +295,19 @@ public static class DummyDeck
     //Foolish Burial - 81439173
     //Painful Choice - 74191942
     //Graceful Charity - 79571449
+    //Tenyi Vishuda - 23431858
+    //Tenyi Ashuna - 87052196
+    //Tenyi Adhara - 98159737
+    //Tenyi Suruya - 52854600
+    //Shaman of the Tenyi - 78917791
+    //Monk of the Tenyi - 32519092
+    //Swordsoul of Mo Ye - 20001443
+    //Swordsoul Emergency - 56465981
+    //Swordsoul Grandmaster - Chixiao - 69248256
+    //Swordsoul of Taia - 56495147
+    //Swordsoul Longyuan - 93490856
+    //Swordsoul Supreme Soverign - 96633955
+    //Swordsoul Sinister Soverign - 47710198
     
     /*
      *

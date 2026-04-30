@@ -1,4 +1,5 @@
-﻿using YgoSoul.Message.Abstr;
+﻿using YgoSoul.Handler;
+using YgoSoul.Message.Abstr;
 using YgoSoul.Message.Component;
 using YgoSoul.Message.Enum;
 
@@ -27,6 +28,6 @@ public class SelectYesNoMessage : IMessage
 
     public override string ToString()
     {
-        return $"Player {Player}, activate effect:\n[0] - No\n[1] - Yes";
+        return $"Player {Player}, activate effect? Description={DescriptionHandler.GetDescription(Description)}:\n[0] - No\n[1] - Yes";
     }
 }

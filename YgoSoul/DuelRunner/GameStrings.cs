@@ -251,7 +251,28 @@ SelectToPlaceCounter = 0x23C,   // 572
     TypeLink = 0x434,               // 1076
 
     // --- Outros (1081) ---
-    ExtraMonsterZone = 0x439        // 1081
+    ExtraMonsterZone = 0x439,       // 1081
+    ActivateAction = 0x47E,         // 1150
+    NormalSummonAction = 0x47F,     // 1151
+    SpecialSummonAction = 0x480,    // 1152
+    Set = 0x481,                    // 1153
+    FlipSummonAction = 0x482,       // 1154
+    ToDefense = 0x483,              // 1155
+    ToAttack = 0x484,               // 1156
+    Attack = 0x485,                 // 1157
+    View = 0x486,                   // 1158
+    StSet = 0x487,                  // 1159
+    ActivatePendulum = 0x488,       // 1160
+    ResolveEffect = 0x489,          // 1161
+    ResetEffect = 0x48A,            // 1162
+    PendulumSummon = 0x48B,         // 1163
+
+    // --- Tipos de Invocação Especial (1170 - 1174) ---
+    FusionSummon = 0x492,           // 1170
+    RitualSummon = 0x493,           // 1171
+    SynchroSummon = 0x494,          // 1172
+    XyzSummon = 0x495,              // 1173
+    LinkSummon = 0x496              // 1174
 }
 
 /*

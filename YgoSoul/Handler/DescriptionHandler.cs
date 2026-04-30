@@ -42,11 +42,10 @@ public class DescriptionHandler
     {
         switch (hint)
         {
+            case CardHint.Turn:
             case CardHint.Card:
                 var cardCode = (uint)value;
                 return CardLibrary.GetCard(cardCode).Name;
-                break;
-            case CardHint.Turn:
             case CardHint.Race:
                 return $"{(MonsterRaces)value}";
             case CardHint.Attribute:
@@ -55,6 +54,7 @@ public class DescriptionHandler
             case CardHint.DescAdd:
                 return $"{(GameStrings)value}";
             case CardHint.DescRemove:
+                return $"{(GameStrings)value}";
             default:
                 throw new ArgumentOutOfRangeException(nameof(hint), hint, null);
         }
