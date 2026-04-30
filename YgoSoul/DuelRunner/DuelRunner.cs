@@ -412,7 +412,13 @@ public class DuelRunner
         do
         {
             Console.WriteLine("\n--- AWAITING PLAYER'S INPUT ---");
-            Console.Write("Input your selections: ");
+            Console.WriteLine("Input your selections. Enter=confirm all, Cancel=cancel operation if able, Clear=reset your inputs: ");
+            var value = "";
+            foreach (var id in responseIds)
+            {
+                value += id + ",";
+            }
+            Console.WriteLine($"Current inputs={value}");
             var input = Console.ReadLine();
 
             if (input == null)
@@ -432,6 +438,12 @@ public class DuelRunner
                     continue;
                 }
                 enter = true;
+                continue;
+            }
+            
+            if(input.ToLower() == "clear")
+            {
+                responseIds.Clear();
                 continue;
             }
 

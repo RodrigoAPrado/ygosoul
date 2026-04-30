@@ -40,6 +40,7 @@ public static class ParserFactory
             { GameMessage.SelectTribute, new SelectTributeParser() },
             { GameMessage.SortChain, sortChainCardParser },
             { GameMessage.SelectCounter, new SelectCounterParser() },
+            { GameMessage.SelectSum, new SelectSumParser() },
             { GameMessage.SelectDisfield, selectPlaceParser },
             { GameMessage.SortCard, sortChainCardParser },
             { GameMessage.SelectUnselectCard, new SelectUnselectedCardParser() },
