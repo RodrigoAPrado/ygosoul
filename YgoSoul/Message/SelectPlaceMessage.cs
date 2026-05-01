@@ -30,13 +30,13 @@ public class SelectPlaceMessage : IMessage
         
         var zone = Choices[id];
         if(!ZoneUtils.ZoneLocation.ContainsKey(zone) 
-           || !ZoneUtils.ZoneIndex.ContainsKey(zone))
+           || !ZoneUtils.ZoneIndexInput.ContainsKey(zone))
             return [];
         
         var response = new byte[3];
         response[0] = (byte)Player;
         response[1] = (byte)ZoneUtils.ZoneLocation[zone];
-        response[2] = (byte)ZoneUtils.ZoneIndex[zone];
+        response[2] = (byte)ZoneUtils.ZoneIndexInput[zone];
         return response;
     }
 

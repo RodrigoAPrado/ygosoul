@@ -7,6 +7,7 @@ using YgoSoul.Message.Abstr;
 using YgoSoul.Message.Component;
 using YgoSoul.Message.Enum;
 using YgoSoul.Parser.Abstr;
+using YgoSoul.Query;
 
 namespace YgoSoul.DuelRunner;
 
@@ -44,7 +45,7 @@ public class DuelRunner
         var options = new OCG_DuelOptions
         {
             seed0 = 0x12345,
-            flags = OcgConstants.DUEL_MODE_MR5,
+            flags = (ulong)DuelOptions.MasterRule5,
             team1 = new OCG_Player { startingLP = 8000, startingDrawCount = 5, drawCountPerTurn = 1 },
             team2 = new OCG_Player { startingLP = 8000, startingDrawCount = 5, drawCountPerTurn = 1 },
             cardReader = Marshal.GetFunctionPointerForDelegate(_dataReader),
@@ -142,7 +143,7 @@ public class DuelRunner
     private static MessageHandleEnum ProcessarUnicaMensagem(byte[] buffer)
     {
         // 2. O 'msgType' está no byte 4 (logo após o header de tamanho)
-        GameMessage msgType = (GameMessage)buffer[0];
+        var msgType = (GameMessage)buffer[0];
 
         if (_parsers.TryGetValue(msgType, out var value))
         {
@@ -221,6 +222,18 @@ public class DuelRunner
     {
         if(MessageHandler.MessageRequiringInput == null)
             throw new InvalidOperationException("MessageHandler.MessageRequiringInput == null");
+        
+        
+        if (MessageHandler.MessageRequiringInput 
+            is SelectBattleCmdMessage
+            or SelectIdleCmdMessage
+            or DamageMessage
+            or RecoverMessage
+            or ChainSolvedMessage)
+        {
+            QueryField(pDuel);
+        }
+        
         
         switch (MessageHandler.MessageRequiringInput.Input)
         {
@@ -476,5 +489,15 @@ public class DuelRunner
             return;
         }
         OcgApi.OCG_DuelSetResponse(pDuel, response, (uint) response.Length); 
+    }
+
+    private static void QueryField(IntPtr pDuel)
+    {
+        var query = OcgApi.OCG_DuelQueryField(pDuel, out var length);
+        var data = new byte[length];
+        Marshal.Copy(query, data, 0, (int)length);
+        Console.WriteLine($"Query Raw: {BitConverter.ToString(data)}");
+        var result = QueryParser.ParseField(data);
+        Console.WriteLine($"Query: {result}");
     }
 }

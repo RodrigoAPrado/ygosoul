@@ -14,16 +14,16 @@ public class PositionListParser : BaseParser
     {
         var reader = new PacketReader(buffer);
         var msgType = (GameMessage) reader.ReadByte();//msg
-        var size = reader.ReadByte();
+        var size = reader.ReadUInt32();
 
         var cards = new List<FullLocationReference>();
-        for (int i = size; i > 0; i--)
+        for (var i = size; i > 0; i--)
         {
             cards.Add(new FullLocationReference(
                 reader.ReadByte(), 
                 (CardLocation) reader.ReadByte(),
                 reader.ReadUInt32(),
-                (CardPosition) reader.ReadByte()));
+                (CardPosition) reader.ReadUInt32()));
         }
 
         switch (msgType)

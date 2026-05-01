@@ -37,10 +37,18 @@ public static class OcgApi
     [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int OCG_LoadScript(IntPtr duel, byte[] buffer, uint length, [MarshalAs(UnmanagedType.LPStr)] string name);
         
-    // ... Outros métodos de Query podem ser adicionados conforme a necessidade
+    // Queries
     
     [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
     public static extern uint OCG_DuelQueryCount(IntPtr pDuel, byte team, uint loc);
+    //[DllImport("ocgcore.dll", CallingConvention = CallingConvention.Cdecl)]
+    //public static extern IntPtr OCG_DuelQuery(IntPtr pDuel, out uint length, ref OCG_QueryInfo info_ptr);
+
+    //[DllImport("ocgcore.dll", CallingConvention = CallingConvention.Cdecl)]
+    //public static extern IntPtr OCG_DuelQueryLocation(IntPtr pDuel, out uint length, ref OCG_QueryInfo info_ptr);
+
+    [DllImport("ocgcore.dll", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr OCG_DuelQueryField(IntPtr pDuel, out uint length);
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 28)]
