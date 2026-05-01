@@ -297,7 +297,7 @@ public static class DummyDeck
         92746535,
         31991800,
         94784213,
-        68395509
+        58577036
     ];
     
     private static List<uint> _extra =
@@ -333,6 +333,7 @@ public static class DummyDeck
     //Swordsoul Supreme Soverign - 96633955
     //Swordsoul Sinister Soverign - 47710198
     
+    //Reasoning - Announce Number -                       58577036
     //Pot of Duality - Decktop -                          98645731
     //Pot of Extravagance - Y/N -                         49238328
     //Gen - Invocar no campo do cara -                    52126602

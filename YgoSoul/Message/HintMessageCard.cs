@@ -5,14 +5,16 @@ namespace YgoSoul.Message;
 
 public class HintMessageCard : BaseMessage
 {
+    public byte Player { get; }
     public uint CardCode { get; }
-    public HintMessageCard(uint cardCode)
+    public HintMessageCard(byte player, uint cardCode)
     {
+        Player = player;
         CardCode = cardCode;
     }
 
     public override string ToString()
     {
-        return $"Hint: Card={CardLibrary.GetCard(CardCode).Name}";
+        return $"Hint: Player={Player} Card={CardLibrary.GetCard(CardCode).Name}";
     }
 }

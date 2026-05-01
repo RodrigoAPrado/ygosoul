@@ -6,14 +6,16 @@ namespace YgoSoul.Message;
 
 public class HintMessageAttribute : BaseMessage
 {
+    public byte Player { get; }
     public MonsterAttributes Attribute { get; }
-    public HintMessageAttribute(MonsterAttributes attribute)
+    public HintMessageAttribute(byte player, MonsterAttributes attribute)
     {
+        Player = player;
         Attribute = attribute;
     }
 
     public override string ToString()
     {
-        return $"Hint: Attribute={Attribute}";
+        return $"Hint: Player={Player} Attribute={Attribute}";
     }
 }

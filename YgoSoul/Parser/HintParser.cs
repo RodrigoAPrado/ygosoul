@@ -23,9 +23,10 @@ public class HintParser : BaseParser
             GameHintType.HintEvent => HandleHintEvent(reader, player),
             GameHintType.HintSelectMsg => new HintMessage($"Player {player}, {GetHintText(reader.ReadULong64())}..."),
             GameHintType.HintOpSelected => new HintMessage($"$Player {player}, choose {DescriptionHandler.GetDescription(reader.ReadULong64())}"),
-            GameHintType.HintCard => new HintMessageCard(reader.ReadUInt32()), // o resto dos 32 bits é tudo zerado
-            GameHintType.HintAttrib => new HintMessageAttribute((MonsterAttributes)reader.ReadUInt32()),
-            GameHintType.HintRace => new HintMessageRace((MonsterRaces)reader.ReadULong64()),
+            GameHintType.HintCard => new HintMessageCard(player, (uint)reader.ReadULong64()),
+            GameHintType.HintAttrib => new HintMessageAttribute(player, (MonsterAttributes)reader.ReadUInt32()),
+            GameHintType.HintRace => new HintMessageRace(player, (MonsterRaces)reader.ReadULong64()),
+            GameHintType.HintNumber => new HintMessageNumber(player, reader.ReadULong64()),
             _ => new UnknownMessage(buffer)
         };
     }

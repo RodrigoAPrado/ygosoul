@@ -95,6 +95,7 @@ public static class ParserFactory
             { GameMessage.AnnounceRace, announceRaceAttributeParser },
             { GameMessage.AnnounceAttrib, announceRaceAttributeParser },
             { GameMessage.AnnounceCard, new AnnounceCardParser() },
+            { GameMessage.AnnounceNumber, new AnnounceNumberParser() },
             { GameMessage.CardHint, basicParser },
             { GameMessage.PlayerHint, new PlayerHintParser() }
         };

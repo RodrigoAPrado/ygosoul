@@ -5,14 +5,16 @@ namespace YgoSoul.Message;
 
 public class HintMessageRace : BaseMessage
 {
+    public byte Player { get; }
     public MonsterRaces Race { get; }
-    public HintMessageRace(MonsterRaces race)
+    public HintMessageRace(byte player, MonsterRaces race)
     {
+        Player = player;
         Race = race;
     }
 
     public override string ToString()
     {
-        return $"Hint: Race={Race}";
+        return $"Hint: Player={Player}, Race={Race}";
     }
 }
