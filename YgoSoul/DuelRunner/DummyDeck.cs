@@ -192,6 +192,69 @@ public static class DummyDeck
         95134948, // 14 Dragonar Utopia
         63767246, // 15 38 Habinger
     ];
+
+    private static List<uint> _salaMain = 
+    [
+        26889158, // 01 Gazelle
+        26889158, // 02 Gazelle
+        11962031, // 03 Sala of Fire
+        11962031, // 04 Sala of Fire
+        52277807, // 05 Spinny
+        52277807, // 06 Spinny
+        52277807, // 07 Spinny
+        56003780, // 08 Jack Jaguar
+        57357130, // 09 Weasel
+        20618081, // 10 Falco
+        94620082, // 11 Foxy
+        67225377, // 12 Meer
+        52155219, // 13 Circle
+        52155219, // 14 Circle
+        52155219, // 15 Circle
+         1295111, // 16 Sanctuary
+        14934922, // 17 Rage
+        51339637, // 18 Roar
+        74652966, // 19 Code of Soul
+        80794697, // 20 Flame Buferlo
+        57160136, // 21 Cynet Mining
+        57160136, // 22 Cynet Mining
+        59438930, // 23 Ghost Ogre
+        59438930, // 24 Ghost Ogre
+        59438930, // 25 Ghost Ogre
+        14558127, // 26 Ash
+        14558127, // 27 Ash
+        14558127, // 28 Ash
+        97268402, // 29 Veiler
+        97268402, // 30 Veiler
+        97268402, // 31 Veiler
+        24224830, // 32 Called by
+        10045474, // 33 Imperm
+        10045474, // 34 Imperm
+        10045474, // 35 Imperm
+        26889158, // 36 Gazelle
+        11962031, // 37 Sala of Fire
+        57160136, // 38 Cynet Mining
+        80794697, // 39 Flame Buferlo
+        64178424, // 40 Will
+    ];
+
+    private static List<uint> _salaExtra =
+    [
+        14812471, // 01 Balelynx
+        14812471, // 02 Balelynx
+        87871125, // 03 Sunlight Wolf
+        87871125, // 04 Sunlight Wolf
+        57134592, // 05 Phoenix
+        57134592, // 06 Phoenix
+        87327776, // 07 Stallion
+        24842059, // 08 Linguriboh
+        88093706, // 09 Update Jammer
+        48815792, // 10 Hiita
+         2772337, // 11 Promethean Princess
+        46947713, // 12 Transcode Talker
+        61245672, // 13 Heatsoul
+        86066372, // 14 Accesscode
+        59859086, // 15 Splash Mage
+    ];
     
     private static List<uint> _cards =
     [
