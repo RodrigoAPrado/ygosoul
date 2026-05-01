@@ -22,6 +22,6 @@ public class RemoveCounterMessage : BaseMessage
 
     public override string ToString()
     {
-        return $"RemoveCounter, CounterType={CounterType}, Player={Player}, Location={Location} Sequence={Sequence}, Count={Count}";
+        return $"RemoveCounter, CounterType={(CounterType)CounterType}, Player={Player}, Location={Location} Sequence={Sequence}, Count={Count}";
     }
 }

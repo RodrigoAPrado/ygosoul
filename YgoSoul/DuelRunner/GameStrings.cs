@@ -3,8 +3,6 @@
 [Flags]
 public enum GameStrings : ulong
 {
-    None = 0,
-
     // --- Summons e Ações Básicas (1-7) ---
     NormalSummon = 0x1,             // 1
     SpecialSummon = 0x2,            // 2
@@ -272,7 +270,98 @@ SelectToPlaceCounter = 0x23C,   // 572
     RitualSummon = 0x493,           // 1171
     SynchroSummon = 0x494,          // 1172
     XyzSummon = 0x495,              // 1173
-    LinkSummon = 0x496              // 1174
+    LinkSummon = 0x496,             // 1174
+    
+    // --- Proteção: Geral (3000-3013) ---
+    CannotBeDestroyedByBattle = 3000,
+    CannotBeDestroyedByCardEffects = 3001,
+    CannotBeTargetedByCardEffects = 3002,
+    CannotBeTargetedByMonsterEffects = 3003,
+    CannotBeTargetedBySpellEffects = 3004,
+    CannotBeTargetedByTrapEffects = 3005,
+    CannotBeTargetedBySpellTrapEffects = 3006,
+    CannotBeTargetedForAnAttack = 3007,
+    CannotBeDestroyedByBattleOrCardEffects = 3008,
+    CannotBeTargetedOrDestroyedByCardEffects = 3009,
+    CannotBeDestroyedByMonsterEffects = 3010,
+    CannotBeDestroyedBySpellEffects = 3011,
+    CannotBeDestroyedByTrapEffects = 3012,
+    CannotBeDestroyedBySpellTrapEffects = 3013,
+
+    // --- Proteção: Própria (3030-3037) ---
+    CannotBeDestroyedByYourCardEffects = 3030,
+    CannotBeTargetedByYourCardEffects = 3031,
+    CannotBeTargetedByYourMonsterEffects = 3032,
+    CannotBeTargetedByYourSpellEffects = 3033,
+    CannotBeTargetedByYourTrapEffects = 3034,
+    CannotBeTargetedByYourSpellTrapEffects = 3035,
+    CannotBeDestroyedByBattleOrYourCardEffects = 3036,
+    CannotBeTargetedOrDestroyedByYourCardEffects = 3037,
+
+    // --- Proteção: Oponente (3060-3067) ---
+    CannotBeDestroyedByOpponentCardEffects = 3060,
+    CannotBeTargetedByOpponentCardEffects = 3061,
+    CannotBeTargetedByOpponentMonsterEffects = 3062,
+    CannotBeTargetedByOpponentSpellEffects = 3063,
+    CannotBeTargetedByOpponentTrapEffects = 3064,
+    CannotBeTargetedByOpponentSpellTrapEffects = 3065,
+    CannotBeDestroyedByBattleOrOpponentCardEffects = 3066,
+    CannotBeTargetedOrDestroyedByOpponentCardEffects = 3067,
+
+    // --- Não Afetado: Geral (3100-3104) ---
+    UnaffectedByOtherCardEffects = 3100,
+    UnaffectedByMonsterEffects = 3101,
+    UnaffectedBySpellEffects = 3102,
+    UnaffectedByTrapEffects = 3103,
+    UnaffectedBySpellTrapEffects = 3104,
+
+    // --- Não Afetado: Própria (3105-3109) ---
+    UnaffectedByYourCardEffects = 3105,
+    UnaffectedByYourMonsterEffects = 3106,
+    UnaffectedByYourSpellEffects = 3107,
+    UnaffectedByYourTrapEffects = 3108,
+    UnaffectedByYourSpellTrapEffects = 3109,
+
+    // --- Não Afetado: Oponente (3110-3114) ---
+    UnaffectedByOpponentEffects = 3110,
+    UnaffectedByOpponentMonsterEffects = 3111,
+    UnaffectedByOpponentSpellEffects = 3112,
+    UnaffectedByOpponentTrapEffects = 3113,
+    UnaffectedByOpponentSpellTrapEffects = 3114,
+
+    // --- Relacionado a Batalha (3200-3214) ---
+    MustAttackIfAble = 3200,
+    CanMakeASecondAttack = 3201,
+    CanMakeASecondAttackOnMonsters = 3202,
+    CanMakeASecondAttackInARow = 3203,
+    CanMakeASecondAttackOnMonstersInARow = 3204,
+    CanAttackDirectly = 3205,
+    CannotAttack = 3206,
+    CannotAttackDirectly = 3207,
+    InflictsPiercingBattleDamage = 3208,
+    InflictsDoubleBattleDamage = 3209,
+    TakeNoBattleDamageInvolvingThisCard = 3210,
+    OpponentAlsoTakesBattleDamageInvolvingThisCard = 3211,
+    OpponentTakesBattleDamageInvolvingThisCardInstead = 3212,
+    NeitherPlayerTakesBattleDamageInvolvingThisCard = 3213,
+    OpponentTakesNoBattleDamageInvolvingThisCard = 3214,
+
+    // --- Diversos (3300-3314) ---
+    BanishItWhenItLeavesTheField = 3300,
+    ReturnItToDeckWhenItLeavesTheField = 3301,
+    CannotActivateItsEffects = 3302,
+    CannotBeTributed = 3303,
+    CannotBeTributedForATributeSummon = 3304,
+    CannotBeDiscarded = 3305,
+    CannotBeBanishied = 3306,
+    CannotBeRespondedTo = 3307,
+    CannotBeNegated = 3308,
+    CannotBeUsedAsFusionMaterial = 3309,
+    CannotBeUsedAsSynchroMaterial = 3310,
+    CannotBeUsedAsXyzMaterial = 3311,
+    CannotBeUsedAsLinkMaterial = 3312,
+    CannotChangeItsBattlePosition = 3313,
+    CannotApplyItsEffects = 3314
 }
 
 /*

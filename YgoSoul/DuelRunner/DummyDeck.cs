@@ -419,21 +419,23 @@ Hint message. Content: 02-03-01-01-00-60-44-C1-46-00-00
     
     public static List<OCG_NewCardInfo> CreateDeck(byte team, int deck, bool randomize)
     {
-        if (deck is > 2 or < 0)
+        if (deck is > 3 or < 0)
             return CreateDeck(team, randomize);
         
         var m = deck switch
         {
             0 => _brandedMain,
             1 => _utopiaMain,
-            2 => _kewlTuneMain
+            2 => _kewlTuneMain,
+            3 => _salaMain
         };
         
         var e = deck switch
         {
             0 => _brandedExtra,
             1 => _utopiaExtra,
-            2 => _kewlTuneExtra
+            2 => _kewlTuneExtra,
+            3 => _salaExtra
         };
         
         var list = m.Select(card => CreateCard(team, card)).ToList();

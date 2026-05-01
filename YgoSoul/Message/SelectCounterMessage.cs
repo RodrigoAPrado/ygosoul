@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using YgoSoul.DuelRunner;
+using YgoSoul.Flag;
 using YgoSoul.Message.Abstr;
 using YgoSoul.Message.Component;
 using YgoSoul.Message.Enum;
@@ -56,7 +57,7 @@ public class SelectCounterMessage : ISelectionsMessage
     public override string ToString()
     {
         var sb = new StringBuilder();
-        sb.AppendLine($"Selec counter from cards, you need {CounterAmount} counters.");
+        sb.AppendLine($"Selec counter from cards, you need {(CounterType)CounterAmount} counters.");
         foreach (var c in Cards)
         {
             sb.AppendLine($"{CardLibrary.GetCard(c.CardCode).Name} has {c.CounterAmount} counters...");

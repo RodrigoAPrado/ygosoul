@@ -22,6 +22,6 @@ public class AddCounterMessage : BaseMessage
 
     public override string ToString()
     {
-        return $"AddCounter, CounterType={CounterType}, Player={Player}, Location={Location} Sequence={Sequence}, Count={Count}";
+        return $"AddCounter, CounterType={(CounterType)CounterType}, Player={Player}, Location={Location} Sequence={Sequence}, Count={Count}";
     }
 }
