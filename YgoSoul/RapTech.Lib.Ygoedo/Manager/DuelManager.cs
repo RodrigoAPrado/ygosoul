@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using YgoSoul.RapTech.Lib.Ygoedo.Api;
 using YgoSoul.RapTech.Lib.Ygoedo.Factory;
 using YgoSoul.RapTech.Lib.Ygoedo.Handler;
 using YgoSoul.RapTech.Lib.Ygoedo.Handler.Enum;
@@ -11,7 +12,7 @@ using YgoSoul.RapTech.Lib.Ygoedo.Query;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.DuelRunner;
 
-public class DuelRunner
+public class DuelManager
 {
     private static DataReader _dataReader;
     private static ScriptReader _scriptReader;
@@ -26,7 +27,7 @@ public class DuelRunner
     {
         
         // 1. Verifique a versão (Bom para testar se a DLL carregou)
-        OcgApi.OCG_GetVersion(out int major, out int minor);
+        OCG_Api.Setup.OCG_GetVersion(out int major, out int minor);
         Console.WriteLine($"OCGCore Version: {major}.{minor}");
 
         // Inicializa banco de dados
@@ -59,12 +60,12 @@ public class DuelRunner
 
         // 4. Criação do Duelo
         IntPtr pDuel;
-        if (OcgApi.OCG_CreateDuel(out pDuel, ref options) == 0)
+        if (OCG_Api.Setup.OCG_CreateDuel(out pDuel, ref options) == 0)
         {
             LoadBaseScripts(pDuel);
             CreateDecks(pDuel);
             RodarDuelo(pDuel);
-            OcgApi.OCG_DestroyDuel(pDuel);
+            OCG_Api.Setup.OCG_DestroyDuel(pDuel);
         }
     }
 
@@ -95,7 +96,7 @@ public class DuelRunner
 
         Console.WriteLine($"[LOAD] {normalizedName}");
 
-        return OcgApi.OCG_LoadScript(
+        return OCG_Api.Setup.OCG_LoadScript(
             pDuel,
             content,
             (uint)content.Length,
@@ -159,9 +160,9 @@ public class DuelRunner
         CreateDeck(pDuel, 1, -1, false);
         
         // 0x01 é LOCATION_DECK
-        var quantidadeNoDeck0 = OcgApi.OCG_DuelQueryCount(pDuel, 0, 0x01);
+        var quantidadeNoDeck0 = OCG_Api.Query.OCG_DuelQueryCount(pDuel, 0, 0x01);
         Console.WriteLine($"Player 0 MAINDECK Size: {quantidadeNoDeck0}");
-        var quantidadeNoDeck1 = OcgApi.OCG_DuelQueryCount(pDuel, 1, 0x01);
+        var quantidadeNoDeck1 = OCG_Api.Query.OCG_DuelQueryCount(pDuel, 1, 0x01);
         Console.WriteLine($"Player 1 MAINDECK Size: {quantidadeNoDeck1}");
     }
 
@@ -171,13 +172,13 @@ public class DuelRunner
         foreach (var card in deck)
         {
             var ocgNewCardInfo = card;
-            OcgApi.OCG_DuelNewCard(pDuel, ref ocgNewCardInfo);
+            OCG_Api.Setup.OCG_DuelNewCard(pDuel, ref ocgNewCardInfo);
         }
     }
     
     static void RodarDuelo(IntPtr pDuel)
     {
-        OcgApi.OCG_StartDuel(pDuel);
+        OCG_Api.Setup.OCG_StartDuel(pDuel);
         Console.WriteLine("--- DUEL STARTED ---");
 
         bool duelando = true;
@@ -185,9 +186,9 @@ public class DuelRunner
 
         while (duelando)
         {
-            int status = OcgApi.OCG_DuelProcess(pDuel);
+            int status = OCG_Api.Run.OCG_DuelProcess(pDuel);
             uint length;
-            IntPtr messagePtr = OcgApi.OCG_DuelGetMessage(pDuel, out length);
+            IntPtr messagePtr = OCG_Api.Run.OCG_DuelGetMessage(pDuel, out length);
             if (length > 0)
             {
                 // 1. Criamos um array de bytes no C# com o tamanho que a DLL nos deu
@@ -285,7 +286,7 @@ public class DuelRunner
             }
         } while (response.Length == 0);
 
-        OcgApi.OCG_DuelSetResponse(pDuel, response, (uint) response.Length); 
+        OCG_Api.Run.OCG_DuelSetResponse(pDuel, response, (uint) response.Length); 
     }
 
     private static void HandlePlayerInputConfirmation(IntPtr pDuel)
@@ -335,7 +336,7 @@ public class DuelRunner
                 }
             }
         } while (response.Length == 0);
-        OcgApi.OCG_DuelSetResponse(pDuel, response, (uint) response.Length); 
+        OCG_Api.Run.OCG_DuelSetResponse(pDuel, response, (uint) response.Length); 
     }
 
     private static void HandlePlayerSelectChain(IntPtr pDuel)
@@ -365,7 +366,7 @@ public class DuelRunner
             }
         } while (response.Length == 0);
 
-        OcgApi.OCG_DuelSetResponse(pDuel, response, (uint) response.Length); 
+        OCG_Api.Run.OCG_DuelSetResponse(pDuel, response, (uint) response.Length); 
     }
 
     private static void HandlePlayerInputSort(IntPtr pDuel)
@@ -413,7 +414,7 @@ public class DuelRunner
             Console.WriteLine("--- INVALID CHOICE ---");
         } while (response.Length == 0);
 
-        OcgApi.OCG_DuelSetResponse(pDuel, response, (uint) response.Length); 
+        OCG_Api.Run.OCG_DuelSetResponse(pDuel, response, (uint) response.Length); 
     }
 
     private static void HandlePlayerInputSelections(IntPtr pDuel)
@@ -488,12 +489,12 @@ public class DuelRunner
             HandlePlayerInputSelections(pDuel);
             return;
         }
-        OcgApi.OCG_DuelSetResponse(pDuel, response, (uint) response.Length); 
+        OCG_Api.Run.OCG_DuelSetResponse(pDuel, response, (uint) response.Length); 
     }
 
     private static void QueryField(IntPtr pDuel)
     {
-        var query = OcgApi.OCG_DuelQueryField(pDuel, out var length);
+        var query = OCG_Api.Query.OCG_DuelQueryField(pDuel, out var length);
         var data = new byte[length];
         Marshal.Copy(query, data, 0, (int)length);
         Console.WriteLine($"Query Raw: {BitConverter.ToString(data)}");

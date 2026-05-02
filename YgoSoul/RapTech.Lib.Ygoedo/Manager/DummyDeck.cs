@@ -1,4 +1,5 @@
-﻿using YgoSoul.RapTech.Lib.Ygoedo.Flag;
+﻿using YgoSoul.RapTech.Lib.Ygoedo.Api;
+using YgoSoul.RapTech.Lib.Ygoedo.Flag;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.DuelRunner;
 
