@@ -27,6 +27,7 @@ public class HintParser : BaseParser
             GameHintType.HintAttrib => new HintMessageAttribute(player, (MonsterAttributes)reader.ReadUInt32()),
             GameHintType.HintRace => new HintMessageRace(player, (MonsterRaces)reader.ReadULong64()),
             GameHintType.HintNumber => new HintMessageNumber(player, reader.ReadULong64()),
+            GameHintType.HintCode => new HintMessageCode(player, (uint)reader.ReadULong64()),
             _ => new UnknownMessage(buffer)
         };
     }

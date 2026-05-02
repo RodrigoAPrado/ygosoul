@@ -276,7 +276,7 @@ public static class DummyDeck
         6728559,
         02483611,
         02483611,
-        06740720,
+        25131968,
         25131968,
         25131968,
         60862676,
@@ -294,15 +294,16 @@ public static class DummyDeck
         43096270,
         43096270,
         17484499,
-        79571449,
-        63136489,
-        23076639,
-        55461744
+        42941100,
+        79335209,
+        12482652,
+        24094653
     ];
     
     private static List<uint> _extra =
     [
-        1769875
+        1769875,
+        90140980
         /*
         37818794,
         37818794,
@@ -318,6 +319,11 @@ public static class DummyDeck
         78917791*/
     ];
     
+    //Ojama Yellow - 42941100
+    //Ojama Black - 79335209
+    //Ojama Green - 12482652
+    //Polymerization - 24094653
+    //Ojama King - 90140980
     //Big-Winged Berfomet - 55461744
     //Gazelle the King of Mythical Claws - 23076639
     //Chimera the King of Phantom Beasts - 1769875
