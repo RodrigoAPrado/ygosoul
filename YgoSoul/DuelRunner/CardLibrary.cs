@@ -18,7 +18,7 @@ public static class CardLibrary
 
     public static CardData GetCard(uint code)
     {
-        return Cards[code];
+        return code == 0 ? CardData.GetEmpty() : Cards[code];
     }
 
     public static IReadOnlyDictionary<uint, CardData> AllCards()
@@ -34,6 +34,7 @@ public class CardData
     public string Description { get; }
     public IReadOnlyList<string> Strings { get; }
     public ulong Category { get; }
+    private static readonly CardData EmptyData = new CardData(new OCG_CardData(), "Monster", "", [], 0);
 
     public CardData(OCG_CardData data, string name, string description, List<string> strings, ulong category)
     {
@@ -42,5 +43,10 @@ public class CardData
         Description = description;
         Strings = strings;
         Category = category;
+    }
+
+    public static CardData GetEmpty()
+    {
+        return EmptyData;
     }
 }

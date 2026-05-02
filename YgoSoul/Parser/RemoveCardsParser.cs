@@ -1,0 +1,29 @@
+﻿using YgoSoul.Flag;
+using YgoSoul.Message;
+using YgoSoul.Message.Abstr;
+using YgoSoul.Message.Component;
+using YgoSoul.Parser.Abstr;
+using YgoSoul.Util;
+
+namespace YgoSoul.Parser;
+
+public class RemoveCardsParser : BaseParser
+{
+    protected override IMessage DoParse(byte[] buffer)
+    {
+        var reader = new PacketReader(buffer);
+        reader.ReadByte();//msg
+        var size = reader.ReadUInt32();
+        var list = new List<FullLocationReference>();
+        for (var i = size; i > 0; i--)
+        {
+            list.Add(new FullLocationReference(
+                reader.ReadByte(), 
+                (CardLocation)reader.ReadByte(),
+                reader.ReadUInt32(),
+                (CardPosition) reader.ReadUInt32()));
+        }
+
+        return new RemoveCardsMessage(list);
+    }
+}

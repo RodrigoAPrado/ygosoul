@@ -237,6 +237,9 @@ public class DuelRunner
         
         switch (MessageHandler.MessageRequiringInput.Input)
         {
+            case InputType.Win:
+                Console.WriteLine("--- DUEL WIN! ---");
+                return false;
             case InputType.Value:
                 HandlePlayerInputValue(pDuel);
                 break;
@@ -255,9 +258,6 @@ public class DuelRunner
             case InputType.AnnounceCard:
                 HandleAnnounceCard(pDuel);
                 break;
-            case InputType.Win:
-                Console.WriteLine("--- DUEL WIN! ---");
-                return false;
             default:
                 throw new ArgumentOutOfRangeException();
         }

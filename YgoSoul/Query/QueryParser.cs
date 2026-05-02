@@ -1,4 +1,5 @@
 ﻿using YgoSoul.Flag;
+using YgoSoul.Message.Component;
 using YgoSoul.Query.Component;
 using YgoSoul.Util;
 
@@ -33,6 +34,26 @@ public class QueryParser
                 reader.ReadUInt32(),
                 reader.ReadUInt32()));
         }
+
+        var chainSize = reader.ReadUInt32();
+        var chainList = new List<FieldQueryChain>();
+        for (var i = chainSize; i > 0; i--)
+        {
+            chainList.Add(new FieldQueryChain(
+                reader.ReadUInt32(),
+                new FullLocationReference(
+                    reader.ReadByte(), 
+                    (CardLocation) reader.ReadByte(), 
+                    reader.ReadUInt32(), 
+                    (CardPosition)reader.ReadUInt32()
+                ),
+                reader.ReadByte(),
+                (CardLocation) reader.ReadByte(),
+                reader.ReadUInt32(),
+                reader.ReadULong64()
+                ));
+        }
+        fieldBuilder.AddFieldQueryChain(chainList);
 
         return fieldBuilder.Build();
     }

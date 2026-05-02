@@ -1,0 +1,44 @@
+﻿using YgoSoul.DuelRunner;
+using YgoSoul.Flag;
+using YgoSoul.Handler;
+using YgoSoul.Message.Component;
+
+namespace YgoSoul.Query.Component;
+
+public class FieldQueryChain
+{
+    public uint CardCode { get; }
+    public FullLocationReference Location { get; }
+    public byte TriggerController { get; }
+    public CardLocation TriggerLocation { get; }
+    public uint TriggerSequence { get; }
+    public ulong Description { get; }
+
+    public FieldQueryChain(
+        uint cardCode, 
+        FullLocationReference location, 
+        byte triggerController, 
+        CardLocation triggerLocation, 
+        uint triggerSequence, 
+        ulong description
+        )
+    {
+        CardCode = cardCode;
+        Location = location;
+        TriggerController = triggerController;
+        TriggerLocation = triggerLocation;
+        TriggerSequence = triggerSequence;
+        Description = description;
+    }
+
+    public override string ToString()
+    {
+        return $"FieldQueryChain=[Card={CardLibrary.GetCard(CardCode).Name}, " +
+               $"Location=[{Location}], " +
+               $"TriggerController={TriggerController}, " +
+               $"TriggerLocation={TriggerLocation}, " +
+               $"TriggerSequence={TriggerSequence}], " +
+               $"Description={DescriptionHandler.GetDescription(Description)}," +
+               $"DescriptionHex={Description:x16}]";
+    }
+}

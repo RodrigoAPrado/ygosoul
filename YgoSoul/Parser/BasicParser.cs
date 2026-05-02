@@ -129,12 +129,14 @@ public class BasicParser : BaseParser
                     );
             case GameMessage.CardHint:
                 return new CardHintMessage(new FullLocationReference(
-                    reader.ReadByte(), 
-                    (CardLocation) reader.ReadByte(),
-                    reader.ReadUInt32(),
-                    (CardPosition) reader.ReadUInt32()),
+                        reader.ReadByte(), 
+                        (CardLocation) reader.ReadByte(),
+                        reader.ReadUInt32(),
+                        (CardPosition) reader.ReadUInt32()),
                     (CardHint) reader.ReadByte(),
                     reader.ReadULong64());
+            case GameMessage.MatchKill:
+                return new MatchKillMessage(reader.ReadUInt32());
             default:
                 return new UnknownMessage(buffer);
         }

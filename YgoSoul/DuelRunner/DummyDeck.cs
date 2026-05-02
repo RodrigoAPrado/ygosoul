@@ -259,9 +259,9 @@ public static class DummyDeck
     private static List<uint> _cards =
     [
         74677422,
-        00032864,
-        00032864,
-        23431858,
+        5318639,
+        5318639,
+        5318639,
         00549481,
         00549481,
         01184620,
@@ -291,17 +291,18 @@ public static class DummyDeck
         97590747,
         97590747,
         97590747,
-        46986414,
-        46986414,
-        59197169,
-        92746535,
-        31991800,
-        94784213,
-        58577036
+        43096270,
+        43096270,
+        17484499,
+        79571449,
+        63136489,
+        23076639,
+        55461744
     ];
     
     private static List<uint> _extra =
     [
+        1769875
         /*
         37818794,
         37818794,
@@ -317,6 +318,11 @@ public static class DummyDeck
         78917791*/
     ];
     
+    //Big-Winged Berfomet - 55461744
+    //Gazelle the King of Mythical Claws - 23076639
+    //Chimera the King of Phantom Beasts - 1769875
+    //Chimera Fusion - 63136489
+    //Alexandrite Dragon - 43096270
     //Gold Sarcophagus - 75500286
     //Archnemesis Protos - 6728559
     //Tenyi Vishuda - 23431858
@@ -333,6 +339,9 @@ public static class DummyDeck
     //Swordsoul Supreme Soverign - 96633955
     //Swordsoul Sinister Soverign - 47710198
     
+    //Magical Hats - -                                    81210420
+    //Mystical Space Typhoon - -                           5318639
+    //Evenly Matched - Remove Cards -                     15693423
     //Reasoning - Announce Number -                       58577036
     //Pot of Duality - Decktop -                          98645731
     //Pot of Extravagance - Y/N -                         49238328

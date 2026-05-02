@@ -48,6 +48,8 @@ public static class ParserFactory
             { GameMessage.ConfirmCards, confirmCardParser },
             { GameMessage.ShuffleDeck, basicParser },
             { GameMessage.ShuffleHand,  shuffleCardsParser},
+            { GameMessage.SwapGraveDeck, new SwapGraveDeckParser() },
+            { GameMessage.ShuffleSetCard, new ShuffleSetCardParser() },
             { GameMessage.ReverseDeck, basicParser },
             { GameMessage.DeckTop, basicParser},
             { GameMessage.ShuffleExtra, shuffleCardsParser },
@@ -73,6 +75,7 @@ public static class ParserFactory
             { GameMessage.ChainNegated, basicParser },
             { GameMessage.ChainDisabled, basicParser },
             { GameMessage.CardSelected, positionListParser },
+            { GameMessage.RandomSelected, new RandomSelectedParser() },
             { GameMessage.BecomeTarget, positionListParser },
             { GameMessage.Draw, new DrawParser() },
             { GameMessage.Damage, basicParser },
@@ -97,7 +100,9 @@ public static class ParserFactory
             { GameMessage.AnnounceCard, new AnnounceCardParser() },
             { GameMessage.AnnounceNumber, new AnnounceNumberParser() },
             { GameMessage.CardHint, basicParser },
-            { GameMessage.PlayerHint, new PlayerHintParser() }
+            { GameMessage.PlayerHint, new PlayerHintParser() },
+            { GameMessage.MatchKill, basicParser },
+            { GameMessage.RemoveCards, new RemoveCardsParser() }
         };
     }
 }
