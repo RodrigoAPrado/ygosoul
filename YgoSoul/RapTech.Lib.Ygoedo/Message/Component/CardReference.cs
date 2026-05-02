@@ -1,0 +1,38 @@
+﻿using YgoSoul.RapTech.Lib.Ygoedo.DuelRunner;
+using YgoSoul.RapTech.Lib.Ygoedo.Flag;
+
+namespace YgoSoul.RapTech.Lib.Ygoedo.Message.Component;
+
+public class CardReference
+{
+    public uint CardCode { get; }
+    public byte Controller { get; }
+    public CardLocation Location { get; }
+    public uint Sequence { get; }
+    public CardPosition Position { get; }
+    public uint Index { get; }
+    public byte ReleaseValue { get; set; }
+    public ushort CounterAmount { get; set; }
+    public ulong Sum { get; set; }
+
+    public CardReference(
+        uint cardCode,
+        byte controller,
+        CardLocation location,
+        uint sequence,
+        CardPosition position,
+        uint index)
+    {
+        CardCode = cardCode;
+        Controller = controller;
+        Location = location;
+        Sequence = sequence;
+        Position = position;
+        Index = index;
+    }
+
+    public override string ToString()
+    {
+        return $"{CardLibrary.GetCard(CardCode).Name}, Location={Location}, Sequence={Sequence}, Position={Position}, Index={Index}";
+    }
+}

@@ -1,18 +1,7 @@
-﻿using System.Runtime.InteropServices;
-using System.Text;
-using Microsoft.Data.Sqlite;
-using YgoSoul;
-using YgoSoul.CardDownloader;
-using YgoSoul.DuelRunner;
-using YgoSoul.Factory;
-using YgoSoul.Handler;
-using YgoSoul.Handler.Enum;
-using YgoSoul.Message;
-using YgoSoul.Message.Abstr;
-using YgoSoul.Message.Component;
-using YgoSoul.Message.Enum;
-using YgoSoul.Parser;
-using YgoSoul.Parser.Abstr;
+﻿using YgoSoul.CardDownloader;
+using YgoSoul.RapTech.Lib.Ygoedo.DuelRunner;
+
+namespace YgoSoul;
 
 class Program
 {
