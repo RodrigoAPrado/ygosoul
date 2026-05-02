@@ -26,6 +26,16 @@ public class ZoneUtils
         { Zone.OpponentMonster2, CardLocation.MonsterZone },
         { Zone.OpponentMonster3, CardLocation.MonsterZone },
         { Zone.OpponentMonster4, CardLocation.MonsterZone },
+        { Zone.OpponentExtraMonsterZone0, CardLocation.MonsterZone },
+        { Zone.OpponentExtraMonsterZone1, CardLocation.MonsterZone },
+        { Zone.OpponentSpellTrap0, CardLocation.SpellTrapZone },
+        { Zone.OpponentSpellTrap1, CardLocation.SpellTrapZone },
+        { Zone.OpponentSpellTrap2, CardLocation.SpellTrapZone },
+        { Zone.OpponentSpellTrap3, CardLocation.SpellTrapZone },
+        { Zone.OpponentSpellTrap4, CardLocation.SpellTrapZone },
+        { Zone.OpponentFieldZone, CardLocation.SpellTrapZone },
+        { Zone.OpponentPendulum0, CardLocation.SpellTrapZone },
+        { Zone.OpponentPendulum1, CardLocation.SpellTrapZone },
     };
 
     public static readonly Dictionary<Zone, uint> ZoneIndexInput = new()
@@ -50,6 +60,16 @@ public class ZoneUtils
         { Zone.OpponentMonster2, 2 },
         { Zone.OpponentMonster3, 3 },
         { Zone.OpponentMonster4, 4 },
+        { Zone.OpponentExtraMonsterZone0, 5 },
+        { Zone.OpponentExtraMonsterZone1, 6 },
+        { Zone.OpponentSpellTrap0, 0 },
+        { Zone.OpponentSpellTrap1, 1 },
+        { Zone.OpponentSpellTrap2, 2 },
+        { Zone.OpponentSpellTrap3, 3 },
+        { Zone.OpponentSpellTrap4, 4 },
+        { Zone.OpponentFieldZone, 5 },
+        { Zone.OpponentPendulum0, 6 },
+        { Zone.OpponentPendulum1, 7 },
     };
     
     public static readonly List<Zone> ZoneIndexQuery =
@@ -68,11 +88,6 @@ public class ZoneUtils
         Zone.SpellTrap4,
         Zone.FieldZone,
         Zone.Pendulum0,
-        Zone.Pendulum1,
-        Zone.OpponentMonster0,
-        Zone.OpponentMonster1,
-        Zone.OpponentMonster2,
-        Zone.OpponentMonster3,
-        Zone.OpponentMonster4,
+        Zone.Pendulum1
     ];
 }

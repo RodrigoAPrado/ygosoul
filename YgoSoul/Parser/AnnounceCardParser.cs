@@ -35,7 +35,7 @@ public class AnnounceCardParser : BaseParser
                 availableCards.Add((card.Value.Name, card.Value.Data.code));
             }
         }
-
+        
         return new AnnounceCardMessage(player, availableCards);
     }
 }

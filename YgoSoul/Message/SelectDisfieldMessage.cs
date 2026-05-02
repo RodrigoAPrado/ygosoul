@@ -2,21 +2,20 @@
 using YgoSoul.Flag;
 using YgoSoul.Message.Abstr;
 using YgoSoul.Message.Enum;
-using YgoSoul.Parser;
 using YgoSoul.Util;
 
 namespace YgoSoul.Message;
 
-public class SelectPlaceMessage : IMessage
+public class SelectDisfieldMessage : IMessage
 {
     public InputType Input => InputType.Value;
     public int InputCount => Choices.Count;
-    
+
     public byte Player { get; }
     public uint Amount { get; }
     public IReadOnlyList<Zone> Choices { get; }
 
-    public SelectPlaceMessage(byte player, uint amount, List<Zone> choices)
+    public SelectDisfieldMessage(byte player, uint amount, List<Zone> choices)
     {
         Player = player;
         Amount = amount;
@@ -25,18 +24,17 @@ public class SelectPlaceMessage : IMessage
 
     public byte[] GetResponse(int id)
     {
-        if(id < 0 || id >= Choices.Count)
+        if (id < 0 || id >= Choices.Count)
             return [];
-        
+
         var zone = Choices[id];
-        if(!ZoneUtils.ZoneLocation.ContainsKey(zone) 
-           || !ZoneUtils.ZoneIndexInput.ContainsKey(zone))
+        if (!ZoneUtils.ZoneLocation.ContainsKey(zone)
+            || !ZoneUtils.ZoneIndexInput.ContainsKey(zone))
             return [];
-        
+
         var response = new byte[3];
         response[1] = (byte)ZoneUtils.ZoneLocation[zone];
         response[2] = (byte)ZoneUtils.ZoneIndexInput[zone];
-        
         if(ZoneUtils.ZoneIndexQuery.Contains(zone))
             response[0] = Player;
         else
@@ -54,6 +52,7 @@ public class SelectPlaceMessage : IMessage
         {
             sb.AppendLine($"{i} -> Place card on {Choices[i]}");
         }
+
         return sb.ToString();
     }
 }

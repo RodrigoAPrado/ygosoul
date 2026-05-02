@@ -53,26 +53,26 @@ public enum AnnounceCardOpcode : ulong
  * Mind Crush
  * Lullaby of Obedience
  * Gunkan Suship Catch-of-the-Day
- * Gravekeeper's Trap
- * Goddess Urd's Verdict
+ * Gravekeeper's Trap -
+ * Goddess Urd's Verdict -
  * Dirge of the Lost Dragon
  * Dark Designator
  * D.D. Designator
  * Crossout Designator
  * Cloak and Dagger
  * The Black Goat Laughs
- * Artmage Academic Arcane Arts Acropolis
+ * Artmage Academic Arcane Arts Acropolis -
  * Archfiend's Oath
  */
  
  /*
   * Akashic Magician
   * Alsei, the Sylvan High Protector
-  * Ancient Gear Gadget
+  * Ancient Gear Gadget - 
   * Engraver of the Mask
   * GIshki Diviner
   * Great Phantom Thief
-  * Ma'at
+  * Ma'at - 
   * Psi-Blocker
   * The Suppression Pluto
   */

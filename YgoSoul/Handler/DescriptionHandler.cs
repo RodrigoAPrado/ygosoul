@@ -10,6 +10,9 @@ public class DescriptionHandler
     {
         try
         {
+            if(value == 0) 
+                return "Activate";
+
             var buffer = BitConverter.GetBytes(value);
             var reader = new PacketReader(buffer);
             var stringId = reader.ReadUInt16();
@@ -19,9 +22,6 @@ public class DescriptionHandler
             
             if (CardLibrary.HasCard(cardId))
             {
-                if (cardId == 0)
-                    return "Activate";
-                
                 return CardLibrary.GetCard(cardId).Strings[stringId];
             }
 

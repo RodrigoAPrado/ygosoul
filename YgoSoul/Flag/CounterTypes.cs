@@ -95,5 +95,6 @@ public enum CounterType : uint
     UrsarcticRadiation = 0x209,
     Piece = 0x20a,
     PrisonerOfDestiny = 0x20b,
-    GGolem = 0x20c
+    GGolem = 0x20c,
+    Suship = 0x20d
 }

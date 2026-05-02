@@ -1,4 +1,5 @@
-﻿using YgoSoul.Flag;
+﻿using YgoSoul.DuelRunner;
+using YgoSoul.Flag;
 using YgoSoul.Message;
 using YgoSoul.Message.Abstr;
 using YgoSoul.Parser.Abstr;
@@ -11,7 +12,7 @@ public class SelectPlaceParser : BaseParser
     protected override IMessage DoParse(byte[] buffer)
     {
         var reader = new PacketReader(buffer);
-        reader.ReadByte(); //msg
+        var msg = (GameMessage) reader.ReadByte();
         var player = reader.ReadByte();
         var amount = reader.ReadByte();
         var mask = reader.ReadUInt32();
@@ -25,7 +26,15 @@ public class SelectPlaceParser : BaseParser
                 zones.Add((Zone)(1u << i));
             }
         }
-        
-        return new SelectPlaceMessage(player, amount, zones);
+
+        switch (msg)
+        {
+            case GameMessage.SelectPlace:
+                return new SelectPlaceMessage(player, amount, zones);
+            case GameMessage.SelectDisfield:
+                return new SelectDisfieldMessage(player, amount, zones);
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 }
