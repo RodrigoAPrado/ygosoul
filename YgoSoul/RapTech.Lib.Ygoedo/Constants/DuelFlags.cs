@@ -1,7 +1,7 @@
 ﻿namespace YgoSoul.RapTech.Lib.Ygoedo.DuelRunner;
 
 [Flags]
-public enum DuelOptions : ulong
+public enum DuelFlags : ulong
 {
     // --- Flags Individuais ---
     TestMode = 0x01,

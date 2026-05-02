@@ -1,6 +1,5 @@
 ﻿namespace YgoSoul.RapTech.Lib.Ygoedo.Flag;
 
-[Flags]
 public enum PlayerIdleAction : uint
 {
     NormalSummon = 0,

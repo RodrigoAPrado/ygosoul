@@ -20,7 +20,7 @@ class Program
             switch (choice)
             {
                 case 0:
-                    DuelManager.RunDuel();
+                    OldDuelRunner.RunDuel();
                     break;
                 case 1:
                     CardImgDownloader.Download();

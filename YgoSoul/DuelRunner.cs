@@ -1,6 +1,9 @@
 ﻿namespace YgoSoul;
 
-public class DuelRunner
+public static class DuelRunner
 {
-    
+    public static void Run()
+    {
+        
+    }
 }

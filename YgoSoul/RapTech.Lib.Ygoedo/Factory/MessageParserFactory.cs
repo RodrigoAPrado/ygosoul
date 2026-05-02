@@ -5,7 +5,7 @@ using YgoSoul.RapTech.Lib.Ygoedo.Parser.Abstr;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.Factory;
 
-public static class ParserFactory
+public static class MessageParserFactory
 {
     public static Dictionary<GameMessage, IParser> CreateParsers()
     {

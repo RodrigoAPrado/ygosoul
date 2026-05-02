@@ -7,11 +7,14 @@ public static class OCG_Api
 {
     private const string DllName = "ocgcore";
 
-    public static class Setup
+    public static class Info
     {
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
         public static extern void OCG_GetVersion(out int major, out int minor);
-
+    }
+    
+    public static class Setup
+    {
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int OCG_CreateDuel(out IntPtr duel, ref OCG_DuelOptions options);
 
