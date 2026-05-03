@@ -45,7 +45,7 @@ public class MoveMessage : BaseMessage
     public override string ToString()
     {
         var sb = new StringBuilder();
-        sb.AppendLine($"Card {CardLibrary.GetCard(CardCode).Name} was with player {OldPlayer} on the " +
+        sb.AppendLine($"Card {CardLibrary.InternalGetCard(CardCode).Name} was with player {OldPlayer} on the " +
                       $"{OldLocation}, in sequence {OldSequence} and position {OldPosition}.");
         sb.AppendLine($"It moved to {NewLocation}, in sequence {NewSequence} and position " +
                       $"{NewPosition}, and is now controlled by {NewPlayer}, because of {Reason.ToString()}");

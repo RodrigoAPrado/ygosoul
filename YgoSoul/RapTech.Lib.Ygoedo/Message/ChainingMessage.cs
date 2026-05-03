@@ -35,7 +35,7 @@ public class ChainingMessage : BaseMessage
 
     public override string ToString()
     {
-        return $"Card {CardLibrary.GetCard(CardCode).Name} from " +
+        return $"Card {CardLibrary.InternalGetCard(CardCode).Name} from " +
                $"Player={Player}, Location={Location}, Sequence={Sequence}, Position={Position}, " +
                $"\nwas activated by Player={ActivationPlayer}, Location={ActivationLocation}, Sequence={ActivationSequence}, " +
                $"\nwith Description={DescriptionHandler.GetDescription(Description)}, Chain Size={ChainSize}";

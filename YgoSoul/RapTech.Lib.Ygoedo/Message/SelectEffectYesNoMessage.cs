@@ -31,6 +31,6 @@ public class SelectEffectYesNoMessage : IMessage
 
     public override string ToString()
     {
-        return $"\nPlayer {Player}, card effect for card {CardLibrary.GetCard(Card.CardCode).Name}. Description={DescriptionHandler.GetDescription(Description)}\n[0] - No\n[1] - Yes";
+        return $"\nPlayer {Player}, card effect for card {CardLibrary.InternalGetCard(Card.CardCode).Name}. Description={DescriptionHandler.GetDescription(Description)}\n[0] - No\n[1] - Yes";
     }
 }

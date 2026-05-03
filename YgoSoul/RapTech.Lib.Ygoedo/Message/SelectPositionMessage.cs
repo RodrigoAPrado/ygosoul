@@ -32,7 +32,7 @@ public class SelectPositionMessage : IMessage
     public override string ToString()
     {
         var sb = new StringBuilder();
-        sb.AppendLine($"Player {Player} select a position for card {CardLibrary.GetCard(CardCode).Name}:");
+        sb.AppendLine($"Player {Player} select a position for card {CardLibrary.InternalGetCard(CardCode).Name}:");
         for (var i = 0; i < PositionAvailable.Count; i++)
         {
             sb.AppendLine($"[{i}] => {PositionAvailable[i]}");

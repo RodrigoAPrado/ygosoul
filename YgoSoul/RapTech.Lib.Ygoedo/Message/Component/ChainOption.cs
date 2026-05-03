@@ -15,7 +15,7 @@ public class ChainOption
 
     public override string ToString()
     {
-        return $"Card={CardLibrary.GetCard(Code).Name}, Ctrl={Controller}, Loc={Location}, Seq={Sequence}, SubSeq={Position}. " +
+        return $"Card={CardLibrary.InternalGetCard(Code).Name}, Ctrl={Controller}, Loc={Location}, Seq={Sequence}, SubSeq={Position}. " +
                $"\nDesc={DescriptionHandler.GetDescription(Description)}";
     }
 }

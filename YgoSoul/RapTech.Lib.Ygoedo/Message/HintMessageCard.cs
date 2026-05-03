@@ -15,6 +15,6 @@ public class HintMessageCard : BaseMessage
 
     public override string ToString()
     {
-        return $"Hint: Player={Player} Card={CardLibrary.GetCard(CardCode).Name}";
+        return $"Hint: Player={Player} Card={CardLibrary.InternalGetCard(CardCode).Name}";
     }
 }

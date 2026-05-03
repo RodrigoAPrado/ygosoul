@@ -33,6 +33,6 @@ public class CardReference
 
     public override string ToString()
     {
-        return $"{CardLibrary.GetCard(CardCode).Name}, Location={Location}, Sequence={Sequence}, Position={Position}, Index={Index}";
+        return $"{CardLibrary.InternalGetCard(CardCode).Name}, Location={Location}, Sequence={Sequence}, Position={Position}, Index={Index}";
     }
 }

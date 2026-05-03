@@ -23,6 +23,6 @@ public class BattleCmdAttackChoice : BattleCmdChoiceCard
 
     public override string ToString()
     {
-        return $"to attack with {CardLibrary.GetCard(CardCode).Name}...";
+        return $"to attack with {CardLibrary.InternalGetCard(CardCode).Name}...";
     }
 }

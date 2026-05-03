@@ -23,7 +23,7 @@ public class SetMessage : BaseMessage
 
     public override string ToString()
     {
-        return $"{CardLibrary.GetCard(CardCode).Name} is being set for " +
+        return $"{CardLibrary.InternalGetCard(CardCode).Name} is being set for " +
                $"{Player} on {Location} in sequence {Sequence} and position {Position}";
     }
 }

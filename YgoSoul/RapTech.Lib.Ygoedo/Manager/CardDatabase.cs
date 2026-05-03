@@ -63,7 +63,7 @@ public class CardDatabase
 
     public static OCG_CardData GetCardData(uint code)
     {
-        var card = CardLibrary.GetCard(code);
+        var card = CardLibrary.InternalGetCard(code);
         return card.Data;
     }
 }

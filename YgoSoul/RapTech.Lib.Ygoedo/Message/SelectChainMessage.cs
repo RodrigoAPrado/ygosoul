@@ -93,7 +93,7 @@ public class SelectChainMessage : BaseMessage
             var e = Effects[i];
             var description = DescriptionHandler.GetDescription(e.Description);
             sb.AppendLine(
-                $"[{i}] => {CardLibrary.GetCard(e.Code).Name}'s effect, Controller={e.Controller}, " +
+                $"[{i}] => {CardLibrary.InternalGetCard(e.Code).Name}'s effect, Controller={e.Controller}, " +
                 $"Location={e.Location}, Seq={e.Sequence}, Desc={description}"
             );
         }

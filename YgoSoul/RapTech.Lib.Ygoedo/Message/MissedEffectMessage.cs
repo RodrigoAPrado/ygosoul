@@ -17,6 +17,6 @@ public class MissedEffectMessage : BaseMessage
 
     public override string ToString()
     {
-        return $"MissedEffect, LocationReference={LocationReference}, Card={CardLibrary.GetCard(CardCode).Name}";
+        return $"MissedEffect, LocationReference={LocationReference}, Card={CardLibrary.InternalGetCard(CardCode).Name}";
     }
 }

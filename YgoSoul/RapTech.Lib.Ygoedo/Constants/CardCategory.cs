@@ -1,7 +1,7 @@
 ﻿namespace YgoSoul.RapTech.Lib.Ygoedo.Flag;
 
 [Flags]
-public enum CardSearchCategory : ulong
+public enum CardCategory : ulong
 {
     None                = 0,
     DestroyMonster      = 1UL << 0,  // 1100

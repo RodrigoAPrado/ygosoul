@@ -58,7 +58,7 @@ public class SortChainCardMessage : ISelectionsMessage
         sb.AppendLine($"Player {Player}, reorder the chain inputing their index with commas like a,b,c, or \"Cancel\":");
         foreach (var c in Cards)
         {
-            sb.AppendLine($"{CardLibrary.GetCard(c.CardCode).Name}");
+            sb.AppendLine($"{CardLibrary.InternalGetCard(c.CardCode).Name}");
         }
 
         return sb.ToString();

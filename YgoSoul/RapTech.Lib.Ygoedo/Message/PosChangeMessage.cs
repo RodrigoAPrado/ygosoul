@@ -32,7 +32,7 @@ public class PosChangeMessage : BaseMessage
 
     public override string ToString()
     {
-	    return $"Card {CardLibrary.GetCard(CardCode).Name} was changed from {PreviousPosition} to {CurrentPosition}";
+	    return $"Card {CardLibrary.InternalGetCard(CardCode).Name} was changed from {PreviousPosition} to {CurrentPosition}";
     }
 }
 

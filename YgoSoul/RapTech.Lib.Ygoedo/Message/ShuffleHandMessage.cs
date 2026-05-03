@@ -21,7 +21,7 @@ public class ShuffleHandMessage : BaseMessage
         sb.AppendLine($"New card order in hand for player {Player}: ");
         foreach (var c in Cards)
         {
-            sb.Append($"{CardLibrary.GetCard(c).Name}, ");
+            sb.Append($"{CardLibrary.InternalGetCard(c).Name}, ");
         }
         return sb.ToString().TrimEnd(',');
     }

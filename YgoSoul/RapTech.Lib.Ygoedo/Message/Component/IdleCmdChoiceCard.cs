@@ -34,6 +34,6 @@ public class IdleCmdChoiceCard : IIdleCmdChoice
             description = $", Description={DescriptionHandler.GetDescription(Description)}";
         }
             
-        return $"to {Action.ToString()} {CardLibrary.GetCard(CardCode).Name}, Location={Location.ToString()}, Sequence={Sequence}, Index={Index}{description}...";
+        return $"to {Action.ToString()} {CardLibrary.InternalGetCard(CardCode).Name}, Location={Location.ToString()}, Sequence={Sequence}, Index={Index}{description}...";
     }
 }

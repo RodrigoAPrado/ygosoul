@@ -14,6 +14,6 @@ public class MatchKillMessage : BaseMessage
 
     public override string ToString()
     {
-        return $"MatchKill, Card={CardLibrary.GetCard(CardCode).Name}";
+        return $"MatchKill, Card={CardLibrary.InternalGetCard(CardCode).Name}";
     }
 }

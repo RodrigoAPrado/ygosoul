@@ -46,11 +46,11 @@ public class HintParser : BaseParser
         
         if(CardLibrary.HasCard(cardId))
         {
-            return CardLibrary.GetCard(cardId).Strings[cardText];
+            return CardLibrary.InternalGetCard(cardId).Strings[cardText];
         }
         
         return Enum.IsDefined(typeof(GameStrings), hint) 
             ? ((GameStrings)hint).ToString() 
-            : CardLibrary.GetCard((uint)hint).Name;
+            : CardLibrary.InternalGetCard((uint)hint).Name;
     }
 }

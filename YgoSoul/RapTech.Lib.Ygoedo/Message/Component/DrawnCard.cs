@@ -16,7 +16,7 @@ public class DrawnCard
 
     public override string? ToString()
     {
-        var card = CardLibrary.GetCard(_cardCode);
+        var card = CardLibrary.InternalGetCard(_cardCode);
         return $"{card.Name} that was {_cardPosition}.";
     }
 }

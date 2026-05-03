@@ -72,7 +72,7 @@ public class SelectTributeMessage : ISelectionsMessage
         sb.AppendLine($"Select at most {Max} cards, but release value must be above {Min}:");
         foreach (var c in Cards)
         {
-            sb.AppendLine($"{c.Index} => {CardLibrary.GetCard(c.CardCode).Name}, Value: {c.ReleaseValue}...");
+            sb.AppendLine($"{c.Index} => {CardLibrary.InternalGetCard(c.CardCode).Name}, Value: {c.ReleaseValue}...");
         }
 
         if (Cancelable)

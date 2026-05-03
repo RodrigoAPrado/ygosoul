@@ -11,7 +11,7 @@ public class DeckTopMessage : SimpleTextMessage
     public CardPosition Position { get; }
     
     public DeckTopMessage(byte player, uint cardCode, CardPosition position) 
-        : base($"Deck Top - Player {player}, card is {CardLibrary.GetCard(cardCode).Name}, position {position}")
+        : base($"Deck Top - Player {player}, card is {CardLibrary.InternalGetCard(cardCode).Name}, position {position}")
     {
         Player = player;
         CardCode = cardCode;

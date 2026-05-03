@@ -23,6 +23,6 @@ public class BattleCmdEffectChoice : BattleCmdChoiceCard
 
     public override string ToString()
     {
-        return $"to activate {CardLibrary.GetCard(CardCode).Name}'s effect, description={DescriptionHandler.GetDescription(Description)}";
+        return $"to activate {CardLibrary.InternalGetCard(CardCode).Name}'s effect, description={DescriptionHandler.GetDescription(Description)}";
     }
 }

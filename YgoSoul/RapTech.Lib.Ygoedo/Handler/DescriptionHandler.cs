@@ -22,7 +22,7 @@ public class DescriptionHandler
             
             if (CardLibrary.HasCard(cardId))
             {
-                return CardLibrary.GetCard(cardId).Strings[stringId];
+                return CardLibrary.InternalGetCard(cardId).Strings[stringId];
             }
 
             if (System.Enum.IsDefined(typeof(GameStrings), (ulong)stringId))
@@ -45,7 +45,7 @@ public class DescriptionHandler
             case CardHint.Turn:
             case CardHint.Card:
                 var cardCode = (uint)value;
-                return CardLibrary.GetCard(cardCode).Name;
+                return CardLibrary.InternalGetCard(cardCode).Name;
             case CardHint.Race:
                 return $"{(MonsterRaces)value}";
             case CardHint.Attribute:

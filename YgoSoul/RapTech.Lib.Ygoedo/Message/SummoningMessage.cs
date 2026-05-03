@@ -23,7 +23,7 @@ public class SummoningMessage : BaseMessage
 
     public override string ToString()
     {
-        return $"{CardLibrary.GetCard(CardCode).Name} is being summoned for " +
+        return $"{CardLibrary.InternalGetCard(CardCode).Name} is being summoned for " +
                $"{Player} on {Location} in sequence {Sequence} and position {Position}";
     }
 }

@@ -33,7 +33,7 @@ public class FieldQueryChain
 
     public override string ToString()
     {
-        return $"FieldQueryChain=[Card={CardLibrary.GetCard(CardCode).Name}, " +
+        return $"FieldQueryChain=[Card={CardLibrary.InternalGetCard(CardCode).Name}, " +
                $"Location=[{Location}], " +
                $"TriggerController={TriggerController}, " +
                $"TriggerLocation={TriggerLocation}, " +

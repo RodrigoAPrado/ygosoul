@@ -21,7 +21,7 @@ public class ShuffleExtraMessage : BaseMessage
         sb.AppendLine($"New card order in extra for player {Player}: ");
         foreach (var c in Cards)
         {
-            sb.Append($"{CardLibrary.GetCard(c).Name}, ");
+            sb.Append($"{CardLibrary.InternalGetCard(c).Name}, ");
         }
         return sb.ToString().TrimEnd(',');
     }

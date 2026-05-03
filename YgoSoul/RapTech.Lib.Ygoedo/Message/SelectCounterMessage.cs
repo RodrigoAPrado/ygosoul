@@ -60,7 +60,7 @@ public class SelectCounterMessage : ISelectionsMessage
         sb.AppendLine($"Selec counter from cards, you need {(CounterType)CounterAmount} counters.");
         foreach (var c in Cards)
         {
-            sb.AppendLine($"{CardLibrary.GetCard(c.CardCode).Name} has {c.CounterAmount} counters...");
+            sb.AppendLine($"{CardLibrary.InternalGetCard(c.CardCode).Name} has {c.CounterAmount} counters...");
         }
 
         return sb.ToString();

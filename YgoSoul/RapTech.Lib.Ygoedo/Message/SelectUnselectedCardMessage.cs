@@ -58,7 +58,7 @@ public class SelectUnselectedCardMessage : IMessage
             sb.AppendLine("SelectableCards: ");
             foreach (var c in CardsToSelect)
             {
-                sb.AppendLine($"[{c.Index}] => {CardLibrary.GetCard(c.CardCode).Name}");
+                sb.AppendLine($"[{c.Index}] => {CardLibrary.InternalGetCard(c.CardCode).Name}");
             }
         }
 
@@ -67,7 +67,7 @@ public class SelectUnselectedCardMessage : IMessage
             sb.AppendLine("Cards you can unselect:");
             foreach (var c in CardsToUnselect)
             {
-                sb.AppendLine($"[{c.Index + CardsToUnselect.Count}] => {CardLibrary.GetCard(c.CardCode).Name}");
+                sb.AppendLine($"[{c.Index + CardsToUnselect.Count}] => {CardLibrary.InternalGetCard(c.CardCode).Name}");
             }
         }
 
