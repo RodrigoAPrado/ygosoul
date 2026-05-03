@@ -2,10 +2,20 @@
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.DuelRunner;
 
-public class CardLibrary : ICardLibraryAccess
+public class CardLibrary : ICardLibrary
 {
+    public static ICardLibrary Instance { get; private set; }
     private static readonly Dictionary<uint, CardData> Cards = new ();
-
+    private static bool _initialized;
+    
+    public static void CreateInstance()
+    {
+        if (_initialized)
+            return;
+        
+        Instance = new CardLibrary();
+    }
+    
     public static void AddCard(OCG_CardData data, string cardName, string cardText, List<string> strings, ulong category)
     {
         if (Cards.ContainsKey(data.code))

@@ -31,7 +31,7 @@ public class OldDuelRunner
         Console.WriteLine($"OCGCore Version: {major}.{minor}");
 
         // Inicializa banco de dados
-        CardDatabase.Initialize("cards.cdb");
+        CardDatabase.Init("cards.cdb");
         CardDatabase.LoadCards();
         
         // 2. Configure os delegates (Importante: manter referências static)

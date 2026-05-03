@@ -1,8 +1,10 @@
-﻿using YgoSoul.RapTech.Lib.Ygoedo.Parser.Abstr;
+﻿using YgoSoul.RapTech.Lib.Ygoedo.Manager.Interface;
+using YgoSoul.RapTech.Lib.Ygoedo.Parser.Abstr;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.DuelRunner;
 
-public class DuelManager
+public class DuelManager : IDuelManager
 {
     private Dictionary<GameMessage, IParser> _parsers;
+    
 }

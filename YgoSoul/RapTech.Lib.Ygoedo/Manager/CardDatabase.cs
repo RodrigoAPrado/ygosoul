@@ -8,7 +8,7 @@ public class CardDatabase
 {
     private static string _connString;
 
-    public static void Initialize(string dbPath)
+    public static void Init(string dbPath)
     {
         _connString = $"Data Source={dbPath}";
     }
