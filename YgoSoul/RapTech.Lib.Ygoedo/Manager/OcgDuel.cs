@@ -1,12 +1,22 @@
 ﻿using System.Runtime.InteropServices;
 using YgoSoul.RapTech.Lib.Ygoedo.Api;
+using YgoSoul.RapTech.Lib.Ygoedo.DuelRunner;
+using YgoSoul.RapTech.Lib.Ygoedo.Flag;
+using YgoSoul.RapTech.Lib.Ygoedo.Manager.Interface;
+using YgoSoul.RapTech.Lib.Ygoedo.Manager.Interface.Enum;
+using YgoSoul.RapTech.Lib.Ygoedo.Message.Abstr;
+using YgoSoul.RapTech.Lib.Ygoedo.Util;
 
-namespace YgoSoul.RapTech.Lib.Ygoedo.DuelRunner;
+namespace YgoSoul.RapTech.Lib.Ygoedo.Manager;
 
-public class OcgDuel
+public class OcgDuel : IOcgDuel
 {
+    public OcgDuelState State => _state;
+    public IOcgMessage CurrentMessage => _currentMessage;
     private IntPtr _pDuel;
     private OCG_DuelOptions _options;
+    private OcgDuelState _state = OcgDuelState.NotStarted;
+    private IMessage _currentMessage;
     
     public Tuple<int, int> GetOcgVersion()
     {
@@ -14,8 +24,8 @@ public class OcgDuel
         return new Tuple<int, int>(major, minor);
     }
 
-    public void SetupDuelOptions(
-        DuelFlags duelFlags, 
+    public bool SetupDuelOptions(
+        DuelMode duelMode, 
         uint player1Lp, 
         uint player1Hand, 
         uint player1Draw, 
@@ -24,10 +34,15 @@ public class OcgDuel
         uint player2Draw
         )
     {
+        if (_state != OcgDuelState.NotStarted)
+        {
+            Console.WriteLine($"Current state is: {_state}.");
+            return false;
+        }
         _options = new OCG_DuelOptions
         {
             seed0 = 0x12345,
-            flags = (ulong)duelFlags,
+            flags = (ulong)(duelMode.FromDuelMode()),
             team1 = new OCG_Player
             {
                 startingLP = player1Lp, 
@@ -46,27 +61,112 @@ public class OcgDuel
             cardReaderDone = Marshal.GetFunctionPointerForDelegate(OcgDuelBridge.ReaderDone),
             enableUnsafeLibraries = 0
         };
+        _state = OcgDuelState.DuelOptionsSet;
+        return true;
     }
 
     public bool CreateDuel()
     {
-        if (_options is { seed0: 0, seed1: 0, seed2: 0, seed3: 0 })
+        if (_state != OcgDuelState.DuelOptionsSet)
         {
+            Console.WriteLine($"Current state is: {_state}.");
             return false;
         }
 
-        if (OCG_Api.Setup.OCG_CreateDuel(out var pDuel, ref _options) != 0) 
-            return false;
+        if (OCG_Api.Setup.OCG_CreateDuel(out var pDuel, ref _options) != 0)
+        {
+            throw new Exception("Failed to create duel.");
+        }
         
         _pDuel = pDuel;
         LoadBaseScripts();
+        _state = OcgDuelState.DuelCreated;
         return true;
-
     }
 
-    public bool SetDecks()
+    public bool SetDecks(
+        IReadOnlyList<ICardData> mainDeck0, 
+        IReadOnlyList<ICardData> extraDeck0, 
+        IReadOnlyList<ICardData> mainDeck1, 
+        IReadOnlyList<ICardData> extraDeck1
+        )
     {
+        if (_state != OcgDuelState.DuelCreated)
+        {
+            Console.WriteLine($"Current state is: {_state}.");
+            return false;
+        }
         
+        SetDeck(mainDeck0, false, 0);
+        SetDeck(extraDeck0, true, 0);
+        SetDeck(mainDeck1, false, 1);
+        SetDeck(extraDeck1, true, 1);
+        _state = OcgDuelState.DecksSet;
+        return true;
+    }
+
+    public bool StartDuel()
+    {
+        if (_state != OcgDuelState.DecksSet)
+        {
+            Console.WriteLine($"Current state is: {_state}.");
+            return false;
+        }
+        OCG_Api.Setup.OCG_StartDuel(_pDuel);
+        _state = OcgDuelState.DuelReady;
+        return true;
+    }
+
+    public bool ProceedDuel()
+    {
+        if (_state != OcgDuelState.DuelReady)
+        {
+            Console.WriteLine($"Current state is: {_state}.");
+            return false;
+        }
+
+        var result = (OCG_DuelStatus)OCG_Api.Run.OCG_DuelProcess(_pDuel);
+        
+        
+        
+        switch (result)
+        {
+            case OCG_DuelStatus.OcgDuelStatusEnd:
+                _state = OcgDuelState.DuelFinished;
+                break;
+            case OCG_DuelStatus.OcgDuelStatusAwating:
+                _state = OcgDuelState.WaitingInput;
+                break;
+            case OCG_DuelStatus.OcgDuelStatusContinue:
+                _state = OcgDuelState.DuelReady;
+                break;
+        }
+
+        return true;
+    }
+    
+    
+
+    private void SetDeck(IReadOnlyList<ICardData> deck, bool isExtra, byte team)
+    {
+        foreach (var card in deck)
+        {
+            var ocgNewCardInfo = GetNewCardInfo(card, isExtra, team);
+            OCG_Api.Setup.OCG_DuelNewCard(_pDuel, ref ocgNewCardInfo);
+        }
+    }
+
+    private OCG_NewCardInfo GetNewCardInfo(ICardData cardData, bool isExtra, byte team)
+    {
+        return new OCG_NewCardInfo()
+        {
+            team = team,
+            duelist = 0,
+            code = cardData.Code,
+            con = team,
+            loc = (uint) (isExtra ? CardLocation.Extra : CardLocation.Deck),
+            pos = (uint) CardPosition.FaceDown
+        };
     }
     
     private void LoadBaseScripts()

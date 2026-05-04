@@ -1,5 +1,4 @@
-﻿using YgoSoul.RapTech.Lib.Ygoedo.Flag;
-using YgoSoul.RapTech.Lib.Ygoedo.Manager.Interface.Enum;
+﻿using YgoSoul.RapTech.Lib.Ygoedo.Manager.Interface.Enum;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.Manager.Interface;
 

@@ -1,10 +1,32 @@
-﻿using YgoSoul.RapTech.Lib.Ygoedo.Flag;
+﻿using YgoSoul.RapTech.Lib.Ygoedo.DuelRunner;
+using YgoSoul.RapTech.Lib.Ygoedo.Flag;
 using YgoSoul.RapTech.Lib.Ygoedo.Manager.Interface.Enum;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.Util;
 
 public static class FlagExtensions
 {
+    public static DuelFlags FromDuelMode(this DuelMode value)
+    {
+        switch (value)
+        {
+            case DuelMode.MasterRule0:
+                return DuelFlags.MasterRuleGoat;
+            case DuelMode.MasterRule1:
+                return DuelFlags.MasterRule1;
+            case DuelMode.MasterRule2:
+                return DuelFlags.MasterRule2;
+            case DuelMode.MasterRule3:
+                return DuelFlags.MasterRule3;
+            case DuelMode.MasterRule4:
+                return DuelFlags.MasterRule4;
+            case DuelMode.MasterRule5:
+                return DuelFlags.MasterRule5;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(value), value, null);
+        }
+    }
+    
     public static CardIcon ToCardIcon(this MonsterAttributes value)
     {
         switch (value)
