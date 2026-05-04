@@ -1,4 +1,5 @@
 ﻿using YgoSoul.RapTech.Lib.Ygoedo.DuelRunner;
+using YgoSoul.RapTech.Lib.Ygoedo.Factory;
 using YgoSoul.RapTech.Lib.Ygoedo.Manager.Interface;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.Application;
@@ -6,16 +7,14 @@ namespace YgoSoul.RapTech.Lib.Ygoedo.Application;
 public static class OcgLib
 {
     private static IDuelManager _manager;
-    private static ICardLibrary _library;
     private static string _dataPath;
     private static bool _initialized;
     
-    public static void Init(string dataPath)
+    public static IDuelManager Init(string dataPath)
     {
-        if (!_initialized)
+        if (_initialized)
         {
-            Console.WriteLine("OcgLib Already Initialized");
-            return;   
+            return _manager;
         }
         
         _dataPath = dataPath;
@@ -23,22 +22,8 @@ public static class OcgLib
         CardDatabase.Init(_dataPath + "cards.cdb");
         CardDatabase.LoadCards();
         CardLibrary.CreateInstance();
-        _library = CardLibrary.Instance;
-        _manager = new DuelManager();
+        _manager = new DuelManager(CardLibrary.Instance, MessageParserFactory.CreateParsers());
         _initialized = true;
-    }
-
-    public static IDuelManager GetManager()
-    {
-        if (!_initialized)
-            throw new InvalidOperationException("Not Initialized");
         return _manager;
-    }
-
-    public static ICardLibrary GetLibrary()
-    {
-        if (!_initialized)
-            throw new InvalidOperationException("Not Initialized");
-        return _library;
     }
 }

@@ -6,7 +6,7 @@ namespace YgoSoul.RapTech.Lib.Ygoedo.Parser.Abstr;
 
 public abstract class BaseParser : IParser
 {
-    public IMessage Parse(byte[] buffer)
+    public IMessage SafeParse(byte[] buffer)
     {
         try
         {
@@ -20,6 +20,12 @@ public abstract class BaseParser : IParser
             return new UnknownMessage(buffer);
         }
     }
-    
+
+    public IMessage Parse(byte[] buffer)
+    {
+        Console.WriteLine($"Raw: {(GameMessage) buffer[0]} {BitConverter.ToString(buffer)}");
+        return DoParse(buffer);
+    }
+
     protected abstract IMessage DoParse(byte[] buffer);
 }

@@ -17,6 +17,13 @@ public class OcgDuel : IOcgDuel
     private OCG_DuelOptions _options;
     private OcgDuelState _state = OcgDuelState.NotStarted;
     private IMessage _currentMessage;
+
+    private Action<IntPtr, uint> _processMessage;
+    
+    public OcgDuel(Action<IntPtr, uint> processMessage)
+    {
+        _processMessage = processMessage;
+    }
     
     public Tuple<int, int> GetOcgVersion()
     {
@@ -126,27 +133,26 @@ public class OcgDuel : IOcgDuel
         }
 
         var result = (OCG_DuelStatus)OCG_Api.Run.OCG_DuelProcess(_pDuel);
-        
-        
-        
-        switch (result)
+
+        _state = result switch
         {
-            case OCG_DuelStatus.OcgDuelStatusEnd:
-                _state = OcgDuelState.DuelFinished;
-                break;
-            case OCG_DuelStatus.OcgDuelStatusAwating:
-                _state = OcgDuelState.WaitingInput;
-                break;
-            case OCG_DuelStatus.OcgDuelStatusContinue:
-                _state = OcgDuelState.DuelReady;
-                break;
-        }
+            OCG_DuelStatus.OcgDuelStatusEnd => OcgDuelState.DuelFinished,
+            OCG_DuelStatus.OcgDuelStatusAwating => OcgDuelState.WaitingInput,
+            OCG_DuelStatus.OcgDuelStatusContinue => OcgDuelState.DuelReady,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
+        var messagePtr = OCG_Api.Run.OCG_DuelGetMessage(_pDuel, out var length);
+        _processMessage?.Invoke(messagePtr, length);
 
         return true;
     }
-    
-    
 
+    public void SetNewMessages(List<IMessage> messages)
+    {
+        
+    }
+    
     private void SetDeck(IReadOnlyList<ICardData> deck, bool isExtra, byte team)
     {
         foreach (var card in deck)

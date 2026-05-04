@@ -4,5 +4,6 @@ namespace YgoSoul.RapTech.Lib.Ygoedo.Parser.Abstr;
 
 public interface IParser
 {
-    IMessage? Parse(byte[] buffer);
+    IMessage SafeParse(byte[] buffer);
+    IMessage Parse(byte[] buffer);
 }

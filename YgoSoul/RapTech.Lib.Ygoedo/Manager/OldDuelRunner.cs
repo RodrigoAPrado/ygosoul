@@ -148,10 +148,10 @@ public class OldDuelRunner
 
         if (_parsers.TryGetValue(msgType, out var value))
         {
-            return MessageHandler.HandleMessage(value.Parse(buffer));
+            return MessageHandler.HandleMessage(value.SafeParse(buffer));
         }
         
-        return MessageHandler.HandleMessage(_parsers[GameMessage.Unknown].Parse(buffer));
+        return MessageHandler.HandleMessage(_parsers[GameMessage.Unknown].SafeParse(buffer));
     }
     
     private static void CreateDecks(IntPtr pDuel)
