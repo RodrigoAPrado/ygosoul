@@ -13,19 +13,16 @@ public class DescriptionHandler
             if(value == 0) 
                 return "Activate";
 
-            var buffer = BitConverter.GetBytes(value);
-            var reader = new PacketReader(buffer);
-            var stringId = reader.ReadUInt16();
-
-            var cardIdRaw = reader.ReadUInt32();
-            var cardId = cardIdRaw >> 4;
+            var stringId = (value & 0xfffff);
+            var cardId = (uint) (value >> 20);
+            
             
             if (CardLibrary.HasCard(cardId))
             {
-                return CardLibrary.InternalGetCard(cardId).Strings[stringId];
+                return CardLibrary.InternalGetCard(cardId).Strings[(int) stringId];
             }
 
-            if (System.Enum.IsDefined(typeof(GameStrings), (ulong)stringId))
+            if (System.Enum.IsDefined(typeof(GameStrings), stringId))
             {
                 return ((GameStrings)value).ToString();
             }
