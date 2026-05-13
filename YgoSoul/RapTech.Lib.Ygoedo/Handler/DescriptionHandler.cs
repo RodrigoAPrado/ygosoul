@@ -16,7 +16,6 @@ public class DescriptionHandler
             var stringId = (value & 0xfffff);
             var cardId = (uint) (value >> 20);
             
-            
             if (CardLibrary.HasCard(cardId))
             {
                 return CardLibrary.InternalGetCard(cardId).Strings[(int) stringId];

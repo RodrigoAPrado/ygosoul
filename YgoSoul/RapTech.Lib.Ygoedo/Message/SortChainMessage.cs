@@ -6,7 +6,7 @@ using YgoSoul.RapTech.Lib.Ygoedo.Message.Enum;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.Message;
 
-public class SortChainCardMessage : ISelectionsMessage
+public class SortChainMessage : ISelectionsMessage
 {
     public InputType Input => InputType.Sort;
     public int InputCount => Cards.Count;
@@ -14,7 +14,7 @@ public class SortChainCardMessage : ISelectionsMessage
     public byte Player { get; }
     public IReadOnlyList<CardReference> Cards { get; }
     
-    public SortChainCardMessage(byte player, List<CardReference> cards)
+    public SortChainMessage(byte player, List<CardReference> cards)
     {
         Player = player;
         Cards = cards;

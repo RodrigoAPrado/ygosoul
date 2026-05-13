@@ -27,17 +27,17 @@ public class BasicParser : BaseParser
             case GameMessage.Swap:
                 return new SwapMessage(new CardReference(
                     reader.ReadUInt32(), 
-                    reader.ReadByte(), 
-                    (CardLocation)reader.ReadByte(), 
-                    reader.ReadUInt32(), 
-                    (CardPosition)reader.ReadUInt32(), 
+                    new FullLocationReference(reader.ReadByte(), 
+                        (CardLocation)reader.ReadByte(), 
+                        reader.ReadUInt32(), 
+                        (CardPosition)reader.ReadUInt32()), 
                     0
                 ), new CardReference(
                     reader.ReadUInt32(), 
-                    reader.ReadByte(), 
-                    (CardLocation)reader.ReadByte(), 
-                    reader.ReadUInt32(), 
-                    (CardPosition)reader.ReadUInt32(), 
+                    new FullLocationReference(reader.ReadByte(), 
+                        (CardLocation)reader.ReadByte(), 
+                        reader.ReadUInt32(), 
+                        (CardPosition)reader.ReadUInt32()), 
                     0
                 ));
             case GameMessage.FieldDisabled:

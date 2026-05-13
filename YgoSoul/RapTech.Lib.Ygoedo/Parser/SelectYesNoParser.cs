@@ -35,7 +35,7 @@ public class SelectYesNoParser : BaseParser
         var sequence = reader.ReadUInt32();
         var position = (CardPosition) reader.ReadUInt32();
         var description = reader.ReadULong64();
-        var card = new CardReference(cardCode, controller, location, sequence, position, 0);
+        var card = new CardReference(cardCode, new FullLocationReference(controller, location, sequence, position), 0);
         return new SelectEffectYesNoMessage(player, card, description);
     }
 

@@ -2,6 +2,7 @@
 using YgoSoul.RapTech.Lib.Ygoedo.Flag;
 using YgoSoul.RapTech.Lib.Ygoedo.Message;
 using YgoSoul.RapTech.Lib.Ygoedo.Message.Abstr;
+using YgoSoul.RapTech.Lib.Ygoedo.Message.Component;
 using YgoSoul.RapTech.Lib.Ygoedo.Parser.Abstr;
 using YgoSoul.RapTech.Lib.Ygoedo.Util;
 
@@ -20,16 +21,18 @@ public class SummoningParser : BaseParser
         var sequence = reader.ReadUInt32();
         var position = (CardPosition) reader.ReadUInt32();
 
+        var card = new CardReference(cardCode, new FullLocationReference(player, location, sequence, position), 0);
+
         switch (messageType)
         {
             case GameMessage.Summoning:
-                return new SummoningMessage(cardCode, player, location, sequence, position);
+                return new SummoningMessage(card);
             case GameMessage.Set:
-                return new SetMessage(cardCode, player, location, sequence, position);
+                return new SetMessage(card);
             case GameMessage.SpSummoning:
-                return new SpecialSummoningMessage(cardCode, player, location, sequence, position);
+                return new SpecialSummoningMessage(card);
             case GameMessage.FlipSummoning:
-                return new FlipSummoningMessage(cardCode, player, location, sequence, position);
+                return new FlipSummoningMessage(card);
             default:
                 throw new ArgumentOutOfRangeException();
         }

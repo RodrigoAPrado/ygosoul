@@ -6,10 +6,7 @@ namespace YgoSoul.RapTech.Lib.Ygoedo.Message.Component;
 public class CardReference
 {
     public uint CardCode { get; }
-    public byte Controller { get; }
-    public CardLocation Location { get; }
-    public uint Sequence { get; }
-    public CardPosition Position { get; }
+    public FullLocationReference LocationReference { get; }
     public uint Index { get; }
     public byte ReleaseValue { get; set; }
     public ushort CounterAmount { get; set; }
@@ -17,22 +14,20 @@ public class CardReference
 
     public CardReference(
         uint cardCode,
-        byte controller,
-        CardLocation location,
-        uint sequence,
-        CardPosition position,
+        FullLocationReference locationReference,
         uint index)
     {
         CardCode = cardCode;
-        Controller = controller;
-        Location = location;
-        Sequence = sequence;
-        Position = position;
+        LocationReference = locationReference;
         Index = index;
     }
 
     public override string ToString()
     {
-        return $"{CardLibrary.InternalGetCard(CardCode).Name}, Location={Location}, Sequence={Sequence}, Position={Position}, Index={Index}";
+        return $"{CardLibrary.InternalGetCard(CardCode).Name}, " +
+               $"Location={LocationReference.Location}, " +
+               $"Sequence={LocationReference.Sequence}, " +
+               $"Position={LocationReference.Position}, " +
+               $"Index={Index}";
     }
 }

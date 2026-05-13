@@ -1,6 +1,6 @@
 ﻿namespace YgoSoul.RapTech.Lib.Ygoedo.Flag;
 
-public enum CounterType : uint
+public enum CounterType : ushort
 {
     Spell = 0x1,
     Wedge = 0x1002,

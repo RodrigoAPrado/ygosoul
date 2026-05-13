@@ -28,7 +28,8 @@ public class SelectUnselectedCardParser : BaseParser
             var location = (CardLocation)reader.ReadByte();
             var sequence = reader.ReadUInt32();
             var position = (CardPosition) reader.ReadUInt32();
-            cardsToSelect.Add(new CardReference(cardCode, controller, location, sequence, position, cardsToSelectSize -i));
+            cardsToSelect.Add(new CardReference(cardCode, 
+                new FullLocationReference(controller, location, sequence, position), cardsToSelectSize -i));
         }
         
         var cardsToUnselectSize = reader.ReadUInt32();
@@ -41,7 +42,8 @@ public class SelectUnselectedCardParser : BaseParser
             var location = (CardLocation)reader.ReadByte();
             var sequence = reader.ReadUInt32();
             var position = (CardPosition) reader.ReadUInt32();
-            cardsToUnselect.Add(new CardReference(cardCode, controller, location, sequence, position, cardsToUnselectSize -i));
+            cardsToUnselect.Add(new CardReference(cardCode, 
+                new FullLocationReference(controller, location, sequence, position), cardsToUnselectSize -i));
         }
 
         return new SelectUnselectedCardMessage(player, finishable, cancelable, min, max, cardsToSelect, cardsToUnselect);

@@ -25,7 +25,7 @@ public class ConfirmCardParser : BaseParser
             var controller = reader.ReadByte();
             var location = (CardLocation)reader.ReadByte();
             var sequence = reader.ReadUInt32();
-            cards.Add(new CardReference(cardCode, controller, location, sequence, 0, count -i));
+            cards.Add(new CardReference(cardCode, new FullLocationReference(controller, location, sequence, 0), count -i));
         }
 
         switch (msg)

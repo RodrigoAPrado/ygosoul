@@ -28,7 +28,8 @@ public class SelectCardParser : BaseParser
             var location = (CardLocation)reader.ReadByte();
             var sequence = reader.ReadUInt32();
             var position = (CardPosition)reader.ReadUInt32();
-            cards.Add(new CardReference(cardCode, controller, location, sequence, position, count -i));
+            cards.Add(new CardReference(cardCode, 
+                new FullLocationReference(controller, location, sequence, position), count -i));
         }
 
         return new SelectCardMessage(player, cancelable, min, max, cards);

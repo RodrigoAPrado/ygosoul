@@ -27,7 +27,8 @@ public class SelectTributeParser : BaseParser
             var controller = reader.ReadByte();
             var location = (CardLocation)reader.ReadByte();
             var sequence = reader.ReadUInt32();
-            var card = new CardReference(cardCode, controller, location, sequence, 0, count - i);
+            var card = new CardReference(cardCode, 
+                new FullLocationReference(controller, location, sequence, 0), count - i);
             card.ReleaseValue = reader.ReadByte();
             cards.Add(card);
         }

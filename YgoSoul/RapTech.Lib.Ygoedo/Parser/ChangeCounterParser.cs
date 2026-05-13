@@ -13,7 +13,7 @@ public class ChangeCounterParser : BaseParser
     {
         var reader = new PacketReader(buffer);
         var msg = (GameMessage) reader.ReadByte();//msg
-        var counterType = reader.ReadUInt16();
+        var counterType = (CounterType) reader.ReadUInt16();
         var player = reader.ReadByte();
         var location = (CardLocation) reader.ReadByte();
         var sequence = reader.ReadByte();

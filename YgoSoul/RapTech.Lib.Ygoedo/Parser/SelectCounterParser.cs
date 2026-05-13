@@ -26,7 +26,7 @@ public class SelectCounterParser : BaseParser
             var location = (CardLocation) reader.ReadByte();
             var sequence = reader.ReadByte();
             var cardCounter = reader.ReadUInt16();
-            var card = new CardReference(cardCode, controller, location, sequence, 0, count -i);
+            var card = new CardReference(cardCode, new FullLocationReference(controller, location, sequence, 0), count -i);
             card.CounterAmount = cardCounter;
         }
 

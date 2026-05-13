@@ -30,7 +30,8 @@ public class SelectSumParser : BaseParser
             var location = (CardLocation)reader.ReadByte();
             var sequence = reader.ReadUInt32();
             var position = (CardPosition) reader.ReadUInt32();
-            var card = new CardReference(cardCode, controller, location, sequence, position, index);
+            var card = new CardReference(cardCode, 
+                new FullLocationReference(controller, location, sequence, position), index);
             card.Sum = reader.ReadUInt32();
             mustSelectCards.Add(card);
             index++;
@@ -46,7 +47,7 @@ public class SelectSumParser : BaseParser
             var location = (CardLocation)reader.ReadByte();
             var sequence = reader.ReadUInt32();
             var position = (CardPosition) reader.ReadUInt32();
-            var card = new CardReference(cardCode, controller, location, sequence, position, index);
+            var card = new CardReference(cardCode, new FullLocationReference(controller, location, sequence, position), index);
             card.Sum = reader.ReadUInt32();
             canSelect.Add(card);
             index++;

@@ -5,13 +5,13 @@ namespace YgoSoul.RapTech.Lib.Ygoedo.Message;
 
 public class RemoveCounterMessage : BaseMessage
 {
-    public ushort CounterType { get; }
+    public CounterType CounterType { get; }
     public byte Player { get; }
     public CardLocation Location { get; }
     public byte Sequence { get; }
     public ushort Count { get; }
 
-    public RemoveCounterMessage(ushort counterType, byte player, CardLocation location, byte sequence, ushort count)
+    public RemoveCounterMessage(CounterType counterType, byte player, CardLocation location, byte sequence, ushort count)
     {
         CounterType = counterType;
         Player = player;

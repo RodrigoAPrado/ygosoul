@@ -1,29 +1,25 @@
 ﻿using YgoSoul.RapTech.Lib.Ygoedo.DuelRunner;
 using YgoSoul.RapTech.Lib.Ygoedo.Flag;
 using YgoSoul.RapTech.Lib.Ygoedo.Message.Abstr;
+using YgoSoul.RapTech.Lib.Ygoedo.Message.Component;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.Message;
 
 public class SetMessage : BaseMessage
 {
-    public uint CardCode { get; }
-    public byte Player { get; }
-    public CardLocation Location { get; }
-    public uint Sequence { get; }
-    public CardPosition Position { get; }
+    public CardReference Card { get; }
     
-    public SetMessage(uint cardCode, byte player, CardLocation location, uint sequence, CardPosition position) 
+    public SetMessage(CardReference card) 
     {
-        CardCode = cardCode;
-        Player = player;
-        Location = location;
-        Sequence = sequence;
-        Position = position;
+        Card = card;
     }
 
     public override string ToString()
     {
-        return $"{CardLibrary.InternalGetCard(CardCode).Name} is being set for " +
-               $"{Player} on {Location} in sequence {Sequence} and position {Position}";
+        return $"{CardLibrary.InternalGetCard(Card.CardCode).Name} is being set for " +
+               $"{Card.LocationReference.Controller} on " +
+               $"{Card.LocationReference.Location} in sequence " +
+               $"{Card.LocationReference.Sequence} and position " +
+               $"{Card.LocationReference.Position}";
     }
 }

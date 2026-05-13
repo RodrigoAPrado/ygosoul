@@ -18,7 +18,7 @@ public class AttackMessage : BaseMessage
     public override string ToString()
     {
         var sb = new StringBuilder();
-        sb.AppendLine($"Player {Attacker.Player} declares attack on Player {Target.Player}");
+        sb.AppendLine($"Player {Attacker.Controller} declares attack on Player {Target.Controller}");
         sb.Append($"in {Target.Sequence}, that is {Target.Position}, and on {Target.Location}, with ");
         sb.Append($"a card in {Attacker.Sequence}, that is {Attacker.Position}, and on {Attacker.Location}");
         return sb.ToString();

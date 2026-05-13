@@ -1,29 +1,25 @@
 ﻿using YgoSoul.RapTech.Lib.Ygoedo.DuelRunner;
 using YgoSoul.RapTech.Lib.Ygoedo.Flag;
 using YgoSoul.RapTech.Lib.Ygoedo.Message.Abstr;
+using YgoSoul.RapTech.Lib.Ygoedo.Message.Component;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.Message;
 
 public class FlipSummoningMessage : BaseMessage
 {
-    public uint CardCode { get; }
-    public byte Player { get; }
-    public CardLocation Location { get; }
-    public uint Sequence { get; }
-    public CardPosition Position { get; }
+    public CardReference Card { get; }
     
-    public FlipSummoningMessage(uint cardCode, byte player, CardLocation location, uint sequence, CardPosition position) 
+    public FlipSummoningMessage(CardReference card) 
     {
-        CardCode = cardCode;
-        Player = player;
-        Location = location;
-        Sequence = sequence;
-        Position = position;
+        Card = card;
     }
 
     public override string ToString()
     {
-        return $"{CardLibrary.InternalGetCard(CardCode).Name} is being flip summoned for " +
-               $"{Player} on {Location} in sequence {Sequence} and position {Position}";
+        return $"{CardLibrary.InternalGetCard(Card.CardCode).Name} is being flip summoned for " +
+               $"{Card.LocationReference.Controller} on " +
+               $"{Card.LocationReference.Location} in sequence " +
+               $"{Card.LocationReference.Sequence} and position " +
+               $"{Card.LocationReference.Position}";
     }
 }

@@ -4,14 +4,14 @@ namespace YgoSoul.RapTech.Lib.Ygoedo.Message.Component;
 
 public class FullLocationReference
 {
-    public byte Player { get; }
+    public byte Controller { get; }
     public CardLocation Location { get; }
     public uint Sequence { get; }
     public CardPosition Position { get; }
 
-    public FullLocationReference(byte player, CardLocation location, uint sequence, CardPosition position)
+    public FullLocationReference(byte controller, CardLocation location, uint sequence, CardPosition position)
     {
-        Player = player;
+        Controller = controller;
         Location = location;
         Sequence = sequence;
         Position = position;
@@ -24,6 +24,6 @@ public class FullLocationReference
 
     public override string ToString()
     {
-        return $"Playe={Player}, Location={Location}, Sequence={Sequence}, Position={Position}";
+        return $"Player={Controller}, Location={Location}, Sequence={Sequence}, Position={Position}";
     }
 }
