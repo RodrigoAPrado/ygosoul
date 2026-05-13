@@ -5,7 +5,7 @@ namespace YgoSoul.RapTech.Lib.Ygoedo.Manager.Interface;
 public interface IOcgDuel
 {
     public OcgDuelState State { get; }
-    public IOcgMessage CurrentMessage { get; }
+    public IOcgMessage? CurrentMessage { get; }
 
     public Tuple<int, int> GetOcgVersion();
 

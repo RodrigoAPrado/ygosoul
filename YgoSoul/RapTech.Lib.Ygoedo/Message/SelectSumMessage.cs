@@ -10,7 +10,6 @@ public class SelectSumMessage : ISelectionsMessage
     public InputType Input => InputType.Selections;
     public int InputCount => MustSelect.Count + CanSelect.Count;
     public bool CanCancel => false;
-    
     public byte Player { get; }
     public bool HasMax { get; }
     public uint Acc { get; }

@@ -5,7 +5,10 @@ namespace YgoSoul.RapTech.Lib.Ygoedo.Message.Abstr;
 
 public interface IMessage : IOcgMessage
 {
-    InputType Input { get; }
     int InputCount { get; }
-    byte[] GetResponse(int id);
+    bool HasResponded { get; }
+    bool Validated { get; }
+    byte[] GetResponse(List<int> id);
+    void SetResponseSet();
+    void ResetResponse();
 }

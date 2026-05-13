@@ -4,7 +4,9 @@ using YgoSoul.RapTech.Lib.Ygoedo.DuelRunner;
 using YgoSoul.RapTech.Lib.Ygoedo.Flag;
 using YgoSoul.RapTech.Lib.Ygoedo.Manager.Interface;
 using YgoSoul.RapTech.Lib.Ygoedo.Manager.Interface.Enum;
+using YgoSoul.RapTech.Lib.Ygoedo.Message;
 using YgoSoul.RapTech.Lib.Ygoedo.Message.Abstr;
+using YgoSoul.RapTech.Lib.Ygoedo.Message.Enum;
 using YgoSoul.RapTech.Lib.Ygoedo.Util;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.Manager;
@@ -12,17 +14,20 @@ namespace YgoSoul.RapTech.Lib.Ygoedo.Manager;
 public class OcgDuel : IOcgDuel
 {
     public OcgDuelState State => _state;
-    public IOcgMessage CurrentMessage => _currentMessage;
+    
+    public IOcgMessage? CurrentMessage => InternalCurrentMessage;
     private IntPtr _pDuel;
     private OCG_DuelOptions _options;
     private OcgDuelState _state = OcgDuelState.NotStarted;
-    private IMessage _currentMessage;
+    private IMessage? InternalCurrentMessage => _messages.Count > 0 ? _messages[0] : null;
+    private readonly List<IMessage> _messages;
 
-    private Action<IntPtr, uint> _processMessage;
+    private readonly Action<IntPtr, uint> _processMessage;
     
     public OcgDuel(Action<IntPtr, uint> processMessage)
     {
         _processMessage = processMessage;
+        _messages = [];
     }
     
     public Tuple<int, int> GetOcgVersion()
@@ -148,9 +153,52 @@ public class OcgDuel : IOcgDuel
         return true;
     }
 
+    public bool NextMessage()
+    {
+        if (InternalCurrentMessage == null)
+            return false;
+        if (InternalCurrentMessage.Input != InputType.None)
+            return false;
+        _messages.RemoveAt(0);
+        return true;
+    }
+
+    public bool SetResponse(List<int> playerInput)
+    {
+        if (_state != OcgDuelState.WaitingInput)
+        {
+            Console.WriteLine($"Current state is: {_state}.");
+            return false;
+        }
+
+        if (InternalCurrentMessage == null)
+            throw new InvalidOperationException();
+
+        if (InternalCurrentMessage.Input is InputType.None or InputType.Unknown or InputType.Win)
+        {
+            return false;
+        }
+
+        var response = InternalCurrentMessage.GetResponse(playerInput);
+        
+        OCG_Api.Run.OCG_DuelSetResponse(_pDuel, response, (uint) response.Length);
+        
+        _state = OcgDuelState.DuelReady;
+        return true;
+    }
+
     public void SetNewMessages(List<IMessage> messages)
     {
+        if (messages.Count == 1)
+        {
+            if (messages[0] is RetryMessage)
+            {
+                InternalCurrentMessage?.ResetResponse();    
+            }
+            return;
+        }
         
+        _messages.AddRange(messages);
     }
     
     private void SetDeck(IReadOnlyList<ICardData> deck, bool isExtra, byte team)
