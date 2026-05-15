@@ -37,10 +37,6 @@ public class SelectSumMessage : ISelectionsMessage
         CanSelect = canSelect;
     }
     
-    public byte[] GetResponse(int id)
-    {
-        return GetResponse([id]);
-    }
     public byte[] GetResponse(List<int> ids)
     {
         var invalid = ids.Any(x => x >= MustSelect.Count + CanSelect.Count || x < 0);

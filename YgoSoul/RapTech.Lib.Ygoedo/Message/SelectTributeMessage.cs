@@ -26,11 +26,6 @@ public class SelectTributeMessage : ISelectionsMessage
         Cards = cards;
     }
 
-    public byte[] GetResponse(int id)
-    {
-        return GetResponse([id]);
-    }
-
     public byte[] GetResponse(List<int> ids)
     {
         var invalid = ids.Any(x => x >= Cards.Count || x < 0);

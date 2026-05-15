@@ -10,7 +10,7 @@ namespace YgoSoul.RapTech.Lib.Ygoedo.Parser;
 
 public class SelectBattleCmdParser : BaseParser
 {
-    protected override IMessage DoParse(byte[] buffer)
+    protected override IOcgMessage DoParse(byte[] buffer)
     {
         var reader = new PacketReader(buffer);
         reader.ReadByte(); //msg

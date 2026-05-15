@@ -6,9 +6,9 @@ namespace YgoSoul.RapTech.Lib.Ygoedo.Handler;
 
 public class MessageHandler
 {
-    public static IMessage? MessageRequiringInput { get; private set; }
+    public static IOcgMessage? MessageRequiringInput { get; private set; }
     
-    public static MessageHandleEnum HandleMessage(IMessage message)
+    public static MessageHandleEnum HandleMessage(IOcgMessage message)
     {
         if (message == null)
             throw new InvalidOperationException("Message is null");

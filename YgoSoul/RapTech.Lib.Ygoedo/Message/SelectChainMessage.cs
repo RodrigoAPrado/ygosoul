@@ -35,8 +35,13 @@ public class SelectChainMessage : BaseMessage
         Effects = effects;
     }
 
-    public override byte[] GetResponse(int id)
+    public override byte[] GetResponse(List<int> input)
     {
+        if (input.Count != 1)
+            return [];
+        
+        var id = input[0];
+        
         if (id < 0 || id >= Effects.Count)
             return [];
         return BitConverter.GetBytes(id);

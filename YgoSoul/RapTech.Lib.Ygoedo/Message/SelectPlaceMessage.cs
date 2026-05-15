@@ -6,11 +6,11 @@ using YgoSoul.RapTech.Lib.Ygoedo.Util;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.Message;
 
-public class SelectPlaceMessage : IMessage
+public class SelectPlaceMessage : IOcgMessage
 {
     public InputType Input => InputType.Value;
     public int InputCount => Choices.Count;
-    
+
     public byte Player { get; }
     public uint Amount { get; }
     public IReadOnlyList<Zone> Choices { get; }
@@ -21,9 +21,14 @@ public class SelectPlaceMessage : IMessage
         Amount = amount;
         Choices = choices;
     }
-
-    public byte[] GetResponse(int id)
+    
+    public byte[] GetResponse(List<int> input)
     {
+        if (input.Count != 1)
+            return [];
+        
+        var id = input[0];
+        
         if(id < 0 || id >= Choices.Count)
             return [];
         

@@ -5,10 +5,11 @@ using YgoSoul.RapTech.Lib.Ygoedo.Message.Enum;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.Message;
 
-public class SelectBattleCmdMessage : IMessage
+public class SelectBattleCmdMessage : IOcgMessage
 {
     public InputType Input => InputType.Value;
     public int InputCount => Choices.Count;
+
     public byte Player { get; }
     public IReadOnlyList<BattleCmdChoice> Choices { get; }
 
@@ -18,9 +19,13 @@ public class SelectBattleCmdMessage : IMessage
         Choices = choices;
     }
     
-    public byte[] GetResponse(int id)
+    public byte[] GetResponse(List<int> input)
     {
-
+        if (input.Count != 1)
+            return [];
+        
+        var id = input[0];
+        
         if (id >= Choices.Count)
             return [];
 

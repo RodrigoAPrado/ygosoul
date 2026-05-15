@@ -4,7 +4,7 @@ using YgoSoul.RapTech.Lib.Ygoedo.Message.Enum;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.Message;
 
-public class WinMessage : IMessage
+public class WinMessage : IOcgMessage
 {
     public InputType Input => InputType.Win;
     public int InputCount => 0;
@@ -17,7 +17,7 @@ public class WinMessage : IMessage
         Reason = reason;
     }
     
-    public byte[] GetResponse(int id)
+    public byte[] GetResponse(List<int> input)
     {
         return [];
     }

@@ -35,16 +35,3 @@ public class PosChangeMessage : BaseMessage
 	    return $"Card {CardLibrary.InternalGetCard(CardCode).Name} was changed from {PreviousPosition} to {CurrentPosition}";
     }
 }
-
-/*
- *
- *
- *
-			message->write<uint32_t>(pcard->data.code);
-			message->write<uint8_t>(pcard->current.controler);
-			message->write<uint8_t>(pcard->current.location);
-			message->write<uint8_t>(pcard->current.sequence);
-			message->write<uint8_t>(pcard->previous.position);
-			message->write<uint8_t>(pcard->current.position);
- * 
- */

@@ -19,14 +19,6 @@ public class SortCardMessage : ISelectionsMessage
         Player = player;
         Cards = cards;
     }
-    
-    public byte[] GetResponse(int id)
-    {
-        if (id == -1)
-            return Cancel();
-        
-        return GetResponse([id]);
-    }
 
     public byte[] GetResponse(List<int> ids)
     {

@@ -25,11 +25,6 @@ public class SelectCounterMessage : ISelectionsMessage
         Cards = cards;
     }
     
-    public byte[] GetResponse(int id)
-    {
-        return GetResponse([id]);
-    }
-    
     public byte[] GetResponse(List<int> ids)
     {
         if (ids.Count != Cards.Count)

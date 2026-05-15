@@ -276,7 +276,7 @@ public class OldDuelRunner
             var input = Console.ReadLine();
             if (int.TryParse(input, out var choice))
             {
-                response = message.GetResponse(choice);
+                response = message.GetResponse(new List<int>(choice));
                 if (response.Length == 0)
                     Console.WriteLine("--- INVALID CHOICE ---");
             }
@@ -314,7 +314,7 @@ public class OldDuelRunner
             
             if (int.TryParse(input, out var choice))
             {
-                response = message.GetResponse(choice);
+                response = message.GetResponse(new List<int>(choice));
                 if (response.Length == 0)
                     Console.WriteLine("--- INVALID CHOICE ---");
             }
@@ -356,7 +356,7 @@ public class OldDuelRunner
             }
             if (int.TryParse(input, out var choice))
             {
-                response = message.GetResponse(choice);
+                response = message.GetResponse(new List<int>(choice));
                 if (response.Length == 0)
                     Console.WriteLine("--- INVALID CHOICE ---");
             }

@@ -10,7 +10,7 @@ namespace YgoSoul.RapTech.Lib.Ygoedo.Parser;
 
 public class SelectYesNoParser : BaseParser
 {
-    protected override IMessage DoParse(byte[] buffer)
+    protected override IOcgMessage DoParse(byte[] buffer)
     {
         var reader = new PacketReader(buffer);
         var msg = (GameMessage) reader.ReadByte();//msg
@@ -26,7 +26,7 @@ public class SelectYesNoParser : BaseParser
         }
     }
 
-    private IMessage GetEffectYesNo(PacketReader reader)
+    private IOcgMessage GetEffectYesNo(PacketReader reader)
     {
         var player = reader.ReadByte();
         var cardCode = reader.ReadUInt32();
@@ -39,7 +39,7 @@ public class SelectYesNoParser : BaseParser
         return new SelectEffectYesNoMessage(player, card, description);
     }
 
-    private IMessage GetYesNo(PacketReader reader)
+    private IOcgMessage GetYesNo(PacketReader reader)
     {
         var player = reader.ReadByte();
         var description = reader.ReadULong64();

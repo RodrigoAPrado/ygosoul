@@ -1,11 +1,14 @@
 ﻿using YgoSoul.RapTech.Lib.Ygoedo.Manager.Interface.Enum;
+using YgoSoul.RapTech.Lib.Ygoedo.Message.Abstr;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.Manager.Interface;
 
 public interface IOcgDuel
 {
     public OcgDuelState State { get; }
-    public IOcgMessage? CurrentMessage { get; }
+    IReadOnlyList<IDuelMessage> Messages { get; }
+    int CurrentMessageIndex { get; }
+    int RetryCount { get; }
 
     public Tuple<int, int> GetOcgVersion();
 
@@ -31,4 +34,8 @@ public interface IOcgDuel
     public bool StartDuel();
 
     public bool ProceedDuel();
+    
+    bool SetResponse(List<int> playerInput);
+    
+    bool NextMessage();
 }

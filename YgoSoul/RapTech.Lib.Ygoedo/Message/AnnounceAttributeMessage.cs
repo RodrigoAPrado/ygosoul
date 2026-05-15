@@ -20,11 +20,6 @@ public class AnnounceAttributeMessage : ISelectionsMessage
         Count = count;
         Attributes = attributes;
     }
-
-    public byte[] GetResponse(int id)
-    {
-        return GetResponse([id]);
-    }
     
     public byte[] GetResponse(List<int> ids)
     {

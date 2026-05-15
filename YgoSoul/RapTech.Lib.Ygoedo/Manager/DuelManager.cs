@@ -12,7 +12,7 @@ public class DuelManager : IDuelManager
     private Dictionary<GameMessage, IParser> _parsers;
 
     public ICardLibrary CardLibrary { get; }
-    public IOcgDuel CurrentDuel => _ocgDuel;
+    public IOcgDuel? CurrentDuel => _ocgDuel;
     private OcgDuel? _ocgDuel;
     
     public DuelManager(ICardLibrary cardLibrary, Dictionary<GameMessage, IParser> parsers)
@@ -34,13 +34,13 @@ public class DuelManager : IDuelManager
         throw new NotImplementedException();
     }
 
-    private void ParseMessages(IntPtr message, uint length)
+    private bool ParseMessages(OcgResponse response)
     {
-        var buffer = new byte[length];
-        Marshal.Copy(message, buffer, 0, (int)length);
+        var buffer = new byte[response.Length];
+        Marshal.Copy(response.Message, buffer, 0, (int)response.Length);
         
         var offset = 0;
-        var messages = new List<IMessage>();
+        var messages = new List<IOcgMessage>();
         
         while (offset < buffer.Length) {
             var msgSize = BitConverter.ToInt32(buffer, offset);
@@ -52,11 +52,11 @@ public class DuelManager : IDuelManager
 
             messages.Add(ParseSingleMessage(msgData));
         }
-        
-        _ocgDuel?.SetNewMessages(messages);
+
+        return _ocgDuel != null && _ocgDuel.SetNewMessages(messages);
     }
 
-    private IMessage ParseSingleMessage(byte[] buffer)
+    private IOcgMessage ParseSingleMessage(byte[] buffer)
     {
         var msgType = (GameMessage)buffer[0];
         _parsers.TryGetValue(msgType, out var parser);

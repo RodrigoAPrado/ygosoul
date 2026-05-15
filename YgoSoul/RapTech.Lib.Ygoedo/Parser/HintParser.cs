@@ -10,7 +10,7 @@ namespace YgoSoul.RapTech.Lib.Ygoedo.Parser;
 
 public class HintParser : BaseParser
 {
-    protected override IMessage DoParse(byte[] buffer)
+    protected override IOcgMessage DoParse(byte[] buffer)
     {
         var reader = new PacketReader(buffer);
         reader.ReadByte();//msg
@@ -31,7 +31,7 @@ public class HintParser : BaseParser
         };
     }
 
-    private static IMessage HandleHintEvent(PacketReader reader, byte player)
+    private static IOcgMessage HandleHintEvent(PacketReader reader, byte player)
     {
         var hintMessage = (GameStrings) reader.ReadULong64();
         return new HintMessage($"Player {player}, it is {hintMessage}.");

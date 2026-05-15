@@ -6,7 +6,7 @@ using YgoSoul.RapTech.Lib.Ygoedo.Util;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.Message;
 
-public class SelectDisfieldMessage : IMessage
+public class SelectDisfieldMessage : IOcgMessage
 {
     public InputType Input => InputType.Value;
     public int InputCount => Choices.Count;
@@ -21,9 +21,14 @@ public class SelectDisfieldMessage : IMessage
         Amount = amount;
         Choices = choices;
     }
-
-    public byte[] GetResponse(int id)
+    
+    public byte[] GetResponse(List<int> input)
     {
+        if (input.Count != 1)
+            return [];
+        
+        var id = input[0];
+        
         if (id < 0 || id >= Choices.Count)
             return [];
 

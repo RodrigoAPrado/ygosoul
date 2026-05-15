@@ -41,17 +41,3 @@ public class ChainingMessage : BaseMessage
                $"\nwith Description={DescriptionHandler.GetDescription(Description)}, Chain Size={ChainSize}";
     }
 }
-
-
-//46-
-//0A-34-40-05-
-//00-
-//10-
-//09-00-00-00-
-//05-00-00-00-
-//00-
-//10-
-//09-00-00-00-
-//00-00-00-00-00-00-00-00-
-//01-00-00-00
-

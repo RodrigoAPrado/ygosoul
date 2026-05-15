@@ -6,10 +6,11 @@ using YgoSoul.RapTech.Lib.Ygoedo.Message.Enum;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.Message;
 
-public class SelectPositionMessage : IMessage
+public class SelectPositionMessage : IOcgMessage
 {
     public InputType Input => InputType.Value;
     public int InputCount => PositionAvailable.Count;
+
     public byte Player { get; }
     public uint CardCode { get; }
     public IReadOnlyList<CardPosition> PositionAvailable { get; }
@@ -21,8 +22,13 @@ public class SelectPositionMessage : IMessage
         PositionAvailable = positionAvailable;
     }
     
-    public byte[] GetResponse(int id)
+    public byte[] GetResponse(List<int> input)
     {
+        if (input.Count != 1)
+            return [];
+        
+        var id = input[0];
+        
         if (id < 0 || id >= PositionAvailable.Count)
             return [];
         var position = (uint) PositionAvailable[id];

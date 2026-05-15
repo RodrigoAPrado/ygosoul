@@ -6,7 +6,7 @@ using YgoSoul.RapTech.Lib.Ygoedo.Message.Enum;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.Message;
 
-public class SelectEffectYesNoMessage : IMessage
+public class SelectEffectYesNoMessage : IOcgMessage
 {
     public InputType Input => InputType.Value;
     public int InputCount => 1;
@@ -21,13 +21,21 @@ public class SelectEffectYesNoMessage : IMessage
         Description = description;
     }
     
-    public byte[] GetResponse(int id)
+    public byte[] GetResponse(List<int> input)
     {
+        if (input.Count != 1)
+            return [];
+        
+        var id = input[0];
+
         if (id != 0 && id != 1)
             return [];
 
         return BitConverter.GetBytes(id);
+        
+        throw new NotImplementedException();
     }
+
 
     public override string ToString()
     {

@@ -9,7 +9,7 @@ namespace YgoSoul.RapTech.Lib.Ygoedo.Parser;
 
 public class TossCoinDiceParser : BaseParser
 {
-    protected override IMessage DoParse(byte[] buffer)
+    protected override IOcgMessage DoParse(byte[] buffer)
     {
         var reader = new PacketReader(buffer);
         var message = (GameMessage) reader.ReadByte();//msg

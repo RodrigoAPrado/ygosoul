@@ -6,7 +6,7 @@ namespace YgoSoul.RapTech.Lib.Ygoedo.Parser;
 
 public class RetryParser : BaseParser
 {
-    protected override IMessage DoParse(byte[] buffer)
+    protected override IOcgMessage DoParse(byte[] buffer)
     {
         return new RetryMessage("Invalid command! Please, try again!");
     }

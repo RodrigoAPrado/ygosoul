@@ -1,13 +1,15 @@
 ﻿using System.Text;
+using YgoSoul.RapTech.Lib.Ygoedo.Manager.Interface;
 using YgoSoul.RapTech.Lib.Ygoedo.Message.Abstr;
 using YgoSoul.RapTech.Lib.Ygoedo.Message.Enum;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.Message;
 
-public class AnnounceCardMessage : IMessage
+public class AnnounceCardMessage : IOcgMessage
 {
     public InputType Input => InputType.AnnounceCard;
     public int InputCount { get; }
+
     public byte Player { get; }
     public IReadOnlyList<(string, uint)> AvailableCards { get; }
 
@@ -17,8 +19,13 @@ public class AnnounceCardMessage : IMessage
         AvailableCards = availableCards;
     }
     
-    public byte[] GetResponse(int id)
+    public byte[] GetResponse(List<int> input)
     {
+        if (input.Count != 1)
+            return [];
+        
+        var id = input[0];
+        
         if (id >= AvailableCards.Count || id < 0)
             return [];
 

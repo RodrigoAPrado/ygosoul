@@ -4,10 +4,11 @@ using YgoSoul.RapTech.Lib.Ygoedo.Message.Enum;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.Message;
 
-public class AnnounceNumberMessage : IMessage
+public class AnnounceNumberMessage : IOcgMessage
 {
     public InputType Input => InputType.Value;
     public int InputCount => AvailableNumbers.Count;
+
     public byte Player { get; }
     public IReadOnlyList<uint> AvailableNumbers { get; }
 
@@ -17,8 +18,13 @@ public class AnnounceNumberMessage : IMessage
         AvailableNumbers = availableNumbers;
     }
     
-    public byte[] GetResponse(int id)
+    public byte[] GetResponse(List<int> input)
     {
+        if (input.Count != 1)
+            return [];
+        
+        var id = input[0];
+        
         if (id < 0 || id >= AvailableNumbers.Count)
             return [];
         

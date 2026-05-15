@@ -3,7 +3,7 @@
 public interface IDuelManager
 {
     ICardLibrary CardLibrary { get; }
-    IOcgDuel CurrentDuel { get; }
+    IOcgDuel? CurrentDuel { get; }
     bool CreateOcgDuel();
     bool DisposeDuel();
 }

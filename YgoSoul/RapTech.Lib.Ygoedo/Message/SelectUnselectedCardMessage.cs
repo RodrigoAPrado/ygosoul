@@ -6,7 +6,7 @@ using YgoSoul.RapTech.Lib.Ygoedo.Message.Enum;
 
 namespace YgoSoul.RapTech.Lib.Ygoedo.Message;
 
-public class SelectUnselectedCardMessage : IMessage
+public class SelectUnselectedCardMessage : IOcgMessage
 {
     public InputType Input => InputType.Value;
     public int InputCount => CardsToSelect.Count + CardsToUnselect.Count;
@@ -35,8 +35,14 @@ public class SelectUnselectedCardMessage : IMessage
         CardsToSelect = cardsToSelect;
         CardsToUnselect = cardsToUnselect;
     }
-    public byte[] GetResponse(int id)
+    
+    public byte[] GetResponse(List<int> input)
     {
+        if (input.Count != 1)
+            return [];
+        
+        var id = input[0];
+        
         if (id < 0 && (Cancelable || Finishable))
             return BitConverter.GetBytes(-1);
         if (id < 0 || id > CardsToSelect.Count + CardsToUnselect.Count)
@@ -47,7 +53,7 @@ public class SelectUnselectedCardMessage : IMessage
         BitConverter.GetBytes(id).CopyTo(response, 4);
         return response;
     }
-
+    
     public override string ToString()
     {
         var sb = new StringBuilder();

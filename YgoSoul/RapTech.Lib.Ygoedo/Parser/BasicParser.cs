@@ -10,7 +10,7 @@ namespace YgoSoul.RapTech.Lib.Ygoedo.Parser;
 
 public class BasicParser : BaseParser
 {
-    protected override IMessage DoParse(byte[] buffer)
+    protected override IOcgMessage DoParse(byte[] buffer)
     {
         var reader = new PacketReader(buffer);
         var msgType = (GameMessage) reader.ReadByte();

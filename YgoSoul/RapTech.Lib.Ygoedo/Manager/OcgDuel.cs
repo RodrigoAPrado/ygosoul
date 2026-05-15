@@ -15,19 +15,22 @@ public class OcgDuel : IOcgDuel
 {
     public OcgDuelState State => _state;
     
-    public IOcgMessage? CurrentMessage => InternalCurrentMessage;
+    public IReadOnlyList<IDuelMessage> Messages => _messages.Select(IDuelMessage (x) => x).ToList().AsReadOnly();
+    public int CurrentMessageIndex { get; private set; }
+    public int RetryCount { get; private set; }
     private IntPtr _pDuel;
     private OCG_DuelOptions _options;
     private OcgDuelState _state = OcgDuelState.NotStarted;
-    private IMessage? InternalCurrentMessage => _messages.Count > 0 ? _messages[0] : null;
-    private readonly List<IMessage> _messages;
+    private readonly List<IOcgMessage> _messages;
 
-    private readonly Action<IntPtr, uint> _processMessage;
+    private readonly Func<OcgResponse, bool> _processMessage;
     
-    public OcgDuel(Action<IntPtr, uint> processMessage)
+    public OcgDuel(Func<OcgResponse, bool> processMessage)
     {
         _processMessage = processMessage;
         _messages = [];
+        CurrentMessageIndex = 0;
+        RetryCount = 0;
     }
     
     public Tuple<int, int> GetOcgVersion()
@@ -148,19 +151,8 @@ public class OcgDuel : IOcgDuel
         };
 
         var messagePtr = OCG_Api.Run.OCG_DuelGetMessage(_pDuel, out var length);
-        _processMessage?.Invoke(messagePtr, length);
-
-        return true;
-    }
-
-    public bool NextMessage()
-    {
-        if (InternalCurrentMessage == null)
-            return false;
-        if (InternalCurrentMessage.Input != InputType.None)
-            return false;
-        _messages.RemoveAt(0);
-        return true;
+        
+        return _processMessage.Invoke(new OcgResponse(messagePtr, length));
     }
 
     public bool SetResponse(List<int> playerInput)
@@ -171,15 +163,17 @@ public class OcgDuel : IOcgDuel
             return false;
         }
 
-        if (InternalCurrentMessage == null)
-            throw new InvalidOperationException();
+        if (_messages.Count == 0)
+            return false;
 
-        if (InternalCurrentMessage.Input is InputType.None or InputType.Unknown or InputType.Win)
+        var currentMessage = _messages[CurrentMessageIndex];
+        
+        if (currentMessage.Input is InputType.None or InputType.Unknown or InputType.Win)
         {
             return false;
         }
 
-        var response = InternalCurrentMessage.GetResponse(playerInput);
+        var response = currentMessage.GetResponse(playerInput);
         
         OCG_Api.Run.OCG_DuelSetResponse(_pDuel, response, (uint) response.Length);
         
@@ -187,18 +181,36 @@ public class OcgDuel : IOcgDuel
         return true;
     }
 
-    public void SetNewMessages(List<IMessage> messages)
+    public bool NextMessage()
     {
-        if (messages.Count == 1)
+        if (_messages.Count == 0)
+            return false;
+
+        if (_messages[CurrentMessageIndex].Input is not InputType.None)
+            return false;
+
+        if (CurrentMessageIndex + 1 >= _messages.Count)
+            return false;
+        
+        CurrentMessageIndex++;
+        
+        
+        return true;
+    }
+
+    public bool SetNewMessages(List<IOcgMessage> messages)
+    {
+        if (messages is [{ Input: InputType.Retry }])
         {
-            if (messages[0] is RetryMessage)
-            {
-                InternalCurrentMessage?.ResetResponse();    
-            }
-            return;
+            RetryCount++;
+            return false;
         }
         
+        _messages.Clear();
         _messages.AddRange(messages);
+        CurrentMessageIndex = 0;
+        RetryCount = 0;
+        return true;
     }
     
     private void SetDeck(IReadOnlyList<ICardData> deck, bool isExtra, byte team)

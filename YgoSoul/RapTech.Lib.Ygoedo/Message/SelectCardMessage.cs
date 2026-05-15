@@ -25,11 +25,6 @@ public class SelectCardMessage : ISelectionsMessage
         Max = max;
         Cards = cards;
     }
-    
-    public byte[] GetResponse(int id)
-    {
-        return GetResponse([id]);
-    }
 
     public byte[] GetResponse(List<int> ids)
     {

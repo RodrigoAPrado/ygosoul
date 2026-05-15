@@ -1,8 +1,7 @@
 ﻿namespace YgoSoul.RapTech.Lib.Ygoedo.Message.Abstr;
 
-public interface ISelectionsMessage : IMessage
+public interface ISelectionsMessage : IOcgMessage
 {
     bool CanCancel { get; }
-    byte[] GetResponse(List<int> ids);
     byte[] Cancel();
 }
