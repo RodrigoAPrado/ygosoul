@@ -1,0 +1,46 @@
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Struct;
+using YgoSoul.RapTech.Lib.YgoEdo.Manager.Interface;
+
+namespace YgoSoul.RapTech.Lib.YgoEdo.Manager;
+
+public class CardLibrary : ICardLibrary
+{
+    public static ICardLibrary Instance { get; private set; }
+    private static readonly Dictionary<uint, CardData> Cards = new ();
+    private static bool _initialized;
+    
+    public static void CreateInstance()
+    {
+        if (_initialized)
+            return;
+        
+        Instance = new CardLibrary();
+    }
+    
+    public static void AddCard(OCG_CardData data, string cardName, string cardText, List<string> strings, ulong category)
+    {
+        if (Cards.ContainsKey(data.code))
+            return;
+        Cards.Add(data.code, new CardData(data, cardName, cardText, strings, category));
+    }
+
+    public static bool HasCard(uint code)
+    {
+        return Cards.ContainsKey(code);
+    }
+
+    public static CardData InternalGetCard(uint code)
+    {
+        return code == 0 ? CardData.GetEmpty() : Cards[code];
+    }
+
+    public ICardData GetCard(uint code)
+    {
+        return code == 0 ? CardData.GetEmpty() : Cards[code];
+    }
+
+    public static IReadOnlyDictionary<uint, CardData> AllCards()
+    {
+        return Cards;
+    }
+}

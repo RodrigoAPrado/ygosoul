@@ -1,5 +1,5 @@
 ﻿using YgoSoul.CardDownloader;
-using YgoSoul.RapTech.Lib.Ygoedo.DuelRunner;
+using YgoSoul.RapTech.Lib.YgoEdo.Manager;
 
 namespace YgoSoul;
 

@@ -1,0 +1,38 @@
+﻿namespace YgoSoul.RapTech.Lib.YgoEdo.CardInfo.Interface;
+
+public enum SearchCategory
+{
+    None,
+    DestroyMonster,
+    DestroySpellOrTrap,
+    DestroyDeck,
+    DestroyHand,
+    SendToGrave,
+    SendToHand,
+    SendToDeck,
+    Banish,
+    Draw,
+    Search,
+    ChangeAtkDef,
+    ChangeLevelRank,
+    ChangePosition,
+    Piercing,
+    DirectAttack,
+    MultiAttack,
+    NegateActivation,
+    NegateEffect,
+    DamageLifePoints,
+    RecoverLifePoints,
+    SpecialSummon,
+    NonEffectRelated,
+    TokenRelated,
+    FusionRelated,
+    RitualRelated,
+    SynchroRelated,
+    XyzRelated,
+    LinkRelated,
+    CounterRelated,
+    Gamble,
+    Control,
+    MoveZones
+}
