@@ -12,7 +12,7 @@ public interface ICardData
     uint Level { get; }
     MonsterType Type { get; }
     Frame Frame { get; }
-    Icon Icon { get; }
+    CardAttribute CardAttribute { get; }
     int OriginalAttack { get; }
     int OriginalDefense { get; }
     uint LeftScale { get; }

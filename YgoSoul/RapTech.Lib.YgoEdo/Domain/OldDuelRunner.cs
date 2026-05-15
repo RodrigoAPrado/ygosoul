@@ -12,6 +12,7 @@ using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Message.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Parser.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Query;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Manager;

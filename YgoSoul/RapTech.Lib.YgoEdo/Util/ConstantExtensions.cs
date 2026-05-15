@@ -27,24 +27,24 @@ public static class ConstantExtensions
         }
     }
     
-    public static Icon ToCardIcon(this OCG_MonsterAttributes value)
+    public static CardAttribute ToCardIcon(this OCG_MonsterAttributes value)
     {
         switch (value)
         {
             case OCG_MonsterAttributes.Earth:
-                return Icon.Earth;
+                return CardAttribute.Earth;
             case OCG_MonsterAttributes.Water:
-                return Icon.Water;
+                return CardAttribute.Water;
             case OCG_MonsterAttributes.Fire:
-                return Icon.Fire;
+                return CardAttribute.Fire;
             case OCG_MonsterAttributes.Wind:
-                return Icon.Wind;
+                return CardAttribute.Wind;
             case OCG_MonsterAttributes.Light:
-                return Icon.Light;
+                return CardAttribute.Light;
             case OCG_MonsterAttributes.Dark:
-                return Icon.Dark;
+                return CardAttribute.Dark;
             case OCG_MonsterAttributes.Divine:
-                return Icon.Divine;
+                return CardAttribute.Divine;
             default:
                 throw new ArgumentOutOfRangeException(nameof(value), value, null);
         }

@@ -1,23 +1,30 @@
 ﻿using System.Text;
+using YgoSoul.RapTech.Lib.YgoEdo.CardInfo.Interface;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Message.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Message.Interface;
+using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Message;
 
-public class AnnounceAttributeMessage : BaseMessage, ISelectionsMessage
+public class AnnounceAttributeMessage : BaseMessage, ISelectionsMessage, IAnnounceAttributeMessage
 {
     public override InputType Input => InputType.Selections;
+    public override int InputCount => Count;
     public byte Player { get; }
     public byte Count { get; }
-    public List<OCG_MonsterAttributes> Attributes { get; }
+    public IReadOnlyList<CardAttribute> Attributes 
+        => _internalAttributes.Select(x => x.ToCardIcon()).ToList();
+    
     public bool CanCancel => false;
+    public List<OCG_MonsterAttributes> _internalAttributes { get; }
     
     public AnnounceAttributeMessage(byte player, byte count, List<OCG_MonsterAttributes> attributes)
     {
         Player = player;
         Count = count;
-        Attributes = attributes;
+        _internalAttributes = attributes;
     }
     
     public override byte[] GetResponse(List<int> ids)
@@ -48,7 +55,7 @@ public class AnnounceAttributeMessage : BaseMessage, ISelectionsMessage
     public override string ToString()
     {
         var sb = new StringBuilder();
-        sb.AppendLine($"AnnounceAttribute, \nPlayer={Player}, Select {Count} Races:");
+        sb.AppendLine($"AnnounceAttribute, \nPlayer={Player}, Select {Count} Attributes:");
         for (var i = 0; i< Attributes.Count; i++)
         {
             sb.AppendLine($"[{i}] => {Attributes[i]}");

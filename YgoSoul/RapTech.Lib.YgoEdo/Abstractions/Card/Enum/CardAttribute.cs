@@ -1,6 +1,6 @@
 ﻿namespace YgoSoul.RapTech.Lib.YgoEdo.CardInfo.Interface;
 
-public enum Icon
+public enum CardAttribute
 {
     Earth,
     Water,

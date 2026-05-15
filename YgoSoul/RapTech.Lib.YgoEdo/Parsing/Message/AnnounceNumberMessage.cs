@@ -1,14 +1,14 @@
 ﻿using System.Text;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Message.Enum;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Message;
 
-public class AnnounceNumberMessage : BaseMessage, IOcgMessage
+public class AnnounceNumberMessage : BaseMessage, IAnnounceNumberMessage
 {
     public override InputType Input => InputType.Value;
-    public override int InputCount => AvailableNumbers.Count;
-
+    public override int InputCount => 1;
     public byte Player { get; }
     public IReadOnlyList<uint> AvailableNumbers { get; }
 

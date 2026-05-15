@@ -17,7 +17,7 @@ public class CardData : ICardData
     public uint Level => Data.level;
     public MonsterType Type { get; }
     public Frame Frame { get; }
-    public Icon Icon { get; }
+    public CardAttribute CardAttribute { get; }
     public int OriginalAttack => Data.attack;
     public int OriginalDefense => Data.defense;
     public uint LeftScale => Data.lscale;
@@ -41,14 +41,14 @@ public class CardData : ICardData
         Types = SetupTypes();
         Categories = SetupCategories();
         Frame = SetupCardFrame();
-        Icon = SetupCardIcon();
+        CardAttribute = SetupCardIcon();
     }
 
-    private Icon SetupCardIcon()
+    private CardAttribute SetupCardIcon()
     {
         if (Data.attribute != 0)
             return ((OCG_MonsterAttributes)Data.attribute).ToCardIcon();
-        return Frame == Frame.Spell ? Icon.Spell : Icon.Trap;
+        return Frame == Frame.Spell ? CardAttribute.Spell : CardAttribute.Trap;
     }
 
     private Frame SetupCardFrame()
