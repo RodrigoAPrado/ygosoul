@@ -114,7 +114,7 @@ public class BasicParser : BaseParser
             case OCG_GameMessage.PayLpCost:
                 return new PayLpCostMessage(reader.ReadByte(), reader.ReadUInt32());
             case OCG_GameMessage.AttackDisabled:
-                return new AttackDisabled();
+                return new AttackDisabledMessage();
             case OCG_GameMessage.DamageStepStart:
                 return new DamageStepStartMessage();
             case OCG_GameMessage.DamageStepEnd:

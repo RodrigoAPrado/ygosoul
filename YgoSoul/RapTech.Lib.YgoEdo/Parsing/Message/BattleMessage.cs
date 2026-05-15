@@ -1,45 +1,28 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
+using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Message.Component;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Message;
 
-public class BattleMessage : BaseMessage
+public class BattleMessage : BaseMessage, IBattleMessage
 {
-    public FullLocationReference Attacker { get; }
-    public uint AttackerAtk { get; }
-    public uint AttackerDef { get; }
-    public bool AttackerDestroyed { get; }
-    public FullLocationReference Defender { get; }
-    public uint DefenderAtk { get; }
-    public uint DefenderDef { get; }
-    public bool DefenderDestroyed { get; }
+    public IBattleReference Attacker => _attacker;
+    public IBattleReference Defender => _defender;
+    private readonly BattleReference _attacker;
+    private readonly BattleReference _defender;
 
     public BattleMessage(
-        FullLocationReference attacker, 
-        uint attackerAtk, 
-        uint attackerDef, 
-        bool attackerDestroyed, 
-        FullLocationReference defender, 
-        uint defenderAtk, 
-        uint defenderDef, 
-        bool defenderDestroyed
+        BattleReference attacker,
+        BattleReference defender
         )
     {
-        Attacker = attacker;
-        AttackerAtk = attackerAtk;
-        AttackerDef = attackerDef;
-        AttackerDestroyed = attackerDestroyed;
-        Defender = defender;
-        DefenderAtk = defenderAtk;
-        DefenderDef = defenderDef;
-        DefenderDestroyed = defenderDestroyed;
+        _attacker = attacker;
+        _defender = defender;
     }
 
     public override string ToString()
     {
-        var attackerResult = AttackerDestroyed ? "destroyed" : "survives";
-        var defenderResult = DefenderDestroyed ? "destroyed" : "survives";
-        return $"{Attacker} with {AttackerAtk}/{AttackerDef} vs {Defender} with {DefenderAtk}/{DefenderDef}: " +
-               $"Attacker {attackerResult}, Defender {defenderResult}";
+        return $"[Attacker={_attacker}, Defender={_defender}]";
     }
 }

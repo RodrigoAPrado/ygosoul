@@ -1,29 +1,35 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
+using YgoSoul.RapTech.Lib.YgoEdo.CardInfo.Interface;
+using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
+using YgoSoul.RapTech.Lib.YgoEdo.Manager.Interface.Flag;
+using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Message.Component;
 
-public class FullLocationReference
+public class FullLocationReference : IFullLocationReference
 {
     public byte Controller { get; }
-    public OCG_CardLocation Location { get; }
+    public Location Location => _ocgLocation.ToLocation();
     public uint Sequence { get; }
-    public OCG_CardPosition Position { get; }
+    public CardPosition Position => _ocgPosition.ToCardPosition();
+    private readonly OCG_CardLocation _ocgLocation;
+    private readonly OCG_CardPosition _ocgPosition;
 
     public FullLocationReference(byte controller, OCG_CardLocation location, uint sequence, OCG_CardPosition position)
     {
         Controller = controller;
-        Location = location;
+        _ocgLocation = location;
         Sequence = sequence;
-        Position = position;
+        _ocgPosition = position;
     }
 
     public bool IsLocationEmpty()
     {
-        return Location == OCG_CardLocation.Unknown;
+        return _ocgLocation == OCG_CardLocation.Unknown;
     }
 
     public override string ToString()
     {
-        return $"Player={Controller}, Location={Location}, Sequence={Sequence}, Position={Position}";
+        return $"[Player={Controller}, Location={_ocgLocation}, Sequence={Sequence}, Position={_ocgPosition}]";
     }
 }

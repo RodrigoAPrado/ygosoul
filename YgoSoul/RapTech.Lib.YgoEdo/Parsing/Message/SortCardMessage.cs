@@ -6,7 +6,7 @@ using YgoSoul.RapTech.Lib.YgoEdo.Message.Enum;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Message;
 
-public class SortCardMessage : ISelectionsMessage
+public class SortCardMessage : ISelectionOcgMessage
 {
     public InputType Input => InputType.Sort;
     public int InputCount => Cards.Count;

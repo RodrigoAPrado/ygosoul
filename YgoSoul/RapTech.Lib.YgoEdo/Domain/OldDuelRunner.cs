@@ -376,7 +376,7 @@ public class OldDuelRunner
 
     private static void HandlePlayerInputSort(IntPtr pDuel)
     {
-        var message = (ISelectionsMessage)MessageHandler.MessageRequiringInput;
+        var message = (ISelectionOcgMessage)MessageHandler.MessageRequiringInput;
         byte[] response = [];
         do
         {
@@ -426,7 +426,7 @@ public class OldDuelRunner
     {
         var responseIds = new List<int>();
         var enter = false;
-        var message = (ISelectionsMessage)MessageHandler.MessageRequiringInput;
+        var message = (ISelectionOcgMessage)MessageHandler.MessageRequiringInput;
         byte[] response = [];
         do
         {

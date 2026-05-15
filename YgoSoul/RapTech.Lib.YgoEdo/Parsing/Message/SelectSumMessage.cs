@@ -5,7 +5,7 @@ using YgoSoul.RapTech.Lib.YgoEdo.Message.Enum;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Message;
 
-public class SelectSumMessage : ISelectionsMessage
+public class SelectSumMessage : ISelectionOcgMessage
 {
     public InputType Input => InputType.Selections;
     public int InputCount => MustSelect.Count + CanSelect.Count;

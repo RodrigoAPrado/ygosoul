@@ -91,4 +91,10 @@ public class AnnounceCardMessage : BaseMessage, IAnnounceCardMessage
         
         return d[n, m];
     }
+
+    public bool CanCancel => false;
+    public byte[] Cancel()
+    {
+        return [];
+    }
 }

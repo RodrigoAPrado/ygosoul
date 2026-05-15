@@ -3,10 +3,9 @@ using YgoSoul.RapTech.Lib.YgoEdo.Message.Interface.Base;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Message.Interface;
 
-public interface IAnnounceAttributeMessage : IDuelMessage
+public interface IAnnounceAttributeMessage : ISelectionDuelMessage
 {
     byte Player { get; }
     byte Count { get; }
     IReadOnlyList<CardAttribute> Attributes { get; }
-    bool CanCancel { get; }
 }

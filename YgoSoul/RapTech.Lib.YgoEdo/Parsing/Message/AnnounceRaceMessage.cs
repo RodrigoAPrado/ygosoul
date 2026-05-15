@@ -5,7 +5,7 @@ using YgoSoul.RapTech.Lib.YgoEdo.Message.Enum;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Message;
 
-public class AnnounceRaceMessage : BaseMessage, ISelectionsMessage
+public class AnnounceRaceMessage : BaseMessage, ISelectionOcgMessage
 {
     public override InputType Input => InputType.Selections;
     public override int InputCount => Races.Count;

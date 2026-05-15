@@ -1,6 +1,7 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.CardInfo.Interface;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
+using YgoSoul.RapTech.Lib.YgoEdo.Manager.Interface.Flag;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Util;
 
@@ -479,6 +480,14 @@ public static class ConstantExtensions
         {
             OCG_CardLocation.Unknown => Location.Unknown,
             _ => (Location)(uint)value
+        };
+    }
+    
+    public static CardPosition ToCardPosition(this OCG_CardPosition value)
+    {
+        return value switch
+        {
+            _ => (CardPosition)(uint)value
         };
     }
 }

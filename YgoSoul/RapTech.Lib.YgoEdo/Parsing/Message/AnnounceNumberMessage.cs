@@ -41,4 +41,10 @@ public class AnnounceNumberMessage : BaseMessage, IAnnounceNumberMessage
         }
         return sb.ToString();
     }
+
+    public bool CanCancel => false;
+    public byte[] Cancel()
+    {
+        return [];
+    }
 }

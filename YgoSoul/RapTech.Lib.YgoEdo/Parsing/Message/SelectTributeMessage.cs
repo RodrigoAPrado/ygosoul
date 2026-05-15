@@ -6,7 +6,7 @@ using YgoSoul.RapTech.Lib.YgoEdo.Message.Enum;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Message;
 
-public class SelectTributeMessage : ISelectionsMessage
+public class SelectTributeMessage : ISelectionOcgMessage
 {
     public InputType Input => InputType.Selections;
     public int InputCount { get; }

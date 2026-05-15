@@ -31,13 +31,15 @@ public class BattleParser : BaseParser
         var defenderDestroyed = reader.ReadByte() == 1;
 
         return new BattleMessage(
+            new BattleReference(
             fullAttackerLocation,
             attackerAttack,
             attackerDefense,
-            attackerDestroyed,
+            attackerDestroyed), 
+            new BattleReference(
             fullDefenserLocation,
             defenderAttack,
             defenderDefense,
-            defenderDestroyed);
+            defenderDestroyed));
     }
 }
