@@ -3,8 +3,7 @@ using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 
-public interface ISelectIdleCommandMessage : ISelectionDuelMessage
+public interface ISetMessage : IDuelMessage
 {
-    byte Player { get; }
-    IReadOnlyList<IIdleCommand> Choices { get; }
+    ICardReference Card { get; } 
 }

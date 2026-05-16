@@ -1,18 +1,20 @@
 ﻿using System.Text;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class ShuffleExtraMessage : BaseMessage
+public class ShuffleExtraMessage : BaseMessage, IShuffleExtraMessage
 {
     public byte Player { get; }
-    public List<uint> Cards { get; }
+    public IReadOnlyList<uint> Cards => _cards;
+    private readonly List<uint> _cards;
 
     public ShuffleExtraMessage(byte player, List<uint> cards)
     {
         Player = player;
-        Cards = cards;
+        _cards = cards;
     }
 
     public override string ToString()

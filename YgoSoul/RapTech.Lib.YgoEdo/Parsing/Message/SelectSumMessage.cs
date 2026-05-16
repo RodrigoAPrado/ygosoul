@@ -1,40 +1,44 @@
 ﻿using System.Text;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class SelectSumMessage : ISelectionOcgMessage
+public class SelectSumMessage : ISelectionOcgMessage,ISelectSumMessage
 {
     public InputType Input => InputType.Selections;
     public int InputCount => MustSelect.Count + CanSelect.Count;
     public bool CanCancel => false;
     public byte Player { get; }
-    public bool HasMax { get; }
-    public uint Acc { get; }
-    public uint Min { get; }
-    public uint Max { get; }
-    public IReadOnlyList<CardReference> MustSelect { get; }
-    public IReadOnlyList<CardReference> CanSelect { get; }
+    public bool HasMaximumChoices { get; }
+    public uint TargetSum { get; }
+    public uint MinimumChoices { get; }
+    public uint MaximumChoices { get; }
+    public IReadOnlyList<ICardReference> MustSelect => _mustSelect;
+    public IReadOnlyList<ICardReference> CanSelect => _canSelect;
+    private readonly List<CardReference> _mustSelect;
+    private readonly List<CardReference> _canSelect;
 
     public SelectSumMessage(
         byte player, 
-        bool hasMax, 
-        uint acc,
-        uint min,
-        uint max,
+        bool hasMaximumChoices, 
+        uint targetSum,
+        uint minimumChoices,
+        uint maximumChoices,
         List<CardReference> mustSelect,
         List<CardReference> canSelect
         )
     {
         Player = player;
-        HasMax = hasMax;
-        Acc = acc;
-        Min = min;
-        Max = max;
-        MustSelect = mustSelect;
-        CanSelect = canSelect;
+        HasMaximumChoices = hasMaximumChoices;
+        TargetSum = targetSum;
+        MinimumChoices = minimumChoices;
+        MaximumChoices = maximumChoices;
+        _mustSelect = mustSelect;
+        _canSelect = canSelect;
     }
     
     public byte[] GetResponse(List<int> ids)
@@ -53,7 +57,7 @@ public class SelectSumMessage : ISelectionOcgMessage
             }
         }
 
-        if (HasMax && ids.Count > Max && ids.Count < Min)
+        if (HasMaximumChoices && ids.Count > MaximumChoices && ids.Count < MinimumChoices)
             return [];
 
         var selectedCards = new List<CardReference>();
@@ -62,14 +66,14 @@ public class SelectSumMessage : ISelectionOcgMessage
         {
             if (id < MustSelect.Count)
             {
-                selectedCards.Add(MustSelect[id]);
+                selectedCards.Add(_mustSelect[id]);
                 continue;
             }
-            selectedCards.Add(CanSelect[id - MustSelect.Count]);
+            selectedCards.Add(_canSelect[id - _mustSelect.Count]);
         }
 
         var tot = (uint) selectedCards.Sum(x => (int) x.Sum);
-        if (tot < Acc)
+        if (tot < TargetSum)
             return [];
 
         var response = new byte[8 + ids.Count * 4];
@@ -94,12 +98,12 @@ public class SelectSumMessage : ISelectionOcgMessage
     public override string ToString()
     {
         var max = "";
-        if (HasMax)
+        if (HasMaximumChoices)
         {
-            max = $", and you must select between {Min} and {Max} cards";
+            max = $", and you must select between {MinimumChoices} and {MaximumChoices} cards";
         }
         var sb = new StringBuilder();
-        sb.AppendLine($"You need a sum of {Acc}{max}.");
+        sb.AppendLine($"You need a sum of {TargetSum}{max}.");
         if (MustSelect.Count > 0)
             sb.AppendLine("You must select the following cards:");
         foreach (var card in MustSelect)

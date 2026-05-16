@@ -1,25 +1,30 @@
 ﻿using System.Text;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Flag;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class SelectPositionMessage : IOcgMessage
+public class SelectPositionMessage : ISelectionOcgMessage, ISelectPositionMessage
 {
     public InputType Input => InputType.Value;
     public int InputCount => PositionAvailable.Count;
 
     public byte Player { get; }
     public uint CardCode { get; }
-    public IReadOnlyList<OCG_CardPosition> PositionAvailable { get; }
+    public IReadOnlyList<CardPosition> PositionAvailable { get; }
+    private readonly List<OCG_CardPosition> _positionAvailable;
 
     public SelectPositionMessage(byte player, uint cardCode, List<OCG_CardPosition> positionAvailable)
     {
         Player = player;
         CardCode = cardCode;
-        PositionAvailable = positionAvailable;
+        _positionAvailable = positionAvailable;
+        PositionAvailable = _positionAvailable.Select(x => x.ToCardPosition()).ToList().AsReadOnly();
     }
     
     public byte[] GetResponse(List<int> input)
@@ -45,5 +50,11 @@ public class SelectPositionMessage : IOcgMessage
         }
 
         return sb.ToString();
+    }
+
+    public bool CanCancel => false;
+    public byte[] Cancel()
+    {
+        return [];
     }
 }

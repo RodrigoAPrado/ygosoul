@@ -1,8 +1,9 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class ShuffleDeckMessage : SimpleTextMessage
+public class ShuffleDeckMessage : SimpleTextMessage, IShuffleDeckMessage
 {
     public byte Player { get; }
     public ShuffleDeckMessage(byte player) : base($"Shuffle player {player} deck.")

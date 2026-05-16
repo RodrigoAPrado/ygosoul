@@ -1,15 +1,23 @@
 ﻿using System.Text;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Flag;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
+using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class ShuffleSetCardMessage : BaseMessage
+public class ShuffleSetCardMessage : BaseMessage, IShuffleSetCardMessage
 {
-    public OCG_CardLocation Location { get; }
-    public IReadOnlyList<FullLocationReference> Cards { get; }
-    public IReadOnlyList<FullLocationReference> Xyzs { get; }
+    public Location Location { get; }
+    public IReadOnlyList<IFullLocationReference> Cards => _cards;
+    public IReadOnlyList<IFullLocationReference> Xyzs => _xyzs;
+
+    private readonly OCG_CardLocation _location;
+    private readonly List<FullLocationReference> _cards;
+    private readonly List<FullLocationReference> _xyzs;
 
     public ShuffleSetCardMessage(
         OCG_CardLocation location, 
@@ -17,9 +25,10 @@ public class ShuffleSetCardMessage : BaseMessage
         List<FullLocationReference> xyzs
         )
     {
-        Location = location;
-        Cards = cards;
-        Xyzs = xyzs;
+        _location = location;
+        _cards = cards;
+        _xyzs = xyzs;
+        Location = _location.ToLocation();
     }
 
     public override string ToString()

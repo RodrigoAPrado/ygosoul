@@ -1,22 +1,25 @@
 ﻿using System.Text;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Handler;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class SelectOptionMessage : IOcgMessage
+public class SelectOptionMessage : ISelectionOcgMessage, ISelectOptionMessage
 {
     public InputType Input => InputType.Value;
     public int InputCount => Options.Count;
 
     public byte Player { get; }
-    public IReadOnlyList<ulong> Options { get; }
-
+    public IReadOnlyList<string> Options { get; }
+    private readonly List<ulong> _options;
+    
     public SelectOptionMessage(byte player, List<ulong> options)
     {
         Player = player;
-        Options = options;
+        _options = options;
+        Options = _options.Select(DescriptionHandler.GetDescription).ToList().AsReadOnly();
     }
     
     public byte[] GetResponse(List<int> input)
@@ -39,8 +42,14 @@ public class SelectOptionMessage : IOcgMessage
 
         for (var i = 0; i < Options.Count; i++)
         {
-            sb.AppendLine($"[{i}] => {DescriptionHandler.GetDescription(Options[i])}, {Options[i]:x16}");
+            sb.AppendLine($"[{i}] => {DescriptionHandler.GetDescription(_options[i])}, {_options[i]:x16}");
         }
         return sb.ToString();
+    }
+
+    public bool CanCancel => false;
+    public byte[] Cancel()
+    {
+        return [];
     }
 }

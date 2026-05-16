@@ -1,4 +1,6 @@
 ﻿using System.Text;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
@@ -6,24 +8,24 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class SelectTributeMessage : ISelectionOcgMessage
+public class SelectTributeMessage : ISelectionOcgMessage, ISelectTributeMessage
 {
     public InputType Input => InputType.Selections;
-    public int InputCount { get; }
-    public bool CanCancel => Cancelable;
+    public int InputCount => Cards.Count();
+    public bool CanCancel { get; }
     public byte Player { get; }
-    public bool Cancelable { get; }
     public uint Min { get; }
     public uint Max { get; }
-    public IReadOnlyList<CardReference> Cards { get; }
+    public IReadOnlyList<ICardReference> Cards => _cards;
+    private readonly List<CardReference> _cards;
 
     public SelectTributeMessage(byte player, bool cancelable, uint min, uint max, List<CardReference> cards)
     {
         Player = player;
-        Cancelable = cancelable;
+        CanCancel = cancelable;
         Min = min;
         Max = max;
-        Cards = cards;
+        _cards = cards;
     }
 
     public byte[] GetResponse(List<int> ids)
@@ -56,7 +58,7 @@ public class SelectTributeMessage : ISelectionOcgMessage
 
     public byte[] Cancel()
     {
-        return BitConverter.GetBytes(-1);
+        return CanCancel ? BitConverter.GetBytes(-1) : [];
     }
     
     
@@ -70,7 +72,7 @@ public class SelectTributeMessage : ISelectionOcgMessage
             sb.AppendLine($"{c.Index} => {CardLibrary.InternalGetCard(c.CardCode).Name}, Value: {c.ReleaseValue}...");
         }
 
-        if (Cancelable)
+        if (CanCancel)
         {
             sb.AppendLine("Input \"Cancel\" if you want to cancel this selection...");
         }

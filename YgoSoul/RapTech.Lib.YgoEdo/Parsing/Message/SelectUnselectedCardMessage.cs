@@ -1,4 +1,6 @@
 ﻿using System.Text;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
@@ -6,17 +8,18 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class SelectUnselectedCardMessage : IOcgMessage
+public class SelectUnselectedCardMessage : ISelectionOcgMessage, ISelectUnselectCardMessage
 {
     public InputType Input => InputType.Value;
     public int InputCount => CardsToSelect.Count + CardsToUnselect.Count;
     public byte Player { get; }
-    public bool Finishable { get; }
-    public bool Cancelable { get; }
+    public bool Finish { get; }
     public uint Min { get; }
     public uint Max { get; }
-    public IReadOnlyList<CardReference> CardsToSelect { get; }
-    public IReadOnlyList<CardReference> CardsToUnselect { get; }
+    public IReadOnlyList<ICardReference> CardsToSelect => _cardsToSelect;
+    public IReadOnlyList<ICardReference> CardsToUnselect => _cardsToUnselect;
+    private readonly List<CardReference> _cardsToSelect;
+    private readonly List<CardReference> _cardsToUnselect;
 
     public SelectUnselectedCardMessage(
         byte player, 
@@ -28,12 +31,12 @@ public class SelectUnselectedCardMessage : IOcgMessage
         List<CardReference> cardsToUnselect)
     {
         Player = player;
-        Finishable = finishable;
-        Cancelable = cancelable;
+        Finish = finishable;
+        CanCancel = cancelable;
         Min = min;
         Max = max;
-        CardsToSelect = cardsToSelect;
-        CardsToUnselect = cardsToUnselect;
+        _cardsToSelect = cardsToSelect;
+        _cardsToUnselect = cardsToUnselect;
     }
     
     public byte[] GetResponse(List<int> input)
@@ -43,7 +46,7 @@ public class SelectUnselectedCardMessage : IOcgMessage
         
         var id = input[0];
         
-        if (id < 0 && (Cancelable || Finishable))
+        if (id < 0 && (CanCancel || Finish))
             return BitConverter.GetBytes(-1);
         if (id < 0 || id > CardsToSelect.Count + CardsToUnselect.Count)
             return [];
@@ -78,5 +81,11 @@ public class SelectUnselectedCardMessage : IOcgMessage
         }
 
         return sb.ToString();
+    }
+
+    public bool CanCancel { get; }
+    public byte[] Cancel()
+    {
+        return CanCancel ? BitConverter.GetBytes(-1) : [];
     }
 }

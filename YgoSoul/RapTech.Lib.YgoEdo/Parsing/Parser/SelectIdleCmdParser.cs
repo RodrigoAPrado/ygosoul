@@ -21,12 +21,12 @@ public class SelectIdleCmdParser : BaseParser
 
         var choices = new List<IIdleCmdChoice>();
 
+        uint index = 0;
         // helper local
-        void ReadCardList(PlayerIdleAction action)
+        uint ReadCardList(PlayerIdleAction action, uint currentIndex)
         {
             var count = reader.ReadInt32();
 
-            uint index = 0;
             for (var i = count; i > 0; i--)
             {
                 uint code = reader.ReadUInt32();
@@ -40,36 +40,107 @@ public class SelectIdleCmdParser : BaseParser
                     description = reader.ReadULong64();
                     reader.Skip(1);// client mode
                 }
-                choices.Add(new IdleCmdChoiceCard(
-                    action,
-                    code,
-                    controller,
-                    location,
-                    sequence,
-                    index,
-                    description
-                ));
-                index++;
+
+                switch (action)
+                {
+                    case PlayerIdleAction.NormalSummon:
+                        choices.Add(new IdleCmdNormalSummon(
+                            action,
+                            code,
+                            controller,
+                            location,
+                            sequence,
+                            index,
+                            description
+                        ));
+                        break;
+                    case PlayerIdleAction.SpecialSummon:
+                        choices.Add(new IdleCmdSpecialSummon(
+                            action,
+                            code,
+                            controller,
+                            location,
+                            sequence,
+                            index,
+                            description
+                        ));
+                        break;
+                    case PlayerIdleAction.ChangeCardPosition:
+                        choices.Add(new IdleCmdChangeCardPosition(
+                            action,
+                            code,
+                            controller,
+                            location,
+                            sequence,
+                            index,
+                            description
+                        ));
+                        break;
+                    case PlayerIdleAction.Set:
+                        choices.Add(new IdleCmdSet(
+                            action,
+                            code,
+                            controller,
+                            location,
+                            sequence,
+                            index,
+                            description
+                        ));
+                        break;
+                    case PlayerIdleAction.SpellOrTrapSet:
+                        choices.Add(new IdleCmdSpellOrTrapSet(
+                            action,
+                            code,
+                            controller,
+                            location,
+                            sequence,
+                            index,
+                            description
+                        ));
+                        break;
+                    case PlayerIdleAction.EffectActivation:
+                        choices.Add(new IdleCmdEffectActivation(
+                            action,
+                            code,
+                            controller,
+                            location,
+                            sequence,
+                            index,
+                            description
+                        ));
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(action), action, null);
+                }
+                currentIndex++;
             }
+
+            return currentIndex;
         }
 
         // ordem FIXA do protocolo
-        ReadCardList(PlayerIdleAction.NormalSummon);
-        ReadCardList(PlayerIdleAction.SpecialSummon);
-        ReadCardList(PlayerIdleAction.ChangeCardPosition);
-        ReadCardList(PlayerIdleAction.Set);
-        ReadCardList(PlayerIdleAction.SpellOrTrapSet);
-        ReadCardList(PlayerIdleAction.EffectActivation);
+        index = ReadCardList(PlayerIdleAction.NormalSummon, index);
+        index = ReadCardList(PlayerIdleAction.SpecialSummon, index);
+        index = ReadCardList(PlayerIdleAction.ChangeCardPosition, index);
+        index = ReadCardList(PlayerIdleAction.Set, index);
+        index = ReadCardList(PlayerIdleAction.SpellOrTrapSet, index);
+        index = ReadCardList(PlayerIdleAction.EffectActivation, index);
 
         // fases
         if (reader.ReadByte() == 1)
-            choices.Add(new IdleCmdChoiceOther(PlayerIdleAction.GoToBattlePhase, player));
+        {
+            choices.Add(new IdleCmdToBattlePhase(PlayerIdleAction.GoToBattlePhase, index));
+            index++;
+        }
 
         if (reader.ReadByte() == 1)
-	        choices.Add(new IdleCmdChoiceOther(PlayerIdleAction.GotoEndPhase, player));
+        {
+            choices.Add(new IdleCmdToEndPhase(PlayerIdleAction.GotoEndPhase, index));
+            index++;
+        }
         
         if (reader.ReadByte() == 1)
-	        choices.Add(new IdleCmdChoiceOther(PlayerIdleAction.ShuffleHand, player));
+	        choices.Add(new IdleCmdShuffleHand(PlayerIdleAction.ShuffleHand, index));
 
         return new SelectIdleCmdMessage(player, choices);
     }

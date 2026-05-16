@@ -2,7 +2,7 @@
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component.Command.Idle;
 
-public interface ISpellOrTrapSet : IIdleCommand
+public interface IIdleSpellOrTrapSet : IIdleCommand
 {
     uint CardCode { get; }
     byte Controller { get; }

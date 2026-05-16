@@ -7,14 +7,14 @@ using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
-public class IdleCmdNormalSummon : IdleCmdChoiceCard, IIdleNormalSummon
+public class IdleCmdSpecialSummon : IdleCmdChoiceCard, IIdleSpecialSummon
 {
     public Location Location { get; }
-    public string Description { get; }
-    
-    public IdleCmdNormalSummon(PlayerIdleAction playerIdleAction, uint cardCode, byte player, OCG_CardLocation location, uint sequence, uint index, ulong description) : base(playerIdleAction, cardCode, player, location, sequence, index, description)
+
+    public IdleCmdSpecialSummon(PlayerIdleAction playerIdleAction, uint cardCode, byte player,
+        OCG_CardLocation location, uint sequence, uint index, ulong description) : base(playerIdleAction, cardCode,
+        player, location, sequence, index, description)
     {
         Location = _location.ToLocation();
-        Description = DescriptionHandler.GetDescription(_description);
     }
 }

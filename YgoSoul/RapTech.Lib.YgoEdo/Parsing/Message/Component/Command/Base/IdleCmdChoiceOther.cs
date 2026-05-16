@@ -6,13 +6,12 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 public abstract class IdleCmdChoiceOther : IIdleCmdChoice
 {
     public PlayerIdleAction Action { get; }
-    public byte Controller { get; }
-    public uint Index => 0;
+    public uint Index { get; }
 
-    public IdleCmdChoiceOther(PlayerIdleAction playerIdleAction, byte player)
+    public IdleCmdChoiceOther(PlayerIdleAction playerIdleAction, uint index)
     {
         Action = playerIdleAction;
-        Controller = player;
+        Index = index;
     }
 
     public override string ToString()
