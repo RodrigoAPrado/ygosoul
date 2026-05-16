@@ -1,21 +1,25 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
+using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Message.Component;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Message;
 
-public class CancelTargetMessage : BaseMessage
+public class CancelTargetMessage : BaseMessage, ICancelTargetMessage
 {
-    public FullLocationReference Card { get; }
-    public FullLocationReference Target { get; }
+    public IFullLocationReference Card => _card;
+    public IFullLocationReference Target => _target;
+    private readonly FullLocationReference _card;
+    private readonly FullLocationReference _target;
 
     public CancelTargetMessage(FullLocationReference card, FullLocationReference target)
     {
-        Card = card;
-        Target = target;
+        _card = card;
+        _target = target;
     }
 
     public override string ToString()
     {
-        return $"TargetCancel, Card={Card}, Target={Target}";
+        return $"TargetCancel, Card={_card}, Target={_target}";
     }
 }

@@ -1,8 +1,9 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Message;
 
-public class ChainedMessage : BaseMessage
+public class ChainedMessage : BaseMessage, IChainedMessage
 {
     public byte ChainSize { get; }
 

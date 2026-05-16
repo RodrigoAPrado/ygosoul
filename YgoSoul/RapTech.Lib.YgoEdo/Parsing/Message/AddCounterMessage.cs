@@ -28,6 +28,6 @@ public class AddCounterMessage : BaseMessage, IAddCounterMessage
 
     public override string ToString()
     {
-        return $"AddCounter, CounterType={_internalCounterType}, Player={Player}, Location={_internalLocation} Sequence={Sequence}, Count={Count}";
+        return $"[(AddCounter) CounterType={_internalCounterType}, Player={Player}, Location={_internalLocation} Sequence={Sequence}, Count={Count}]";
     }
 }

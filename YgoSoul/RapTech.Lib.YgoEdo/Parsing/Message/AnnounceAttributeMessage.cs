@@ -8,7 +8,7 @@ using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Message;
 
-public class AnnounceAttributeMessage : BaseMessage, IAnnounceAttributeMessage
+public class AnnounceAttributeMessage : BaseMessage, ISelectionOcgMessage, IAnnounceAttributeMessage
 {
     public override InputType Input => InputType.Selections;
     public override int InputCount => Count;
@@ -18,7 +18,7 @@ public class AnnounceAttributeMessage : BaseMessage, IAnnounceAttributeMessage
         => _internalAttributes.Select(x => x.ToCardIcon()).ToList();
     
     public bool CanCancel => false;
-    private List<OCG_MonsterAttributes> _internalAttributes;
+    private readonly List<OCG_MonsterAttributes> _internalAttributes;
     
     public AnnounceAttributeMessage(byte player, byte count, List<OCG_MonsterAttributes> attributes)
     {
@@ -55,7 +55,7 @@ public class AnnounceAttributeMessage : BaseMessage, IAnnounceAttributeMessage
     public override string ToString()
     {
         var sb = new StringBuilder();
-        sb.AppendLine($"AnnounceAttribute, \nPlayer={Player}, Select {Count} Attributes:");
+        sb.AppendLine($"(AnnounceAttribute) [Player={Player}, Select {Count} Attributes:");
         for (var i = 0; i< Attributes.Count; i++)
         {
             sb.AppendLine($"[{i}] => {Attributes[i]}");

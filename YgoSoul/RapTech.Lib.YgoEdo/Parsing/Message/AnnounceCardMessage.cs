@@ -5,7 +5,7 @@ using YgoSoul.RapTech.Lib.YgoEdo.Message.Enum;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class AnnounceCardMessage : BaseMessage, IAnnounceCardMessage
+public class AnnounceCardMessage : BaseMessage, ISelectionOcgMessage, IAnnounceCardMessage
 {
     public override InputType Input => InputType.AnnounceCard;
     public override int InputCount => 1;

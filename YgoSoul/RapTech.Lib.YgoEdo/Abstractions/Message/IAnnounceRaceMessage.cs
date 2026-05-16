@@ -8,5 +8,5 @@ public interface IAnnounceRaceMessage : ISelectionDuelMessage
 {
     byte Player { get; }
     byte Count { get; }
-    List<MonsterType> AvailableTypes { get; }
+    IReadOnlyList<MonsterType> AvailableTypes { get; }
 }

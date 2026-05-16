@@ -490,4 +490,9 @@ public static class ConstantExtensions
             _ => (CardPosition)(uint)value
         };
     }
+
+    public static DuelCardHint ToDuelCardHint(this OCG_CardHint value)
+    {
+        return (DuelCardHint)(int)value;
+    }
 }

@@ -1,17 +1,21 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
+using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Message.Component;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Message;
 
-public class CardTargetMessage : BaseMessage
+public class CardTargetMessage : BaseMessage, ICardTargetMessage
 {
-    public FullLocationReference Card { get; }
-    public FullLocationReference Target { get; }
+    public IFullLocationReference Card => _card;
+    public IFullLocationReference Target => _target;
+    private readonly FullLocationReference _card;
+    private readonly FullLocationReference _target;
 
     public CardTargetMessage(FullLocationReference card, FullLocationReference target)
     {
-        Card = card;
-        Target = target;
+        _card = card;
+        _target = target;
     }
 
     public override string ToString()
