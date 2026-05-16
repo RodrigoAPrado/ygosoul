@@ -1,4 +1,7 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Enum;
@@ -25,7 +28,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Domain.Duel
         public Duel(Func<OcgResponse, bool> processMessage)
         {
             _processMessage = processMessage;
-            _messages = [];
+            _messages = new List<IOcgMessage>();
             CurrentMessageIndex = 0;
             RetryCount = 0;
         }
@@ -40,7 +43,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Domain.Duel
 
         public DuelState State { get; private set; } = DuelState.NotInitiated;
 
-        public IReadOnlyList<IDuelMessage> Messages => _messages.Select(IDuelMessage (x) => x).ToList().AsReadOnly();
+        public IReadOnlyList<IDuelMessage> Messages => _messages;
         public int CurrentMessageIndex { get; private set; }
         public int RetryCount { get; private set; }
 
@@ -233,10 +236,13 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Domain.Duel
 
         public bool SetNewMessages(List<IOcgMessage> messages)
         {
-            if (messages is [{ Input: InputType.Retry }])
+            if (messages.Count == 1)
             {
-                RetryCount++;
-                return false;
+                if (messages[0].Input == InputType.Retry)
+                {
+                    RetryCount++;
+                    return false;
+                }
             }
 
             _messages.Clear();

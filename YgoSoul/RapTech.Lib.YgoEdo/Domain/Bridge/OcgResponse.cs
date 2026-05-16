@@ -1,4 +1,6 @@
-﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Domain.Bridge
+﻿using System;
+
+namespace YgoSoul.RapTech.Lib.YgoEdo.Domain.Bridge
 {
     public class OcgResponse
     {

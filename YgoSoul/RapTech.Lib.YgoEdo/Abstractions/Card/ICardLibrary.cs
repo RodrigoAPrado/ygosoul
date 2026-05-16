@@ -11,5 +11,6 @@
         /// <param name="code">Card code.</param>
         /// <returns>Card data for the code if it exists, empty data otherwise.</returns>
         ICardData GetCard(uint code);
+        bool HasCard(uint code);
     }
 }

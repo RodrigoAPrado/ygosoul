@@ -1,4 +1,5 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Enum;
+﻿using System.Collections.Generic;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Enum;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card
 {

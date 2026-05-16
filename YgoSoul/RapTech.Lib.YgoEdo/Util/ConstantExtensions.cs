@@ -1,4 +1,5 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Enum;
+﻿using System;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Flag;

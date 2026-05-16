@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
@@ -10,7 +12,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Domain.Duel
 {
     public class DuelManager : IDuelManager
     {
-        private Duel? _ocgDuel;
+        private Duel _ocgDuel;
         private readonly Dictionary<OCG_GameMessage, IParser> _parsers;
 
         public DuelManager(ICardLibrary cardLibrary, Dictionary<OCG_GameMessage, IParser> parsers)
@@ -20,7 +22,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Domain.Duel
         }
 
         public ICardLibrary CardLibrary { get; }
-        public IDuel? CurrentDuel => _ocgDuel;
+        public IDuel CurrentDuel => _ocgDuel;
 
         public bool CreateDuel()
         {

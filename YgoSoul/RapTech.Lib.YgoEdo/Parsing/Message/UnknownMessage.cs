@@ -1,4 +1,5 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
+﻿using System;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 

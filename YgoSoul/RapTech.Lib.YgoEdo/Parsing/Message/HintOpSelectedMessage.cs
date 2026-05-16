@@ -1,4 +1,5 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Data.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
@@ -9,11 +10,11 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
         private readonly ulong _description;
 
         public HintOpSelectedMessage(byte player, ulong description) : base(
-            $"$Player {player}, choose {DescriptionUtil.GetDescription(description)}")
+            $"$Player {player}, choose {DescriptionUtil.GetDescription(description, CardLibrary.Instance)}")
         {
             Player = player;
             _description = description;
-            Description = DescriptionUtil.GetDescription(_description);
+            Description = DescriptionUtil.GetDescription(_description, CardLibrary.Instance);
         }
 
         public byte Player { get; }

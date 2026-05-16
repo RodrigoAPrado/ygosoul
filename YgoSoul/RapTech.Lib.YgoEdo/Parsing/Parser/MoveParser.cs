@@ -1,4 +1,6 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
+﻿using System;
+using System.Linq;
+using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
@@ -30,8 +32,9 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser
 
             var mask = reader.ReadUInt32();
 
-            var reasons = Enum
-                .GetValues<OCG_Reason>()
+            var reasons = 
+                Enum.GetValues(typeof(OCG_Reason))
+                .Cast<OCG_Reason>()
                 .Where(x => x != OCG_Reason.None)
                 .Where(x => (mask & (uint)x) != 0)
                 .ToList();

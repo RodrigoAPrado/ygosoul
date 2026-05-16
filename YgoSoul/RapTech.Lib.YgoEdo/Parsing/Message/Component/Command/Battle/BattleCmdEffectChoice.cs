@@ -2,7 +2,7 @@
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component.Command.Battle;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
-using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
+using YgoSoul.RapTech.Lib.YgoEdo.Data.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Command.Base;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
@@ -24,7 +24,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Command.Battle
         {
             _description = description;
             Location = _location.ToLocation();
-            Description = DescriptionUtil.GetDescription(_description);
+            Description = DescriptionUtil.GetDescription(_description, CardLibrary.Instance);
         }
 
         public Location Location { get; }
@@ -33,7 +33,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Command.Battle
         public override string ToString()
         {
             return
-                $"to activate {CardLibrary.InternalGetCard(CardCode).Name}'s effect, description={DescriptionUtil.GetDescription(_description)}";
+                $"to activate {CardLibrary.InternalGetCard(CardCode).Name}'s effect, description={DescriptionUtil.GetDescription(_description, CardLibrary.Instance)}";
         }
     }
 }

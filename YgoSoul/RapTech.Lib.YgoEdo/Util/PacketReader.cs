@@ -1,4 +1,6 @@
-﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Util
+﻿using System;
+
+namespace YgoSoul.RapTech.Lib.YgoEdo.Util
 {
     public class PacketReader
     {

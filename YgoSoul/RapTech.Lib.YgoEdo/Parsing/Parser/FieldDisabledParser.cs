@@ -1,4 +1,7 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
@@ -14,8 +17,9 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser
             reader.ReadByte(); //msg
             var mask = reader.ReadUInt32();
 
-            var zones = Enum
-                .GetValues<OCG_Zone>()
+            var zones = 
+                Enum.GetValues(typeof(OCG_Zone))
+                .Cast<OCG_Zone>()
                 .Where(x => (mask & (uint)x) != 0)
                 .ToList();
 

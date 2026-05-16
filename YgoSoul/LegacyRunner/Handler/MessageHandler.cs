@@ -2,32 +2,33 @@
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
-namespace YgoSoul.LegacyRunner.Handler;
-
-public class MessageHandler
+namespace YgoSoul.LegacyRunner.Handler
 {
-    public static IOcgMessage? MessageRequiringInput { get; private set; }
-    
-    public static MessageHandleEnum HandleMessage(IOcgMessage message)
+    public class MessageHandler
     {
-        if (message == null)
-            throw new InvalidOperationException("Message is null");
+        public static IOcgMessage? MessageRequiringInput { get; private set; }
 
-        Console.WriteLine(message.ToString());
-        
-        if (message.Input == InputType.Unknown)
-            return MessageHandleEnum.Invalid;
-        
-        if (message.Input == InputType.None)
+        public static MessageHandleEnum HandleMessage(IOcgMessage message)
         {
-            MessageRequiringInput = null;
-            return MessageHandleEnum.Proceed;
-        }
+            if (message == null)
+                throw new InvalidOperationException("Message is null");
 
-        if (message.Input == InputType.Retry)
+            Console.WriteLine(message.ToString());
+
+            if (message.Input == InputType.Unknown)
+                return MessageHandleEnum.Invalid;
+
+            if (message.Input == InputType.None)
+            {
+                MessageRequiringInput = null;
+                return MessageHandleEnum.Proceed;
+            }
+
+            if (message.Input == InputType.Retry)
+                return MessageHandleEnum.RequireInput;
+
+            MessageRequiringInput = message;
             return MessageHandleEnum.RequireInput;
-        
-        MessageRequiringInput = message;
-        return MessageHandleEnum.RequireInput;
+        }
     }
 }

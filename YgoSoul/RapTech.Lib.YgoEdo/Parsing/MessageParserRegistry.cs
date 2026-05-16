@@ -1,4 +1,5 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
+﻿using System.Collections.Generic;
+using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
 

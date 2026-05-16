@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
@@ -32,10 +35,10 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
             var invalid = ids.Any(x => x >= _races.Count || x < 0);
 
             if (invalid)
-                return [];
+                return Array.Empty<byte>();
 
             if (ids.Count != Count)
-                return [];
+                return Array.Empty<byte>();
 
             ulong response = 0;
 
@@ -46,7 +49,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 
         public byte[] Cancel()
         {
-            return [];
+            return Array.Empty<byte>();
         }
 
         public override string ToString()

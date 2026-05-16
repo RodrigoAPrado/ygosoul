@@ -7,13 +7,13 @@ using YgoSoul.RapTech.Lib.YgoEdo.Core.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Native;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Struct;
-using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
+using YgoSoul.RapTech.Lib.YgoEdo.Data.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Command.Base;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
-using YgoSoul.RapTech.Lib.YgoEdo.Query;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Query;
 
 namespace YgoSoul
 {

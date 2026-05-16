@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Struct;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Core.Native

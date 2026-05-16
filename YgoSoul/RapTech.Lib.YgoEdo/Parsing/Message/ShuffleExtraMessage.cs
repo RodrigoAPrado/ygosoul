@@ -1,6 +1,7 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Text;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
-using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
+using YgoSoul.RapTech.Lib.YgoEdo.Data.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message

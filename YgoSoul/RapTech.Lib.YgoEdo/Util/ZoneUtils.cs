@@ -1,4 +1,5 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
+﻿using System.Collections.Generic;
+using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Util
@@ -73,8 +74,8 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Util
             { OCG_Zone.OpponentPendulum1, 7 }
         };
 
-        public static readonly List<OCG_Zone> ZoneIndexQuery =
-        [
+        public static readonly List<OCG_Zone> ZoneIndexQuery = new()
+        {
             OCG_Zone.Monster0,
             OCG_Zone.Monster1,
             OCG_Zone.Monster2,
@@ -90,6 +91,6 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Util
             OCG_Zone.FieldZone,
             OCG_Zone.Pendulum0,
             OCG_Zone.Pendulum1
-        ];
+        };
     }
 }

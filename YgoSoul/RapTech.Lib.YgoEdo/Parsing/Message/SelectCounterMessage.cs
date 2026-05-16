@@ -1,10 +1,12 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
-using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
+using YgoSoul.RapTech.Lib.YgoEdo.Data.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
@@ -37,14 +39,14 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
         public byte[] GetResponse(List<int> ids)
         {
             if (ids.Count != _cards.Count)
-                return [];
+                return Array.Empty<byte>();
             var response = new byte[ids.Count * 2];
             var offset = 0;
 
             for (var i = 0; i < ids.Count; i++)
             {
                 if (ids[i] > _cards[i].CounterAmount)
-                    return [];
+                    return Array.Empty<byte>();
 
                 BitConverter.GetBytes((ushort)ids[i]).CopyTo(response, offset);
                 offset += 2;
@@ -55,7 +57,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 
         public byte[] Cancel()
         {
-            return [];
+            return Array.Empty<byte>();
         }
 
         public override string ToString()

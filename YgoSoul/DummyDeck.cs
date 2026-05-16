@@ -1,5 +1,5 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card;
-using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
+using YgoSoul.RapTech.Lib.YgoEdo.Data.Card;
 
 namespace YgoSoul
 {

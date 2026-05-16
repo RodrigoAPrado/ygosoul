@@ -1,4 +1,6 @@
-﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Flag
+﻿using System;
+
+namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Flag
 {
     [Flags]
     public enum Location

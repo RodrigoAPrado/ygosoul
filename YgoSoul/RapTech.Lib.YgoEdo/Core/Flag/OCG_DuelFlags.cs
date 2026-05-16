@@ -1,4 +1,6 @@
-﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Core.Flag
+﻿using System;
+
+namespace YgoSoul.RapTech.Lib.YgoEdo.Core.Flag
 {
     [Flags]
     public enum OCG_DuelFlags : ulong

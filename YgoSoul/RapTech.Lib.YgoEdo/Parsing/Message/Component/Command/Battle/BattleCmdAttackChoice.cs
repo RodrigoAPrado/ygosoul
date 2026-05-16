@@ -2,7 +2,7 @@
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component.Command.Battle;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
-using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
+using YgoSoul.RapTech.Lib.YgoEdo.Data.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Command.Base;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 

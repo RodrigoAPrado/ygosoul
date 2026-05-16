@@ -1,4 +1,6 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+﻿using System;
+using System.Collections.Generic;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
@@ -22,7 +24,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 
         public byte[] GetResponse(List<int> input)
         {
-            return [];
+            return Array.Empty<byte>();
         }
 
         public byte Player { get; }

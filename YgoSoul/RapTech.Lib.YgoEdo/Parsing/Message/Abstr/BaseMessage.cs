@@ -1,4 +1,6 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
+﻿using System;
+using System.Collections.Generic;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr
 {
@@ -9,7 +11,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr
 
         public virtual byte[] GetResponse(List<int> input)
         {
-            return [];
+            return Array.Empty<byte>();
         }
     }
 }

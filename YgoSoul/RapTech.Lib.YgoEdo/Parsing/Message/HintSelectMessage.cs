@@ -1,6 +1,7 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+﻿using System;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
-using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
+using YgoSoul.RapTech.Lib.YgoEdo.Data.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
@@ -28,7 +29,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
             var cardIdRaw = BitConverter.ToUInt32(rawBits, 2);
             var cardId = cardIdRaw >> 4;
 
-            if (CardLibrary.HasCard(cardId)) return CardLibrary.InternalGetCard(cardId).Strings[cardText];
+            if (CardLibrary.Instance.HasCard(cardId)) return CardLibrary.InternalGetCard(cardId).Strings[cardText];
 
             return Enum.IsDefined(typeof(OCG_GameStrings), hint)
                 ? ((OCG_GameStrings)hint).ToString()

@@ -2,7 +2,7 @@
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
-using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
+using YgoSoul.RapTech.Lib.YgoEdo.Data.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
@@ -27,7 +27,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
             _description = description;
             ChainSize = chainSize;
             ActivationLocation = _activationLocation.ToLocation();
-            Description = DescriptionUtil.GetDescription(_description);
+            Description = DescriptionUtil.GetDescription(_description, CardLibrary.Instance);
         }
 
         public uint CardCode { get; }

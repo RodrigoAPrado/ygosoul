@@ -1,5 +1,8 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+﻿using System;
+using System.Collections.Generic;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Data.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
@@ -13,7 +16,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
         {
             Player = player;
             _description = description;
-            Description = DescriptionUtil.GetDescription(_description);
+            Description = DescriptionUtil.GetDescription(_description, CardLibrary.Instance);
         }
 
         public InputType Input => InputType.Value;
@@ -22,12 +25,12 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
         public byte[] GetResponse(List<int> input)
         {
             if (input.Count != 1)
-                return [];
+                return Array.Empty<byte>();
 
             var id = input[0];
 
             if (id != 0 && id != 1)
-                return [];
+                return Array.Empty<byte>();
 
             return BitConverter.GetBytes(id);
         }
@@ -36,7 +39,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 
         public byte[] Cancel()
         {
-            return [];
+            return Array.Empty<byte>();
         }
 
         public byte Player { get; }
@@ -45,7 +48,8 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
         public override string ToString()
         {
             return
-                $"Player {Player}, activate effect? Description={DescriptionUtil.GetDescription(_description)}:\n[0] - No\n[1] - Yes";
+                $"Player {Player}, activate effect? Description={DescriptionUtil.GetDescription(_description, CardLibrary.Instance)}" +
+                $":\n[0] - No\n[1] - Yes";
         }
     }
 }

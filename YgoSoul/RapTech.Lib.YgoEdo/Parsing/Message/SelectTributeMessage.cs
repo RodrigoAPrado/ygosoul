@@ -1,8 +1,11 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
-using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
+using YgoSoul.RapTech.Lib.YgoEdo.Data.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
@@ -30,7 +33,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
             var invalid = ids.Any(x => x >= Cards.Count || x < 0);
 
             if (invalid)
-                return [];
+                return Array.Empty<byte>();
 
             var value = ids.Sum(x => Cards[x].ReleaseValue);
 
@@ -56,7 +59,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 
         public byte[] Cancel()
         {
-            return CanCancel ? BitConverter.GetBytes(-1) : [];
+            return CanCancel ? BitConverter.GetBytes(-1) : Array.Empty<byte>();
         }
 
         public byte Player { get; }

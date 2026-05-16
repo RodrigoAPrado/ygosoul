@@ -1,6 +1,8 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.IO;
+using System.Runtime.InteropServices;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Native;
-using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
+using YgoSoul.RapTech.Lib.YgoEdo.Data.Card;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Domain.Bridge
 {

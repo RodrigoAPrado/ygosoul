@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
@@ -26,10 +29,10 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
         public byte[] GetResponse(List<int> input)
         {
             if (input.Count <= 0 || input.Count >= _choices.Count)
-                return [];
+                return Array.Empty<byte>();
 
             if (input.Count > Amount)
-                return [];
+                return Array.Empty<byte>();
 
             var fullResponse = new List<byte>();
 
@@ -39,7 +42,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 
                 if (!ZoneUtils.ZoneLocation.ContainsKey(zone)
                     || !ZoneUtils.ZoneIndexInput.ContainsKey(zone))
-                    return [];
+                    return Array.Empty<byte>();
 
                 var response = new List<byte>();
 
@@ -61,7 +64,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 
         public byte[] Cancel()
         {
-            return [];
+            return Array.Empty<byte>();
         }
 
         public byte Player { get; }

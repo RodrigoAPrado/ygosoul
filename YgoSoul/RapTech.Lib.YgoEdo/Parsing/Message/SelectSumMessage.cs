@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
@@ -40,15 +43,15 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
             var invalid = ids.Any(x => x >= MustSelect.Count + CanSelect.Count || x < 0);
 
             if (invalid)
-                return [];
+                return Array.Empty<byte>();
 
             if (MustSelect.Count > 0)
                 foreach (var must in MustSelect)
                     if (!ids.Contains((int)must.Index))
-                        return [];
+                        return Array.Empty<byte>();
 
             if (HasMaximumChoices && ids.Count > MaximumChoices && ids.Count < MinimumChoices)
-                return [];
+                return Array.Empty<byte>();
 
             var selectedCards = new List<CardReference>();
 
@@ -65,7 +68,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 
             var tot = (uint)selectedCards.Sum(x => (int)x.Sum);
             if (tot < TargetSum)
-                return [];
+                return Array.Empty<byte>();
 
             var response = new byte[8 + ids.Count * 4];
             var offset = 4;
@@ -84,7 +87,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 
         public byte[] Cancel()
         {
-            return [];
+            return Array.Empty<byte>();
         }
 
         public byte Player { get; }

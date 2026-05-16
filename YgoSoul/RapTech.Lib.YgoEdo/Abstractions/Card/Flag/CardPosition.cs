@@ -1,4 +1,6 @@
-﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Flag
+﻿using System;
+
+namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Flag
 {
     [Flags]
     public enum CardPosition

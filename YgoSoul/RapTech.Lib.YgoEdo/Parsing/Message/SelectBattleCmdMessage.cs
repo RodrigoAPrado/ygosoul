@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component.Command.Base;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
@@ -23,12 +25,12 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
         public byte[] GetResponse(List<int> input)
         {
             if (input.Count != 1)
-                return [];
+                return Array.Empty<byte>();
 
             var id = input[0];
 
             if (id >= _choices.Count)
-                return [];
+                return Array.Empty<byte>();
 
             var choice = _choices[id];
 

@@ -1,8 +1,9 @@
-﻿namespace YgoSoul.LegacyRunner.Handler.Enum;
-
-public enum MessageHandleEnum
+﻿namespace YgoSoul.LegacyRunner.Handler.Enum
 {
-    Invalid = 0,
-    Proceed = 1,
-    RequireInput = 2
+    public enum MessageHandleEnum
+    {
+        Invalid = 0,
+        Proceed = 1,
+        RequireInput = 2
+    }
 }

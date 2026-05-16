@@ -15,7 +15,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel
         /// <summary>
         ///     The ongoing duel. Null if no duel is ongoing.
         /// </summary>
-        IDuel? CurrentDuel { get; }
+        IDuel CurrentDuel { get; }
 
         /// <summary>
         ///     Creates an OcgDuel and sets it as Current Duel.

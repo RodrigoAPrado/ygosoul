@@ -1,5 +1,5 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
-using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
+using YgoSoul.RapTech.Lib.YgoEdo.Data.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component
@@ -14,7 +14,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component
             Code = code;
             _locationReference = locationReference;
             _description = description;
-            Description = DescriptionUtil.GetDescription(_description);
+            Description = DescriptionUtil.GetDescription(_description, CardLibrary.Instance);
         }
 
         public uint Code { get; }
@@ -28,7 +28,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component
                    $"Loc={_locationReference.Location}, " +
                    $"Seq={_locationReference.Sequence}, " +
                    $"SubSeq={_locationReference.Position}. " +
-                   $"\nDesc={DescriptionUtil.GetDescription(_description)}";
+                   $"\nDesc={DescriptionUtil.GetDescription(_description, CardLibrary.Instance)}";
         }
     }
 }
