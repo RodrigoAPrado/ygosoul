@@ -3,28 +3,27 @@ using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class ShuffleExtraMessage : BaseMessage, IShuffleExtraMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public byte Player { get; }
-    public IReadOnlyList<uint> Cards => _cards;
-    private readonly List<uint> _cards;
-
-    public ShuffleExtraMessage(byte player, List<uint> cards)
+    public class ShuffleExtraMessage : BaseMessage, IShuffleExtraMessage
     {
-        Player = player;
-        _cards = cards;
-    }
+        private readonly List<uint> _cards;
 
-    public override string ToString()
-    {
-        var sb = new StringBuilder();
-        sb.AppendLine($"New card order in extra for player {Player}: ");
-        foreach (var c in Cards)
+        public ShuffleExtraMessage(byte player, List<uint> cards)
         {
-            sb.Append($"{CardLibrary.InternalGetCard(c).Name}, ");
+            Player = player;
+            _cards = cards;
         }
-        return sb.ToString().TrimEnd(',');
+
+        public byte Player { get; }
+        public IReadOnlyList<uint> Cards => _cards;
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"New card order in extra for player {Player}: ");
+            foreach (var c in Cards) sb.Append($"{CardLibrary.InternalGetCard(c).Name}, ");
+            return sb.ToString().TrimEnd(',');
+        }
     }
 }

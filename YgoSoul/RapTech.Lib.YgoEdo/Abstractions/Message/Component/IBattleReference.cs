@@ -1,9 +1,10 @@
-﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
-
-public interface IBattleReference
+﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component
 {
-    IFullLocationReference LocationReference { get; }
-    uint Atk { get; }
-    uint Def { get; }
-    bool Destroyed { get; }
+    public interface IBattleReference
+    {
+        IFullLocationReference LocationReference { get; }
+        uint Atk { get; }
+        uint Def { get; }
+        bool Destroyed { get; }
+    }
 }

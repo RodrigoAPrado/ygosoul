@@ -4,16 +4,17 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser;
-
-public class WinParser : BaseParser
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser
 {
-    protected override IOcgMessage DoParse(byte[] buffer)
+    public class WinParser : BaseParser
     {
-        var reader = new PacketReader(buffer);
-        reader.ReadByte();//msg
-        var player = reader.ReadByte();
-        var reason = (OCG_VictoryReason) reader.ReadByte();
-        return new WinMessage(player, reason);
+        protected override IOcgMessage DoParse(byte[] buffer)
+        {
+            var reader = new PacketReader(buffer);
+            reader.ReadByte(); //msg
+            var player = reader.ReadByte();
+            var reason = (OCG_VictoryReason)reader.ReadByte();
+            return new WinMessage(player, reason);
+        }
     }
 }

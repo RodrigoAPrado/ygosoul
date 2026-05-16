@@ -4,24 +4,26 @@ using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class FlipSummoningMessage : BaseMessage, IFlipSummoningMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public ICardReference Card => _card;
-    private readonly CardReference _card;
-    
-    public FlipSummoningMessage(CardReference card) 
+    public class FlipSummoningMessage : BaseMessage, IFlipSummoningMessage
     {
-        _card = card;
-    }
+        private readonly CardReference _card;
 
-    public override string ToString()
-    {
-        return $"{CardLibrary.InternalGetCard(Card.CardCode).Name} is being flip summoned for " +
-               $"{Card.LocationReference.Controller} on " +
-               $"{Card.LocationReference.Location} in sequence " +
-               $"{Card.LocationReference.Sequence} and position " +
-               $"{Card.LocationReference.Position}";
+        public FlipSummoningMessage(CardReference card)
+        {
+            _card = card;
+        }
+
+        public ICardReference Card => _card;
+
+        public override string ToString()
+        {
+            return $"{CardLibrary.InternalGetCard(Card.CardCode).Name} is being flip summoned for " +
+                   $"{Card.LocationReference.Controller} on " +
+                   $"{Card.LocationReference.Location} in sequence " +
+                   $"{Card.LocationReference.Sequence} and position " +
+                   $"{Card.LocationReference.Position}";
+        }
     }
 }

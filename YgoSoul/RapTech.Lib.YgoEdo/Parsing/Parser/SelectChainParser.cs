@@ -5,61 +5,57 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser;
-
-public class SelectChainParser : BaseParser
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser
 {
-    protected override IOcgMessage DoParse(byte[] buffer)
+    public class SelectChainParser : BaseParser
     {
-        var reader = new PacketReader(buffer);
-
-        reader.ReadByte(); // msg id
-
-        byte playerId = reader.ReadByte();
-        byte cancelable = reader.ReadByte();
-        byte forced = reader.ReadByte();
-
-        uint timingMask = reader.ReadUInt32();
-        uint timingOtherMask = reader.ReadUInt32();
-        var count = reader.ReadUInt32();
-
-        var timingList = new List<OCG_HintTiming>();
-        var timingOtherList = new List<OCG_HintTiming>();
-        
-        foreach (OCG_HintTiming hintTiming in System.Enum.GetValues(typeof(OCG_HintTiming)))
+        protected override IOcgMessage DoParse(byte[] buffer)
         {
-            if (((uint)hintTiming & timingMask) != 0)
+            var reader = new PacketReader(buffer);
+
+            reader.ReadByte(); // msg id
+
+            var playerId = reader.ReadByte();
+            var cancelable = reader.ReadByte();
+            var forced = reader.ReadByte();
+
+            var timingMask = reader.ReadUInt32();
+            var timingOtherMask = reader.ReadUInt32();
+            var count = reader.ReadUInt32();
+
+            var timingList = new List<OCG_HintTiming>();
+            var timingOtherList = new List<OCG_HintTiming>();
+
+            foreach (OCG_HintTiming hintTiming in Enum.GetValues(typeof(OCG_HintTiming)))
             {
-                timingList.Add(hintTiming);
+                if (((uint)hintTiming & timingMask) != 0) timingList.Add(hintTiming);
+                if (((uint)hintTiming & timingOtherMask) != 0) timingOtherList.Add(hintTiming);
             }
-            if (((uint)hintTiming & timingOtherMask) != 0)
+
+            var chains = new List<ChainOption>();
+
+            for (var i = count; i > 0; i--)
             {
-                timingOtherList.Add(hintTiming);
+                var code = reader.ReadUInt32();
+                var controller = reader.ReadByte();
+                var location = (OCG_CardLocation)reader.ReadByte();
+                var sequence = reader.ReadUInt32();
+                var position = (OCG_CardPosition)reader.ReadUInt32();
+                var description = reader.ReadULong64();
+                reader.Skip(1); // client mode
+
+                chains.Add(new ChainOption(code, new FullLocationReference(controller, location, sequence, position),
+                    description));
             }
+
+            return new SelectChainMessage(
+                playerId,
+                cancelable != 0,
+                forced != 0,
+                chains,
+                timingList,
+                timingOtherList
+            );
         }
-
-        var chains = new List<ChainOption>();
-
-        for (var i = count; i > 0; i--)
-        {
-            var code = reader.ReadUInt32();
-            var controller = reader.ReadByte();
-            var location = (OCG_CardLocation)reader.ReadByte();
-            var sequence = reader.ReadUInt32();
-            var position = (OCG_CardPosition) reader.ReadUInt32();
-            var description = reader.ReadULong64();
-            reader.Skip(1); // client mode
-
-            chains.Add(new ChainOption(code, new FullLocationReference(controller, location, sequence, position), description));
-        }
-        
-        return new SelectChainMessage(
-            playerId,
-            cancelable != 0,
-            forced != 0,
-            chains,
-            timingList,
-            timingOtherList
-        );
     }
 }

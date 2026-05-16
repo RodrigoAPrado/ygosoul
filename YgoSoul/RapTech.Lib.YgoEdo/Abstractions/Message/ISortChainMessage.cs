@@ -1,10 +1,11 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Base;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
-
-public interface ISortChainMessage : ISelectionDuelMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message
 {
-    byte Player { get; }
-    IReadOnlyList<ICardReference> Cards { get; }
+    public interface ISortChainMessage : ISelectionDuelMessage
+    {
+        byte Player { get; }
+        IReadOnlyList<ICardReference> Cards { get; }
+    }
 }

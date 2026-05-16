@@ -5,65 +5,58 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser;
-
-public class AnnounceRaceAttributeParser : BaseParser
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser
 {
-    protected override IOcgMessage DoParse(byte[] buffer)
+    public class AnnounceRaceAttributeParser : BaseParser
     {
-        var reader = new PacketReader(buffer);
-        var message = (OCG_GameMessage) reader.ReadByte();
-        var player = reader.ReadByte();
-        var count = reader.ReadByte();
-
-        switch (message)
+        protected override IOcgMessage DoParse(byte[] buffer)
         {
-            case OCG_GameMessage.AnnounceRace:
-                return new AnnounceRaceMessage(player, count, GetAvailableRaces(reader.ReadULong64()));
-            case OCG_GameMessage.AnnounceAttrib:
-                return new AnnounceAttributeMessage(player, count, GetAvailableAttributes(reader.ReadUInt32()));
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-    }
-    
-    private List<OCG_MonsterRaces> GetAvailableRaces(ulong availableMask)
-    {
-        var availableList = new List<OCG_MonsterRaces>();
+            var reader = new PacketReader(buffer);
+            var message = (OCG_GameMessage)reader.ReadByte();
+            var player = reader.ReadByte();
+            var count = reader.ReadByte();
 
-        foreach (OCG_MonsterRaces race in Enum.GetValues(typeof(OCG_MonsterRaces)))
-        {
-            ulong raceValue = (ulong)race;
-
-            if (raceValue != 0 && (raceValue & (raceValue - 1)) == 0)
+            switch (message)
             {
-                if ((availableMask & raceValue) != 0)
-                {
-                    availableList.Add(race);
-                }
+                case OCG_GameMessage.AnnounceRace:
+                    return new AnnounceRaceMessage(player, count, GetAvailableRaces(reader.ReadULong64()));
+                case OCG_GameMessage.AnnounceAttrib:
+                    return new AnnounceAttributeMessage(player, count, GetAvailableAttributes(reader.ReadUInt32()));
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
-        return availableList;
-    }
-    
-    private List<OCG_MonsterAttributes> GetAvailableAttributes(uint availableMask)
-    {
-        var availableList = new List<OCG_MonsterAttributes>();
-
-        foreach (OCG_MonsterAttributes attribute in Enum.GetValues(typeof(OCG_MonsterAttributes)))
+        private List<OCG_MonsterRaces> GetAvailableRaces(ulong availableMask)
         {
-            uint monsterAttribute = (uint)attribute;
+            var availableList = new List<OCG_MonsterRaces>();
 
-            if (monsterAttribute != 0 && (monsterAttribute & (monsterAttribute - 1)) == 0)
+            foreach (OCG_MonsterRaces race in Enum.GetValues(typeof(OCG_MonsterRaces)))
             {
-                if ((availableMask & monsterAttribute) != 0)
-                {
-                    availableList.Add(attribute);
-                }
+                var raceValue = (ulong)race;
+
+                if (raceValue != 0 && (raceValue & (raceValue - 1)) == 0)
+                    if ((availableMask & raceValue) != 0)
+                        availableList.Add(race);
             }
+
+            return availableList;
         }
 
-        return availableList;
+        private List<OCG_MonsterAttributes> GetAvailableAttributes(uint availableMask)
+        {
+            var availableList = new List<OCG_MonsterAttributes>();
+
+            foreach (OCG_MonsterAttributes attribute in Enum.GetValues(typeof(OCG_MonsterAttributes)))
+            {
+                var monsterAttribute = (uint)attribute;
+
+                if (monsterAttribute != 0 && (monsterAttribute & (monsterAttribute - 1)) == 0)
+                    if ((availableMask & monsterAttribute) != 0)
+                        availableList.Add(attribute);
+            }
+
+            return availableList;
+        }
     }
 }

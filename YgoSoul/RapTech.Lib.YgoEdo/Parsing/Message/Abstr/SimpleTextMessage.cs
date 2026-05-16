@@ -1,16 +1,17 @@
-﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
-
-public abstract class SimpleTextMessage : BaseMessage
+﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr
 {
-    private string Message { get; }
-
-    protected SimpleTextMessage(string message)
+    public abstract class SimpleTextMessage : BaseMessage
     {
-        Message = message;
-    }
+        protected SimpleTextMessage(string message)
+        {
+            Message = message;
+        }
 
-    public override string ToString()
-    {
-        return Message;
+        private string Message { get; }
+
+        public override string ToString()
+        {
+            return Message;
+        }
     }
 }

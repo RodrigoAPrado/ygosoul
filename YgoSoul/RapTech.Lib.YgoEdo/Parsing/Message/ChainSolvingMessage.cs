@@ -1,19 +1,20 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class ChainSolvingMessage : BaseMessage, IChainSolvingMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public byte ChainLink { get; }
-
-    public ChainSolvingMessage(byte chainLink)
+    public class ChainSolvingMessage : BaseMessage, IChainSolvingMessage
     {
-        ChainLink = chainLink;
-    }
+        public ChainSolvingMessage(byte chainLink)
+        {
+            ChainLink = chainLink;
+        }
 
-    public override string ToString()
-    {
-        return $"SolvingChain, ChainLink={ChainLink}";
+        public byte ChainLink { get; }
+
+        public override string ToString()
+        {
+            return $"SolvingChain, ChainLink={ChainLink}";
+        }
     }
 }

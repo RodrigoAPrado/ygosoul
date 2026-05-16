@@ -5,25 +5,24 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser;
-
-public class RemoveCardsParser : BaseParser
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser
 {
-    protected override IOcgMessage DoParse(byte[] buffer)
+    public class RemoveCardsParser : BaseParser
     {
-        var reader = new PacketReader(buffer);
-        reader.ReadByte();//msg
-        var size = reader.ReadUInt32();
-        var list = new List<FullLocationReference>();
-        for (var i = size; i > 0; i--)
+        protected override IOcgMessage DoParse(byte[] buffer)
         {
-            list.Add(new FullLocationReference(
-                reader.ReadByte(), 
-                (OCG_CardLocation)reader.ReadByte(),
-                reader.ReadUInt32(),
-                (OCG_CardPosition) reader.ReadUInt32()));
-        }
+            var reader = new PacketReader(buffer);
+            reader.ReadByte(); //msg
+            var size = reader.ReadUInt32();
+            var list = new List<FullLocationReference>();
+            for (var i = size; i > 0; i--)
+                list.Add(new FullLocationReference(
+                    reader.ReadByte(),
+                    (OCG_CardLocation)reader.ReadByte(),
+                    reader.ReadUInt32(),
+                    (OCG_CardPosition)reader.ReadUInt32()));
 
-        return new RemoveCardsMessage(list);
+            return new RemoveCardsMessage(list);
+        }
     }
 }

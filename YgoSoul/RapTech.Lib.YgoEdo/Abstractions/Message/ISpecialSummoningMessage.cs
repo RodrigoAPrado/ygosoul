@@ -1,9 +1,10 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Base;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
-
-public interface ISpecialSummoningMessage : IDuelMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message
 {
-    ICardReference Card { get; }
+    public interface ISpecialSummoningMessage : IDuelMessage
+    {
+        ICardReference Card { get; }
+    }
 }

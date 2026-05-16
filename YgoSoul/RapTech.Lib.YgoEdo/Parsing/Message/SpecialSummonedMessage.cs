@@ -1,11 +1,12 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class SpecialSummonedMessage : SimpleTextMessage, ISpecialSummonedMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public SpecialSummonedMessage(string message = "Monster Special Summoned!") : base(message)
+    public class SpecialSummonedMessage : SimpleTextMessage, ISpecialSummonedMessage
     {
+        public SpecialSummonedMessage(string message = "Monster Special Summoned!") : base(message)
+        {
+        }
     }
 }

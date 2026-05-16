@@ -1,9 +1,10 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Base;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
-
-public interface IHintCardMessage : IDuelMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message
 {
-    byte Player { get; }
-    uint CardCode { get; }
+    public interface IHintCardMessage : IDuelMessage
+    {
+        byte Player { get; }
+        uint CardCode { get; }
+    }
 }

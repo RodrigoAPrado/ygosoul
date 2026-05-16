@@ -21,7 +21,7 @@ public static class YgoEdo
         
         _dataPath = dataPath;
         OcgBridge.Init(_dataPath);
-        CardDatabase.Init(_dataPath + "cards.cdb");
+        CardDatabase.Init(_dataPath + "db/cards.cdb");
         CardDatabase.LoadCards();
         CardLibrary.CreateInstance();
         _manager = new DuelManager(CardLibrary.Instance, MessageParserRegistry.RegisterParsers());

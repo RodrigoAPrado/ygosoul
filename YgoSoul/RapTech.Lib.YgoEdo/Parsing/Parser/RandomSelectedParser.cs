@@ -5,29 +5,28 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser;
-
-public class RandomSelectedParser : BaseParser
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser
 {
-    protected override IOcgMessage DoParse(byte[] buffer)
+    public class RandomSelectedParser : BaseParser
     {
-        var reader = new PacketReader(buffer);
-        reader.ReadByte();//msg
-        var player = reader.ReadByte();
-        var count = reader.ReadUInt32();
-
-        var list = new List<FullLocationReference>();
-        
-        for (var i = count; i > 0; i--)
+        protected override IOcgMessage DoParse(byte[] buffer)
         {
-            list.Add(new FullLocationReference(
-                reader.ReadByte(), 
-                (OCG_CardLocation) reader.ReadByte(),
-                reader.ReadUInt32(), 
-                (OCG_CardPosition) reader.ReadUInt32())
-            );    
-        }
+            var reader = new PacketReader(buffer);
+            reader.ReadByte(); //msg
+            var player = reader.ReadByte();
+            var count = reader.ReadUInt32();
 
-        return new RandomSelectedMessage(player, list);
+            var list = new List<FullLocationReference>();
+
+            for (var i = count; i > 0; i--)
+                list.Add(new FullLocationReference(
+                    reader.ReadByte(),
+                    (OCG_CardLocation)reader.ReadByte(),
+                    reader.ReadUInt32(),
+                    (OCG_CardPosition)reader.ReadUInt32())
+                );
+
+            return new RandomSelectedMessage(player, list);
+        }
     }
 }

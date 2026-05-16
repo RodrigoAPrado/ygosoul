@@ -2,22 +2,23 @@
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class HintCardMessage : BaseHintMessage, IHintCardMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public byte Player { get; }
-    public uint CardCode { get; }
-
-    public HintCardMessage(byte player, uint cardCode) 
-        : base($"Hint: Player={player} Card={CardLibrary.InternalGetCard(cardCode).Name}")
+    public class HintCardMessage : BaseHintMessage, IHintCardMessage
     {
-        Player = player;
-        CardCode = cardCode;
-    }
+        public HintCardMessage(byte player, uint cardCode)
+            : base($"Hint: Player={player} Card={CardLibrary.InternalGetCard(cardCode).Name}")
+        {
+            Player = player;
+            CardCode = cardCode;
+        }
 
-    public override string ToString()
-    {
-        return $"Hint: Player={Player} Card={CardLibrary.InternalGetCard(CardCode).Name}";
+        public byte Player { get; }
+        public uint CardCode { get; }
+
+        public override string ToString()
+        {
+            return $"Hint: Player={Player} Card={CardLibrary.InternalGetCard(CardCode).Name}";
+        }
     }
 }

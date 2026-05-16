@@ -1,19 +1,20 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class ChainedMessage : BaseMessage, IChainedMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public byte ChainSize { get; }
-
-    public ChainedMessage(byte chainSize)
+    public class ChainedMessage : BaseMessage, IChainedMessage
     {
-        ChainSize = chainSize;
-    }
+        public ChainedMessage(byte chainSize)
+        {
+            ChainSize = chainSize;
+        }
 
-    public override string ToString()
-    {
-        return $"Chain Size={ChainSize}";
+        public byte ChainSize { get; }
+
+        public override string ToString()
+        {
+            return $"Chain Size={ChainSize}";
+        }
     }
 }

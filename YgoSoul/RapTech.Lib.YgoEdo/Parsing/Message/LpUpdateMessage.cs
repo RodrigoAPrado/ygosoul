@@ -1,21 +1,22 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class LpUpdateMessage : BaseMessage, ILpUpdateMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public byte Player { get; }
-    public uint Lp { get; }
-
-    public LpUpdateMessage(byte player, uint lp)
+    public class LpUpdateMessage : BaseMessage, ILpUpdateMessage
     {
-        Player = player;
-        Lp = lp;
-    }
+        public LpUpdateMessage(byte player, uint lp)
+        {
+            Player = player;
+            Lp = lp;
+        }
 
-    public override string ToString()
-    {
-        return $"LP update, Player={Player}, LP={Lp}";
+        public byte Player { get; }
+        public uint Lp { get; }
+
+        public override string ToString()
+        {
+            return $"LP update, Player={Player}, LP={Lp}";
+        }
     }
 }

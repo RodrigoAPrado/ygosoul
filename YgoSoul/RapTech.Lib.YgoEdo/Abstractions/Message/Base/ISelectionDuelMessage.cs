@@ -1,6 +1,7 @@
-﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Base;
-
-public interface ISelectionDuelMessage : IDuelMessage
+﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Base
 {
-    bool CanCancel { get; }
+    public interface ISelectionDuelMessage : IDuelMessage
+    {
+        bool CanCancel { get; }
+    }
 }

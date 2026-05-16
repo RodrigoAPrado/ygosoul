@@ -6,30 +6,34 @@ using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Command.Base;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Command.Battle;
-
-public class BattleCmdEffectChoice : BattleCmdChoiceCard, IBattleActivateEffect
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Command.Battle
 {
-    public Location Location { get; }
-    public string Description { get; }
-    private readonly ulong _description;
-    public BattleCmdEffectChoice(
-        PlayerBattleAction action, 
-        uint index, 
-        uint cardCode, 
-        byte controller, 
-        OCG_CardLocation location, 
-        uint sequence, 
-        ulong description) 
-        : base(action, index, cardCode, controller, location, sequence)
+    public class BattleCmdEffectChoice : BattleCmdChoiceCard, IBattleActivateEffect
     {
-        _description = description;
-        Location = _location.ToLocation();
-        Description = DescriptionUtil.GetDescription(_description);
-    }
+        private readonly ulong _description;
 
-    public override string ToString()
-    {
-        return $"to activate {CardLibrary.InternalGetCard(CardCode).Name}'s effect, description={DescriptionUtil.GetDescription(_description)}";
+        public BattleCmdEffectChoice(
+            PlayerBattleAction action,
+            uint index,
+            uint cardCode,
+            byte controller,
+            OCG_CardLocation location,
+            uint sequence,
+            ulong description)
+            : base(action, index, cardCode, controller, location, sequence)
+        {
+            _description = description;
+            Location = _location.ToLocation();
+            Description = DescriptionUtil.GetDescription(_description);
+        }
+
+        public Location Location { get; }
+        public string Description { get; }
+
+        public override string ToString()
+        {
+            return
+                $"to activate {CardLibrary.InternalGetCard(CardCode).Name}'s effect, description={DescriptionUtil.GetDescription(_description)}";
+        }
     }
 }

@@ -3,22 +3,20 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser;
-
-public class AnnounceNumberParser : BaseParser
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser
 {
-    protected override IOcgMessage DoParse(byte[] buffer)
+    public class AnnounceNumberParser : BaseParser
     {
-        var reader = new PacketReader(buffer);
-        reader.ReadByte();//msg
-        var player = reader.ReadByte();
-        var size = reader.ReadByte();
-        var list = new List<uint>();
-        for (var i = size; i > 0; i--)
+        protected override IOcgMessage DoParse(byte[] buffer)
         {
-            list.Add((uint) reader.ReadULong64());
+            var reader = new PacketReader(buffer);
+            reader.ReadByte(); //msg
+            var player = reader.ReadByte();
+            var size = reader.ReadByte();
+            var list = new List<uint>();
+            for (var i = size; i > 0; i--) list.Add((uint)reader.ReadULong64());
+
+            return new AnnounceNumberMessage(player, list);
         }
-        
-        return new AnnounceNumberMessage(player, list);
     }
 }

@@ -4,24 +4,25 @@ using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
-
-public class DrawnCard : IDrawnCard
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component
 {
-    public uint CardCode { get; }
-    public CardPosition CardPosition => _cardPosition.ToCardPosition();
-    
-    private readonly OCG_CardPosition _cardPosition;
-    
-    public DrawnCard(uint cardCode, OCG_CardPosition cardPosition)
+    public class DrawnCard : IDrawnCard
     {
-        CardCode = cardCode;
-        _cardPosition = cardPosition;
-    }
+        private readonly OCG_CardPosition _cardPosition;
 
-    public override string? ToString()
-    {
-        var card = CardLibrary.InternalGetCard(CardCode);
-        return $"{card.Name} that was {_cardPosition}.";
+        public DrawnCard(uint cardCode, OCG_CardPosition cardPosition)
+        {
+            CardCode = cardCode;
+            _cardPosition = cardPosition;
+        }
+
+        public uint CardCode { get; }
+        public CardPosition CardPosition => _cardPosition.ToCardPosition();
+
+        public override string? ToString()
+        {
+            var card = CardLibrary.InternalGetCard(CardCode);
+            return $"{card.Name} that was {_cardPosition}.";
+        }
     }
 }

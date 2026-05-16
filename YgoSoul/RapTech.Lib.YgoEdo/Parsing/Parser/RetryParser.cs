@@ -2,12 +2,13 @@
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser;
-
-public class RetryParser : BaseParser
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser
 {
-    protected override IOcgMessage DoParse(byte[] buffer)
+    public class RetryParser : BaseParser
     {
-        return new RetryMessage("Invalid command! Please, try again!");
+        protected override IOcgMessage DoParse(byte[] buffer)
+        {
+            return new RetryMessage("Invalid command! Please, try again!");
+        }
     }
 }

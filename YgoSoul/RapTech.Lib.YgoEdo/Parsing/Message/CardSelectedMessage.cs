@@ -4,27 +4,26 @@ using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class CardSelectedMessage : BaseMessage, ICardSelectMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public IReadOnlyList<IFullLocationReference> Locations => _locations;
-    private readonly List<FullLocationReference> _locations;
-
-    public CardSelectedMessage(List<FullLocationReference> locations)
+    public class CardSelectedMessage : BaseMessage, ICardSelectMessage
     {
-        _locations = locations;
-    }
+        private readonly List<FullLocationReference> _locations;
 
-    public override string ToString()
-    {
-        var sb = new StringBuilder();
-        sb.AppendLine("Cards selected on the following locations:");
-        foreach (var l in _locations)
+        public CardSelectedMessage(List<FullLocationReference> locations)
         {
-            sb.AppendLine(l.ToString());
+            _locations = locations;
         }
 
-        return sb.ToString();
+        public IReadOnlyList<IFullLocationReference> Locations => _locations;
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("Cards selected on the following locations:");
+            foreach (var l in _locations) sb.AppendLine(l.ToString());
+
+            return sb.ToString();
+        }
     }
 }

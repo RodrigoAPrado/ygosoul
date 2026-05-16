@@ -1,12 +1,13 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class DamageStepEndMessage : BaseMessage, IDamageStepEndMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public override string ToString()
+    public class DamageStepEndMessage : BaseMessage, IDamageStepEndMessage
     {
-        return $"Ending the Damage Step!";
+        public override string ToString()
+        {
+            return "Ending the Damage Step!";
+        }
     }
 }

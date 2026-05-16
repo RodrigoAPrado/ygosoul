@@ -4,24 +4,26 @@ using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class SetMessage : BaseMessage, ISetMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public ICardReference Card => _card;
-    private readonly CardReference _card;
-    
-    public SetMessage(CardReference card) 
+    public class SetMessage : BaseMessage, ISetMessage
     {
-        _card = card;
-    }
+        private readonly CardReference _card;
 
-    public override string ToString()
-    {
-        return $"{CardLibrary.InternalGetCard(Card.CardCode).Name} is being set for " +
-               $"{Card.LocationReference.Controller} on " +
-               $"{Card.LocationReference.Location} in sequence " +
-               $"{Card.LocationReference.Sequence} and position " +
-               $"{Card.LocationReference.Position}";
+        public SetMessage(CardReference card)
+        {
+            _card = card;
+        }
+
+        public ICardReference Card => _card;
+
+        public override string ToString()
+        {
+            return $"{CardLibrary.InternalGetCard(Card.CardCode).Name} is being set for " +
+                   $"{Card.LocationReference.Controller} on " +
+                   $"{Card.LocationReference.Location} in sequence " +
+                   $"{Card.LocationReference.Sequence} and position " +
+                   $"{Card.LocationReference.Position}";
+        }
     }
 }

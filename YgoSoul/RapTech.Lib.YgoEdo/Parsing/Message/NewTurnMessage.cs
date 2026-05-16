@@ -1,13 +1,15 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class NewTurnMessage : SimpleTextMessage, INewTurnMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public byte Player { get; }
-    public NewTurnMessage(byte player) : base($"Your turn, {player}")
+    public class NewTurnMessage : SimpleTextMessage, INewTurnMessage
     {
-        Player = player;
+        public NewTurnMessage(byte player) : base($"Your turn, {player}")
+        {
+            Player = player;
+        }
+
+        public byte Player { get; }
     }
 }

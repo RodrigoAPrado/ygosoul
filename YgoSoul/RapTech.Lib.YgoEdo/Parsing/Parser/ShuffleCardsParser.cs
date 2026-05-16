@@ -5,31 +5,28 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 using ArgumentOutOfRangeException = System.ArgumentOutOfRangeException;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser;
-
-public class ShuffleCardsParser : BaseParser
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser
 {
-    protected override IOcgMessage DoParse(byte[] buffer)
+    public class ShuffleCardsParser : BaseParser
     {
-        var reader = new PacketReader(buffer);
-        var msgType = (OCG_GameMessage) reader.ReadByte();
-        var player = reader.ReadByte();
-        var count = reader.ReadUInt32();
-        var cards = new List<uint>();
-        for (var i = count; i > 0; i--)
+        protected override IOcgMessage DoParse(byte[] buffer)
         {
-            cards.Add(reader.ReadUInt32());
-        }
-        
-        switch (msgType)
-        {
-            case OCG_GameMessage.ShuffleHand:
-                return new ShuffleHandMessage(player, cards);
-            case OCG_GameMessage.ShuffleExtra:
-                return new ShuffleExtraMessage(player, cards);
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+            var reader = new PacketReader(buffer);
+            var msgType = (OCG_GameMessage)reader.ReadByte();
+            var player = reader.ReadByte();
+            var count = reader.ReadUInt32();
+            var cards = new List<uint>();
+            for (var i = count; i > 0; i--) cards.Add(reader.ReadUInt32());
 
+            switch (msgType)
+            {
+                case OCG_GameMessage.ShuffleHand:
+                    return new ShuffleHandMessage(player, cards);
+                case OCG_GameMessage.ShuffleExtra:
+                    return new ShuffleExtraMessage(player, cards);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
     }
 }

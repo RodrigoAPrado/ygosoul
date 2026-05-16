@@ -2,11 +2,12 @@
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component.Command.Battle;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Command.Base;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Command.Battle;
-
-public class BattleCmdToEndPhaseChoice : BattleCmdChoice, IBattleToEndPhase
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Command.Battle
 {
-    public BattleCmdToEndPhaseChoice(PlayerBattleAction action, uint sequence) : base(action, sequence)
+    public class BattleCmdToEndPhaseChoice : BattleCmdChoice, IBattleToEndPhase
     {
+        public BattleCmdToEndPhaseChoice(PlayerBattleAction action, uint sequence) : base(action, sequence)
+        {
+        }
     }
 }

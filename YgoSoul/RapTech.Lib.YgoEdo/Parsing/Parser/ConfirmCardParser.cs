@@ -6,38 +6,40 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser;
-
-public class ConfirmCardParser : BaseParser
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser
 {
-    protected override IOcgMessage DoParse(byte[] buffer)
+    public class ConfirmCardParser : BaseParser
     {
-        var reader = new PacketReader(buffer);
-        var msg = (OCG_GameMessage) reader.ReadByte();
-        var player = reader.ReadByte();
-        var count = reader.ReadUInt32();
-
-        var cards = new List<CardReference>();
-        
-        for (var i = count; i > 0; i--)
+        protected override IOcgMessage DoParse(byte[] buffer)
         {
-            var cardCode = reader.ReadUInt32();
-            var controller = reader.ReadByte();
-            var location = (OCG_CardLocation)reader.ReadByte();
-            var sequence = reader.ReadUInt32();
-            cards.Add(new CardReference(cardCode, new FullLocationReference(controller, location, sequence, 0), count -i));
-        }
+            var reader = new PacketReader(buffer);
+            var msg = (OCG_GameMessage)reader.ReadByte();
+            var player = reader.ReadByte();
+            var count = reader.ReadUInt32();
 
-        switch (msg)
-        {
-            case OCG_GameMessage.ConfirmDeckTop:
-                return new ConfirmDeckTopMessage(player, cards);
-            case OCG_GameMessage.ConfirmCards:
-                return new ConfirmCardsMessage(player, cards);
-            case OCG_GameMessage.ConfirmExtraTop:
-                return new ConfirmExtraDeckTopMessage(player, cards);
-            default:
-                throw new ArgumentOutOfRangeException();
+            var cards = new List<CardReference>();
+
+            for (var i = count; i > 0; i--)
+            {
+                var cardCode = reader.ReadUInt32();
+                var controller = reader.ReadByte();
+                var location = (OCG_CardLocation)reader.ReadByte();
+                var sequence = reader.ReadUInt32();
+                cards.Add(new CardReference(cardCode, new FullLocationReference(controller, location, sequence, 0),
+                    count - i));
+            }
+
+            switch (msg)
+            {
+                case OCG_GameMessage.ConfirmDeckTop:
+                    return new ConfirmDeckTopMessage(player, cards);
+                case OCG_GameMessage.ConfirmCards:
+                    return new ConfirmCardsMessage(player, cards);
+                case OCG_GameMessage.ConfirmExtraTop:
+                    return new ConfirmExtraDeckTopMessage(player, cards);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

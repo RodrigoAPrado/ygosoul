@@ -5,39 +5,36 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser;
-
-public class ShuffleSetCardParser : BaseParser
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser
 {
-    protected override IOcgMessage DoParse(byte[] buffer)
+    public class ShuffleSetCardParser : BaseParser
     {
-        var reader = new PacketReader(buffer);
-        reader.ReadByte();//msg
-        var location = (OCG_CardLocation) reader.ReadByte();
-        var count = reader.ReadByte();
-        
-        var cards = new List<FullLocationReference>();
-        for (var i = count; i > 0; i--)
+        protected override IOcgMessage DoParse(byte[] buffer)
         {
-            cards .Add(new FullLocationReference(
-                reader.ReadByte(), 
-                (OCG_CardLocation) reader.ReadByte(), 
-                reader.ReadUInt32(), 
-                (OCG_CardPosition) reader.ReadUInt32())
-            );
+            var reader = new PacketReader(buffer);
+            reader.ReadByte(); //msg
+            var location = (OCG_CardLocation)reader.ReadByte();
+            var count = reader.ReadByte();
+
+            var cards = new List<FullLocationReference>();
+            for (var i = count; i > 0; i--)
+                cards.Add(new FullLocationReference(
+                    reader.ReadByte(),
+                    (OCG_CardLocation)reader.ReadByte(),
+                    reader.ReadUInt32(),
+                    (OCG_CardPosition)reader.ReadUInt32())
+                );
+
+            var xyz = new List<FullLocationReference>();
+            for (var i = count; i > 0; i--)
+                xyz.Add(new FullLocationReference(
+                    reader.ReadByte(),
+                    (OCG_CardLocation)reader.ReadByte(),
+                    reader.ReadUInt32(),
+                    (OCG_CardPosition)reader.ReadUInt32())
+                );
+
+            return new ShuffleSetCardMessage(location, cards, xyz);
         }
-        
-        var xyz = new List<FullLocationReference>();
-        for (var i = count; i > 0; i--)
-        {
-            xyz .Add(new FullLocationReference(
-                reader.ReadByte(), 
-                (OCG_CardLocation) reader.ReadByte(), 
-                reader.ReadUInt32(), 
-                (OCG_CardPosition) reader.ReadUInt32())
-            );
-        }
-        
-        return new ShuffleSetCardMessage(location, cards, xyz);
     }
 }

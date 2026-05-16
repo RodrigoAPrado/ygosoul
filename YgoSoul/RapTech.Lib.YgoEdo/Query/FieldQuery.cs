@@ -1,63 +1,64 @@
 ﻿using System.Text;
 using YgoSoul.RapTech.Lib.YgoEdo.Query.Component;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Query;
-
-public class FieldQuery
+namespace YgoSoul.RapTech.Lib.YgoEdo.Query
 {
-    public IReadOnlyDictionary<byte, PlayerInfo> PlayerInfos { get; private set; }
-    public IReadOnlyList<FieldQueryChain> Chain { get; private set; }
-    private FieldQuery() { }
-
-    public override string ToString()
+    public class FieldQuery
     {
-        var sb = new StringBuilder();
-        foreach (var p in PlayerInfos)
+        private FieldQuery()
         {
-            sb.AppendLine($"Player={p.Key}, Info=[{p.Value}]");
         }
 
-        sb.AppendLine($"ChainSize={Chain.Count}");
-        foreach (var c in Chain)
+        public IReadOnlyDictionary<byte, PlayerInfo> PlayerInfos { get; private set; }
+        public IReadOnlyList<FieldQueryChain> Chain { get; private set; }
+
+        public override string ToString()
         {
-            sb.AppendLine($"Chain=[{c}]");
+            var sb = new StringBuilder();
+            foreach (var p in PlayerInfos) sb.AppendLine($"Player={p.Key}, Info=[{p.Value}]");
+
+            sb.AppendLine($"ChainSize={Chain.Count}");
+            foreach (var c in Chain) sb.AppendLine($"Chain=[{c}]");
+
+            return sb.ToString();
         }
 
-        return sb.ToString();
-    }
+        public class Builder
+        {
+            private readonly List<FieldQueryChain> _chains = new();
 
-    public class Builder
-    {
-        private Builder()
-        {
-            
-        }
-        
-        public static Builder Create() => new ();
-        
-        private Dictionary<byte, PlayerInfo> _playerInfo = new();
-        private List<FieldQueryChain> _chains = new();
-    
-        public Builder AddPlayerInfo(byte player, PlayerInfo info)
-        {
-            _playerInfo.Add(player, info);
-            return this;
-        }
+            private readonly Dictionary<byte, PlayerInfo> _playerInfo = new();
 
-        public Builder AddFieldQueryChain(List<FieldQueryChain> chain)
-        {
-            _chains.AddRange(chain);
-            return this;
-        }
-
-        public FieldQuery Build()
-        {
-            var query = new FieldQuery
+            private Builder()
             {
-                PlayerInfos = _playerInfo,
-                Chain = _chains
-            };
-            return query;
+            }
+
+            public static Builder Create()
+            {
+                return new Builder();
+            }
+
+            public Builder AddPlayerInfo(byte player, PlayerInfo info)
+            {
+                _playerInfo.Add(player, info);
+                return this;
+            }
+
+            public Builder AddFieldQueryChain(List<FieldQueryChain> chain)
+            {
+                _chains.AddRange(chain);
+                return this;
+            }
+
+            public FieldQuery Build()
+            {
+                var query = new FieldQuery
+                {
+                    PlayerInfos = _playerInfo,
+                    Chain = _chains
+                };
+                return query;
+            }
         }
     }
 }

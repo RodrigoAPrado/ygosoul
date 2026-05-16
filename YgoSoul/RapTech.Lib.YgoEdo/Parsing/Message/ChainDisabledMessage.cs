@@ -1,19 +1,20 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class ChainDisabledMessage : BaseMessage, IChainDisabledMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public byte ChainSize { get; }
-
-    public ChainDisabledMessage(byte chainSize)
+    public class ChainDisabledMessage : BaseMessage, IChainDisabledMessage
     {
-        ChainSize = chainSize;
-    }
+        public ChainDisabledMessage(byte chainSize)
+        {
+            ChainSize = chainSize;
+        }
 
-    public override string ToString()
-    {
-        return $"ChainDisabled, ChainSize={ChainSize}";
+        public byte ChainSize { get; }
+
+        public override string ToString()
+        {
+            return $"ChainDisabled, ChainSize={ChainSize}";
+        }
     }
 }

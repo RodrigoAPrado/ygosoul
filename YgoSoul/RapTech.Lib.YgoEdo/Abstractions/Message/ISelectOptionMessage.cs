@@ -1,9 +1,10 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Base;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
-
-public interface ISelectOptionMessage : ISelectionDuelMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message
 {
-    byte Player { get; }
-    IReadOnlyList<string> Options { get; }
+    public interface ISelectOptionMessage : ISelectionDuelMessage
+    {
+        byte Player { get; }
+        IReadOnlyList<string> Options { get; }
+    }
 }

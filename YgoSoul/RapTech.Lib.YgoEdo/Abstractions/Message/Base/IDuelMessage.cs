@@ -1,9 +1,10 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Base;
-
-public interface IDuelMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Base
 {
-    int InputCount { get; }
-    InputType Input { get; }
+    public interface IDuelMessage
+    {
+        int InputCount { get; }
+        InputType Input { get; }
+    }
 }

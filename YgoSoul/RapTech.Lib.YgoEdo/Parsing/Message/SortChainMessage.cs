@@ -6,56 +6,54 @@ using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class SortChainMessage : ISelectionOcgMessage, ISortChainMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public InputType Input => InputType.Sort;
-    public int InputCount => Cards.Count;
-    public bool CanCancel => true;
-    public byte Player { get; }
-    public IReadOnlyList<ICardReference> Cards => _cards;
-    private readonly List<CardReference> _cards;
-    
-    public SortChainMessage(byte player, List<CardReference> cards)
+    public class SortChainMessage : ISelectionOcgMessage, ISortChainMessage
     {
-        Player = player;
-        _cards = cards;
-    }
+        private readonly List<CardReference> _cards;
 
-    public byte[] GetResponse(List<int> ids)
-    {
-        var invalid = ids.Any(x => x >= Cards.Count || x < 0);
-
-        if (invalid)
-            return [];
-
-        if (ids.Count != Cards.Count)
-            return [];
-        
-        var response = new byte[ids.Count];
-        for (var i = 0; i < ids.Count; i++)
+        public SortChainMessage(byte player, List<CardReference> cards)
         {
-            response[i] = (byte)ids[i];
+            Player = player;
+            _cards = cards;
         }
 
-        return response;
-    }
+        public InputType Input => InputType.Sort;
+        public int InputCount => Cards.Count;
+        public bool CanCancel => true;
 
-    public byte[] Cancel()
-    {
-        return [unchecked((byte)-1)];
-    }
-
-    public override string ToString()
-    {
-        var sb = new StringBuilder();
-        sb.AppendLine($"Player {Player}, reorder the chain inputing their index with commas like a,b,c, or \"Cancel\":");
-        foreach (var c in Cards)
+        public byte[] GetResponse(List<int> ids)
         {
-            sb.AppendLine($"{CardLibrary.InternalGetCard(c.CardCode).Name}");
+            var invalid = ids.Any(x => x >= Cards.Count || x < 0);
+
+            if (invalid)
+                return [];
+
+            if (ids.Count != Cards.Count)
+                return [];
+
+            var response = new byte[ids.Count];
+            for (var i = 0; i < ids.Count; i++) response[i] = (byte)ids[i];
+
+            return response;
         }
 
-        return sb.ToString();
+        public byte[] Cancel()
+        {
+            return [unchecked((byte)-1)];
+        }
+
+        public byte Player { get; }
+        public IReadOnlyList<ICardReference> Cards => _cards;
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine(
+                $"Player {Player}, reorder the chain inputing their index with commas like a,b,c, or \"Cancel\":");
+            foreach (var c in Cards) sb.AppendLine($"{CardLibrary.InternalGetCard(c.CardCode).Name}");
+
+            return sb.ToString();
+        }
     }
 }

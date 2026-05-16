@@ -3,23 +3,25 @@ using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class CardTargetMessage : BaseMessage, ICardTargetMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public IFullLocationReference Card => _card;
-    public IFullLocationReference Target => _target;
-    private readonly FullLocationReference _card;
-    private readonly FullLocationReference _target;
-
-    public CardTargetMessage(FullLocationReference card, FullLocationReference target)
+    public class CardTargetMessage : BaseMessage, ICardTargetMessage
     {
-        _card = card;
-        _target = target;
-    }
+        private readonly FullLocationReference _card;
+        private readonly FullLocationReference _target;
 
-    public override string ToString()
-    {
-        return $"CardTarget, Card={Card}, Target={Target}";
+        public CardTargetMessage(FullLocationReference card, FullLocationReference target)
+        {
+            _card = card;
+            _target = target;
+        }
+
+        public IFullLocationReference Card => _card;
+        public IFullLocationReference Target => _target;
+
+        public override string ToString()
+        {
+            return $"CardTarget, Card={Card}, Target={Target}";
+        }
     }
 }

@@ -4,14 +4,15 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser;
-
-public class PlayerHintParser : BaseParser
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser
 {
-    protected override IOcgMessage DoParse(byte[] buffer)
+    public class PlayerHintParser : BaseParser
     {
-        var reader = new PacketReader(buffer);
-        reader.ReadByte();//msg
-        return new PlayerHintMessage(reader.ReadByte(), (OCG_PlayerHint) reader.ReadByte(), reader.ReadULong64());
+        protected override IOcgMessage DoParse(byte[] buffer)
+        {
+            var reader = new PacketReader(buffer);
+            reader.ReadByte(); //msg
+            return new PlayerHintMessage(reader.ReadByte(), (OCG_PlayerHint)reader.ReadByte(), reader.ReadULong64());
+        }
     }
 }

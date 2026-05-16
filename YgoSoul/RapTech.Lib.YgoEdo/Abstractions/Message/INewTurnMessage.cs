@@ -1,8 +1,9 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Base;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
-
-public interface INewTurnMessage : IDuelMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message
 {
-    byte Player { get; }
+    public interface INewTurnMessage : IDuelMessage
+    {
+        byte Player { get; }
+    }
 }

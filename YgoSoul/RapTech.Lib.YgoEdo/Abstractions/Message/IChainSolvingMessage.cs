@@ -1,8 +1,9 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Base;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
-
-public interface IChainSolvingMessage : IDuelMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message
 {
-    byte ChainLink { get; }
+    public interface IChainSolvingMessage : IDuelMessage
+    {
+        byte ChainLink { get; }
+    }
 }

@@ -1,8 +1,9 @@
-﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
-
-public interface IChainOption
+﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component
 {
-    uint Code { get; }
-    string Description { get; }
-    IFullLocationReference LocationReference { get; }
+    public interface IChainOption
+    {
+        uint Code { get; }
+        string Description { get; }
+        IFullLocationReference LocationReference { get; }
+    }
 }

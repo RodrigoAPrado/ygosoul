@@ -2,19 +2,20 @@
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class MatchKillMessage : BaseMessage, IMatchKillMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public uint CardCode { get; }
-
-    public MatchKillMessage(uint cardCode)
+    public class MatchKillMessage : BaseMessage, IMatchKillMessage
     {
-        CardCode = cardCode;
-    }
+        public MatchKillMessage(uint cardCode)
+        {
+            CardCode = cardCode;
+        }
 
-    public override string ToString()
-    {
-        return $"MatchKill, Card={CardLibrary.InternalGetCard(CardCode).Name}";
+        public uint CardCode { get; }
+
+        public override string ToString()
+        {
+            return $"MatchKill, Card={CardLibrary.InternalGetCard(CardCode).Name}";
+        }
     }
 }

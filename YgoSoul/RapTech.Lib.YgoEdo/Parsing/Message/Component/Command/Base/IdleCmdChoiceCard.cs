@@ -3,37 +3,38 @@ using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Command.Base;
-
-public abstract class IdleCmdChoiceCard : IIdleCmdChoice
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Command.Base
 {
-    public PlayerIdleAction Action { get; }
-    public byte Controller { get; }
-    public uint Index { get; }
-    public uint Sequence { get; }
-    public uint CardCode { get; }
-    protected ulong _description { get; }
-    protected OCG_CardLocation _location { get; }
-
-    public IdleCmdChoiceCard(PlayerIdleAction playerIdleAction, uint cardCode, byte player, OCG_CardLocation location, uint sequence, uint index, ulong description)
+    public abstract class IdleCmdChoiceCard : IIdleCmdChoice
     {
-        Action = playerIdleAction;
-        Controller = player;
-        Sequence = sequence;
-        _location = location;
-        CardCode = cardCode;
-        Index = index;
-        _description = description;
-    }
-
-    public override string ToString()
-    {
-        var description = "";
-        if (Action == PlayerIdleAction.EffectActivation)
+        public IdleCmdChoiceCard(PlayerIdleAction playerIdleAction, uint cardCode, byte player,
+            OCG_CardLocation location, uint sequence, uint index, ulong description)
         {
-            description = $", Description={DescriptionUtil.GetDescription(_description)}";
+            Action = playerIdleAction;
+            Controller = player;
+            Sequence = sequence;
+            _location = location;
+            CardCode = cardCode;
+            Index = index;
+            _description = description;
         }
-            
-        return $"to {Action.ToString()} {CardLibrary.InternalGetCard(CardCode).Name}, Location={_location.ToString()}, Sequence={Sequence}, Index={Index}{description}...";
+
+        public byte Controller { get; }
+        public uint Sequence { get; }
+        public uint CardCode { get; }
+        protected ulong _description { get; }
+        protected OCG_CardLocation _location { get; }
+        public PlayerIdleAction Action { get; }
+        public uint Index { get; }
+
+        public override string ToString()
+        {
+            var description = "";
+            if (Action == PlayerIdleAction.EffectActivation)
+                description = $", Description={DescriptionUtil.GetDescription(_description)}";
+
+            return
+                $"to {Action.ToString()} {CardLibrary.InternalGetCard(CardCode).Name}, Location={_location.ToString()}, Sequence={Sequence}, Index={Index}{description}...";
+        }
     }
 }

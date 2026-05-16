@@ -4,22 +4,25 @@ using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class HintRaceMessage : BaseMessage, IHintRaceMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public byte Player { get; }
-    public MonsterType MonsterType { get; }
-    private readonly OCG_MonsterRaces _race;
-    public HintRaceMessage(byte player, OCG_MonsterRaces race)
+    public class HintRaceMessage : BaseMessage, IHintRaceMessage
     {
-        Player = player;
-        _race = race;
-        MonsterType = _race.ToMonsterType();
-    }
+        private readonly OCG_MonsterRaces _race;
 
-    public override string ToString()
-    {
-        return $"Hint: Player={Player}, Race={_race}";
+        public HintRaceMessage(byte player, OCG_MonsterRaces race)
+        {
+            Player = player;
+            _race = race;
+            MonsterType = _race.ToMonsterType();
+        }
+
+        public byte Player { get; }
+        public MonsterType MonsterType { get; }
+
+        public override string ToString()
+        {
+            return $"Hint: Player={Player}, Race={_race}";
+        }
     }
 }

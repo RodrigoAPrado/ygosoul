@@ -1,6 +1,7 @@
-﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component.Command.Base;
-
-public interface IIdleCommand
+﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component.Command.Base
 {
-    uint Index { get; }
+    public interface IIdleCommand
+    {
+        uint Index { get; }
+    }
 }

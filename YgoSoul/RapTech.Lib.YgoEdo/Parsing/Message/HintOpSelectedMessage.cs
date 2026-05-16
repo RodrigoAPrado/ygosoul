@@ -2,19 +2,21 @@
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class HintOpSelectedMessage : BaseHintMessage, IHintOpSelectedMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public byte Player { get; }
-    public string Description { get; }
-    private readonly ulong _description;
-    
-    public HintOpSelectedMessage(byte player, ulong description) : base(
-        $"$Player {player}, choose {DescriptionUtil.GetDescription(description)}")
+    public class HintOpSelectedMessage : BaseHintMessage, IHintOpSelectedMessage
     {
-        Player = player;
-        _description = description;
-        Description = DescriptionUtil.GetDescription(_description);
+        private readonly ulong _description;
+
+        public HintOpSelectedMessage(byte player, ulong description) : base(
+            $"$Player {player}, choose {DescriptionUtil.GetDescription(description)}")
+        {
+            Player = player;
+            _description = description;
+            Description = DescriptionUtil.GetDescription(_description);
+        }
+
+        public byte Player { get; }
+        public string Description { get; }
     }
 }

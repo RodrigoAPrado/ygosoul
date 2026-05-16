@@ -6,48 +6,52 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class SelectEffectYesNoMessage : ISelectionOcgMessage, ISelectEffectYesNoMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public InputType Input => InputType.Value;
-    public int InputCount => 1;
-    public byte Player { get; }
-    public ICardReference Card => _card;
-    public string Description { get; }
-    private readonly CardReference _card;
-    private readonly ulong _description;
+    public class SelectEffectYesNoMessage : ISelectionOcgMessage, ISelectEffectYesNoMessage
+    {
+        private readonly CardReference _card;
+        private readonly ulong _description;
 
-    public SelectEffectYesNoMessage(byte player, CardReference card, ulong description)
-    {
-        Player = player;
-        _card = card;
-        _description = description;
-        Description = DescriptionUtil.GetDescription(_description);
-    }
-    
-    public byte[] GetResponse(List<int> input)
-    {
-        if (input.Count != 1)
+        public SelectEffectYesNoMessage(byte player, CardReference card, ulong description)
+        {
+            Player = player;
+            _card = card;
+            _description = description;
+            Description = DescriptionUtil.GetDescription(_description);
+        }
+
+        public byte Player { get; }
+        public ICardReference Card => _card;
+        public string Description { get; }
+        public InputType Input => InputType.Value;
+        public int InputCount => 1;
+
+        public byte[] GetResponse(List<int> input)
+        {
+            if (input.Count != 1)
+                return [];
+
+            var id = input[0];
+
+            if (id != 0 && id != 1)
+                return [];
+
+            return BitConverter.GetBytes(id);
+        }
+
+        public bool CanCancel => false;
+
+        public byte[] Cancel()
+        {
             return [];
-        
-        var id = input[0];
-
-        if (id != 0 && id != 1)
-            return [];
-
-        return BitConverter.GetBytes(id);
-    }
+        }
 
 
-    public override string ToString()
-    {
-        return $"\nPlayer {Player}, card effect for card {CardLibrary.InternalGetCard(_card.CardCode).Name}. Description={DescriptionUtil.GetDescription(_description)}\n[0] - No\n[1] - Yes";
-    }
-
-    public bool CanCancel => false;
-    public byte[] Cancel()
-    {
-        return [];
+        public override string ToString()
+        {
+            return
+                $"\nPlayer {Player}, card effect for card {CardLibrary.InternalGetCard(_card.CardCode).Name}. Description={DescriptionUtil.GetDescription(_description)}\n[0] - No\n[1] - Yes";
+        }
     }
 }

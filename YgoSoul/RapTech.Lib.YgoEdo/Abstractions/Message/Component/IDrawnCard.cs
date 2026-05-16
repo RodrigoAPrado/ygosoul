@@ -1,9 +1,10 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Flag;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
-
-public interface IDrawnCard
+namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component
 {
-    uint CardCode { get; }
-    CardPosition CardPosition { get; }
+    public interface IDrawnCard
+    {
+        uint CardCode { get; }
+        CardPosition CardPosition { get; }
+    }
 }

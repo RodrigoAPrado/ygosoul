@@ -3,61 +3,60 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Query.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Query;
-
-public class QueryParser
+namespace YgoSoul.RapTech.Lib.YgoEdo.Query
 {
-    public static FieldQuery ParseField(byte[] buffer)
+    public class QueryParser
     {
-        var reader = new PacketReader(buffer);
-        reader.ReadUInt32(); //
-        var fieldBuilder = FieldQuery.Builder.Create();
-        for (byte i = 0; i < 2; i++) // player info
+        public static FieldQuery ParseField(byte[] buffer)
         {
-            var lp = reader.ReadUInt32();
-            var infos = new Dictionary<int, FieldQueryCard>();
-            for (var j = 0; j < ZoneUtils.ZoneIndexQuery.Count; j++)
+            var reader = new PacketReader(buffer);
+            reader.ReadUInt32(); //
+            var fieldBuilder = FieldQuery.Builder.Create();
+            for (byte i = 0; i < 2; i++) // player info
             {
-                var hasCard = reader.ReadByte() == 1;
-                if (hasCard)
+                var lp = reader.ReadUInt32();
+                var infos = new Dictionary<int, FieldQueryCard>();
+                for (var j = 0; j < ZoneUtils.ZoneIndexQuery.Count; j++)
                 {
-                    infos.Add(j, new FieldQueryCard(ZoneUtils.ZoneIndexQuery[j], (OCG_CardPosition) reader.ReadByte(), reader.ReadUInt32()));
+                    var hasCard = reader.ReadByte() == 1;
+                    if (hasCard)
+                        infos.Add(j,
+                            new FieldQueryCard(ZoneUtils.ZoneIndexQuery[j], (OCG_CardPosition)reader.ReadByte(),
+                                reader.ReadUInt32()));
                 }
+
+                fieldBuilder.AddPlayerInfo(i, new PlayerInfo(
+                    lp,
+                    infos,
+                    reader.ReadUInt32(),
+                    reader.ReadUInt32(),
+                    reader.ReadUInt32(),
+                    reader.ReadUInt32(),
+                    reader.ReadUInt32(),
+                    reader.ReadUInt32()));
             }
-            fieldBuilder.AddPlayerInfo(i, new PlayerInfo(
-                lp, 
-                infos, 
-                reader.ReadUInt32(), 
-                reader.ReadUInt32(), 
-                reader.ReadUInt32(),
-                reader.ReadUInt32(),
-                reader.ReadUInt32(),
-                reader.ReadUInt32()));
-        }
 
-        var chainSize = reader.ReadUInt32();
-        var chainList = new List<FieldQueryChain>();
-        for (var i = chainSize; i > 0; i--)
-        {
-            chainList.Add(new FieldQueryChain(
-                reader.ReadUInt32(),
-                new FullLocationReference(
-                    reader.ReadByte(), 
-                    (OCG_CardLocation) reader.ReadByte(), 
-                    reader.ReadUInt32(), 
-                    (OCG_CardPosition)reader.ReadUInt32()
-                ),
-                reader.ReadByte(),
-                (OCG_CardLocation) reader.ReadByte(),
-                reader.ReadUInt32(),
-                reader.ReadULong64()
+            var chainSize = reader.ReadUInt32();
+            var chainList = new List<FieldQueryChain>();
+            for (var i = chainSize; i > 0; i--)
+                chainList.Add(new FieldQueryChain(
+                    reader.ReadUInt32(),
+                    new FullLocationReference(
+                        reader.ReadByte(),
+                        (OCG_CardLocation)reader.ReadByte(),
+                        reader.ReadUInt32(),
+                        (OCG_CardPosition)reader.ReadUInt32()
+                    ),
+                    reader.ReadByte(),
+                    (OCG_CardLocation)reader.ReadByte(),
+                    reader.ReadUInt32(),
+                    reader.ReadULong64()
                 ));
-        }
-        fieldBuilder.AddFieldQueryChain(chainList);
+            fieldBuilder.AddFieldQueryChain(chainList);
 
-        return fieldBuilder.Build();
+            return fieldBuilder.Build();
+        }
     }
-}
 /*
  * 00-E8-02-00-
  * 40-1F-00-00- LP Player 0
@@ -115,3 +114,4 @@ public class QueryParser
  * xx-xx-xx-xx // triggering sequence
  * xx-xx-xx-xx-xx-xx-xx-xx // description
  */
+}

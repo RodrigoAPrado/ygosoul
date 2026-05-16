@@ -1,21 +1,22 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class DamageMessage : BaseMessage, IDamageMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public byte Player { get; }
-    public uint Damage { get; }
-    
-    public DamageMessage(byte player, uint damage)
+    public class DamageMessage : BaseMessage, IDamageMessage
     {
-        Player = player;
-        Damage = damage;
-    }
+        public DamageMessage(byte player, uint damage)
+        {
+            Player = player;
+            Damage = damage;
+        }
 
-    public override string ToString()
-    {
-        return $"Player: {Player}, took {Damage} damage!";
+        public byte Player { get; }
+        public uint Damage { get; }
+
+        public override string ToString()
+        {
+            return $"Player: {Player}, took {Damage} damage!";
+        }
     }
 }

@@ -1,9 +1,10 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Base;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
-
-public interface IRecoverMessage : IDuelMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message
 {
-    byte Player { get; }
-    uint Recover { get; }
+    public interface IRecoverMessage : IDuelMessage
+    {
+        byte Player { get; }
+        uint Recover { get; }
+    }
 }

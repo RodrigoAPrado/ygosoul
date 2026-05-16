@@ -6,29 +6,32 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class CardHintMessage : BaseMessage, ICardHintMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public IFullLocationReference LocationReference => _locationReference;
-    public DuelCardHint CardHint { get; }
-    public string Description { get; }
-    
-    private readonly FullLocationReference _locationReference;
-    private readonly OCG_CardHint _cardHint;
-    private readonly ulong _description;
-
-    public CardHintMessage(FullLocationReference fullLocationReference, OCG_CardHint cardHint, ulong description)
+    public class CardHintMessage : BaseMessage, ICardHintMessage
     {
-        _locationReference = fullLocationReference;
-        _cardHint = cardHint;
-        _description = description;
-        CardHint = _cardHint.ToDuelCardHint();
-        Description = DescriptionUtil.GetDescription(_description, _cardHint);
-    }
+        private readonly OCG_CardHint _cardHint;
+        private readonly ulong _description;
 
-    public override string ToString()
-    {
-        return $"{_locationReference}. Hint={_cardHint}, Description={DescriptionUtil.GetDescription(_description, _cardHint)}, DescriptionDex={_description:x16}";
+        private readonly FullLocationReference _locationReference;
+
+        public CardHintMessage(FullLocationReference fullLocationReference, OCG_CardHint cardHint, ulong description)
+        {
+            _locationReference = fullLocationReference;
+            _cardHint = cardHint;
+            _description = description;
+            CardHint = _cardHint.ToDuelCardHint();
+            Description = DescriptionUtil.GetDescription(_description, _cardHint);
+        }
+
+        public IFullLocationReference LocationReference => _locationReference;
+        public DuelCardHint CardHint { get; }
+        public string Description { get; }
+
+        public override string ToString()
+        {
+            return
+                $"{_locationReference}. Hint={_cardHint}, Description={DescriptionUtil.GetDescription(_description, _cardHint)}, DescriptionDex={_description:x16}";
+        }
     }
 }

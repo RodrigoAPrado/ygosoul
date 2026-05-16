@@ -3,44 +3,49 @@ using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class SelectYesNoMessage : ISelectionOcgMessage, ISelectYesNoMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public InputType Input => InputType.Value;
-    public int InputCount => 1;
-
-    public byte Player { get; }
-    public string Description { get; }
-    private readonly ulong _description;
-
-    public SelectYesNoMessage(byte player, ulong description)
+    public class SelectYesNoMessage : ISelectionOcgMessage, ISelectYesNoMessage
     {
-        Player = player;
-        _description = description;
-        Description = DescriptionUtil.GetDescription(_description);
-    }
-    public byte[] GetResponse(List<int> input)
-    {
-        if (input.Count != 1)
+        private readonly ulong _description;
+
+        public SelectYesNoMessage(byte player, ulong description)
+        {
+            Player = player;
+            _description = description;
+            Description = DescriptionUtil.GetDescription(_description);
+        }
+
+        public InputType Input => InputType.Value;
+        public int InputCount => 1;
+
+        public byte[] GetResponse(List<int> input)
+        {
+            if (input.Count != 1)
+                return [];
+
+            var id = input[0];
+
+            if (id != 0 && id != 1)
+                return [];
+
+            return BitConverter.GetBytes(id);
+        }
+
+        public bool CanCancel => false;
+
+        public byte[] Cancel()
+        {
             return [];
-        
-        var id = input[0];
-        
-        if (id != 0 && id != 1)
-            return [];
+        }
 
-        return BitConverter.GetBytes(id);
-    }
-    
-    public override string ToString()
-    {
-        return $"Player {Player}, activate effect? Description={DescriptionUtil.GetDescription(_description)}:\n[0] - No\n[1] - Yes";
-    }
+        public byte Player { get; }
+        public string Description { get; }
 
-    public bool CanCancel => false;
-    public byte[] Cancel()
-    {
-        return [];
+        public override string ToString()
+        {
+            return
+                $"Player {Player}, activate effect? Description={DescriptionUtil.GetDescription(_description)}:\n[0] - No\n[1] - Yes";
+        }
     }
 }

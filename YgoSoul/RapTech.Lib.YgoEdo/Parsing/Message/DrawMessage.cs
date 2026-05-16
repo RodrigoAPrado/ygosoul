@@ -4,28 +4,28 @@ using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
-
-public class DrawMessage : BaseMessage, IDrawMessage
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message
 {
-    public uint Player { get; }
-    public IReadOnlyList<IDrawnCard> Cards => _cards;
-    private readonly List<DrawnCard> _cards;
-    public DrawMessage(uint player, List<DrawnCard> cards)
+    public class DrawMessage : BaseMessage, IDrawMessage
     {
-        Player = player;
-        _cards = cards;
-    }
+        private readonly List<DrawnCard> _cards;
 
-    public override string ToString()
-    {
-        var sb = new StringBuilder();
-        sb.AppendLine($"Player {Player} drew the following cards:");
-        foreach (var card in _cards)
+        public DrawMessage(uint player, List<DrawnCard> cards)
         {
-            sb.AppendLine($"- {card.ToString()}");
+            Player = player;
+            _cards = cards;
         }
 
-        return sb.ToString();
+        public uint Player { get; }
+        public IReadOnlyList<IDrawnCard> Cards => _cards;
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"Player {Player} drew the following cards:");
+            foreach (var card in _cards) sb.AppendLine($"- {card.ToString()}");
+
+            return sb.ToString();
+        }
     }
 }
