@@ -1,28 +1,36 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Flag;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class RemoveCounterMessage : BaseMessage
+public class RemoveCounterMessage : BaseMessage, IRemoveCounterMessage
 {
-    public OCG_CounterType CounterType { get; }
+    public CounterType CounterType { get; }
     public byte Player { get; }
-    public OCG_CardLocation Location { get; }
+    public Location Location { get; }
     public byte Sequence { get; }
     public ushort Count { get; }
+    private OCG_CounterType _counterType;
+    private OCG_CardLocation _location;
 
     public RemoveCounterMessage(OCG_CounterType counterType, byte player, OCG_CardLocation location, byte sequence, ushort count)
     {
-        CounterType = counterType;
+        _counterType = counterType;
         Player = player;
-        Location = location;
+        _location = location;
         Sequence = sequence;
         Count = count;
+        CounterType = _counterType.ToCardCounterType();
+        Location = _location.ToLocation();
     }
 
     public override string ToString()
     {
-        return $"RemoveCounter, CounterType={(OCG_CounterType)CounterType}, Player={Player}, Location={Location} Sequence={Sequence}, Count={Count}";
+        return $"RemoveCounter, CounterType={(OCG_CounterType)_counterType}, Player={Player}, Location={_location} Sequence={Sequence}, Count={Count}";
     }
 }

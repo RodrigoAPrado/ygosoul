@@ -13,16 +13,11 @@ public class FieldDisabledParser : BaseParser
         var reader = new PacketReader(buffer);
         reader.ReadByte();//msg
         var mask = reader.ReadUInt32();
-
-        var zones = new List<OCG_Zone>();
-
-        for (int i = 0; i < 32; i++)
-        {
-            if ((mask & (1u << i)) != 0)
-            {
-                zones.Add((OCG_Zone)(1u << i));
-            }
-        }
+        
+        var zones = Enum
+            .GetValues<OCG_Zone>()
+            .Where(x => (mask & (uint)x) != 0)
+            .ToList();
 
         return new FieldDisabledMessage(zones, mask);
     }

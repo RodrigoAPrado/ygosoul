@@ -14,8 +14,7 @@ public class AnnounceRaceMessage : BaseMessage, ISelectionOcgMessage, IAnnounceR
     public override int InputCount => _races.Count;
     public byte Player { get; }
     public byte Count { get; }
-    public IReadOnlyList<MonsterType> AvailableTypes 
-        => _races.Select(x => x.ToMonsterType()).ToList().AsReadOnly();
+    public IReadOnlyList<MonsterType> AvailableTypes { get; }
     public bool CanCancel => false;
     private readonly List<OCG_MonsterRaces> _races;
     
@@ -24,6 +23,7 @@ public class AnnounceRaceMessage : BaseMessage, ISelectionOcgMessage, IAnnounceR
         Player = player;
         Count = count;
         _races = races;
+        AvailableTypes= _races.Select(x => x.ToMonsterType()).ToList().AsReadOnly();
     }
     
     public override byte[] GetResponse(List<int> ids)

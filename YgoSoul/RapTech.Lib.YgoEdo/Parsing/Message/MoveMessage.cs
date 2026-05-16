@@ -1,55 +1,46 @@
 ﻿using System.Text;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
+using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class MoveMessage : BaseMessage
+public class MoveMessage : BaseMessage, IMoveMessage
 {
     public uint CardCode { get; }
-    public uint OldPlayer { get; }
-    public OCG_CardLocation OldLocation { get; }
-    public uint OldSequence { get; }
-    public OCG_CardPosition OldPosition { get; }
-    public uint NewPlayer { get; }
-    public OCG_CardLocation NewLocation { get; }
-    public uint NewSequence { get; }
-    public OCG_CardPosition NewPosition { get; }
-    public OCG_Reason Reason { get; }
-
+    public IFullLocationReference OldLocation => _oldLocation;
+    public IFullLocationReference NewLocation => _newLocation;
+    public IReadOnlyList<SystemReason> Reasons { get; }
+    private readonly FullLocationReference _oldLocation;
+    private readonly FullLocationReference _newLocation;
+    private readonly List<OCG_Reason> _reasons;
+    
     public MoveMessage(
         uint cardCode, 
-        uint oldPlayer, 
-        OCG_CardLocation oldLocation, 
-        uint oldSequence, 
-        OCG_CardPosition oldPosition,
-        OCG_Reason reason,
-        uint newPlayer, 
-        OCG_CardLocation newLocation, 
-        uint newSequence, 
-        OCG_CardPosition newPosition)
+        FullLocationReference oldLocation,
+        FullLocationReference newLocation,
+        List<OCG_Reason> reasons)
     {
         CardCode = cardCode;
-        OldPlayer = oldPlayer;
-        OldLocation = oldLocation;
-        OldSequence = oldSequence;
-        OldPosition = oldPosition;
-        NewPlayer = newPlayer;
-        NewLocation = newLocation;
-        NewSequence = newSequence;
-        NewPosition = newPosition;
-        Reason = reason;
+        _oldLocation = oldLocation;
+        _newLocation = newLocation;
+        _reasons = reasons;
+        Reasons = _reasons.Select(x => x.ToSystemReason()).ToList();
     }
 
     public override string ToString()
     {
         var sb = new StringBuilder();
-        sb.AppendLine($"Card {CardLibrary.InternalGetCard(CardCode).Name} was with player {OldPlayer} on the " +
-                      $"{OldLocation}, in sequence {OldSequence} and position {OldPosition}.");
-        sb.AppendLine($"It moved to {NewLocation}, in sequence {NewSequence} and position " +
-                      $"{NewPosition}, and is now controlled by {NewPlayer}, because of {Reason.ToString()}");
+        sb.AppendLine($"Card {CardLibrary.InternalGetCard(CardCode).Name} was with player {_oldLocation.Controller} on the " +
+                      $"{_oldLocation.Location}, in sequence {_oldLocation.Sequence} and position {_oldLocation.Position}.");
+        sb.AppendLine($"It moved to {_newLocation.Location}, in sequence {_newLocation.Sequence} and position " +
+                      $"{_newLocation.Position}, and is now controlled by {_newLocation.Controller}, because of {_reasons.ToString()}");
         return sb.ToString();
     }
 }

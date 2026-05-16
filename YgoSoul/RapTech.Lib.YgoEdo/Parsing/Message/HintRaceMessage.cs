@@ -9,12 +9,13 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 public class HintRaceMessage : BaseMessage, IHintRaceMessage
 {
     public byte Player { get; }
-    public MonsterType MonsterType => _race.ToMonsterType();
+    public MonsterType MonsterType { get; }
     private readonly OCG_MonsterRaces _race;
     public HintRaceMessage(byte player, OCG_MonsterRaces race)
     {
         Player = player;
         _race = race;
+        MonsterType = _race.ToMonsterType();
     }
 
     public override string ToString()

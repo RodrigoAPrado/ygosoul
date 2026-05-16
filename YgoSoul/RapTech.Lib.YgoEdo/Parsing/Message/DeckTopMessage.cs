@@ -11,7 +11,8 @@ public class DeckTopMessage : SimpleTextMessage, IDeckTopMessage
 {
     public byte Player { get; }
     public uint CardCode { get; }
-    public CardPosition Position => _position.ToCardPosition();
+    public CardPosition Position { get; }
+    
     private readonly OCG_CardPosition _position;
     
     public DeckTopMessage(byte player, uint cardCode, OCG_CardPosition position) 
@@ -20,5 +21,6 @@ public class DeckTopMessage : SimpleTextMessage, IDeckTopMessage
         Player = player;
         CardCode = cardCode;
         _position = position;
+        Position = _position.ToCardPosition();
     }
 }

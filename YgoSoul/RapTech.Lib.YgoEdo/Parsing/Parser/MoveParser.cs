@@ -2,6 +2,7 @@
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
@@ -26,20 +27,20 @@ public class MoveParser : BaseParser
         var newLocation = (OCG_CardLocation)reader.ReadByte();
         var newSequence = reader.ReadUInt32();
         var newPosition = (OCG_CardPosition) reader.ReadUInt32();
-
-        var reason = (OCG_Reason) reader.ReadUInt32();
-
+        
+        var mask = reader.ReadUInt32();
+        
+        var reasons = Enum
+            .GetValues<OCG_Reason>()
+            .Where(x => x != OCG_Reason.None)
+            .Where(x => (mask & (uint)x) != 0)
+            .ToList();
+        
         return new MoveMessage(
             cardCode,
-            prevController,
-            prevLocation,
-            prevSequence,
-            prevPosition,
-            reason,
-            newController,
-            newLocation,
-            newSequence,
-            newPosition
+            new FullLocationReference(prevController, prevLocation, prevSequence, prevPosition),
+            new FullLocationReference(newController, newLocation, newSequence, newPosition),
+            reasons
         );
     }
 }

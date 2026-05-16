@@ -7,7 +7,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 public class HintOpSelectedMessage : BaseHintMessage, IHintOpSelectedMessage
 {
     public byte Player { get; }
-    public string Description => DescriptionHandler.GetDescription(_description);
+    public string Description { get; }
     private readonly ulong _description;
     
     public HintOpSelectedMessage(byte player, ulong description) : base(
@@ -15,5 +15,6 @@ public class HintOpSelectedMessage : BaseHintMessage, IHintOpSelectedMessage
     {
         Player = player;
         _description = description;
+        Description = DescriptionHandler.GetDescription(_description);
     }
 }

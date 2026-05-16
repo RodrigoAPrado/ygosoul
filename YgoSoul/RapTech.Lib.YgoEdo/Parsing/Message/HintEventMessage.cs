@@ -9,12 +9,13 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 public class HintEventMessage : BaseHintMessage, IHintEventMessage
 {
     public byte Player { get; }
-    public SystemStrings Text => _text.ToSystemStrings();
+    public SystemStrings Text { get; }
     private readonly OCG_GameStrings _text;
 
     public HintEventMessage(byte player, OCG_GameStrings text) : base($"Player {player}, it is {text}.")
     {
         Player = player;
         _text = text;
+        Text = _text.ToSystemStrings();
     }
 }

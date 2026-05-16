@@ -1,17 +1,24 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Flag;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Flag;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class PosChangeMessage : BaseMessage
+public class PosChangeMessage : BaseMessage, IPosChangeMessage
 {
     public uint CardCode { get; }
     public byte CurrentController { get; }
-    public OCG_CardLocation CurrentLocation { get; }
+    public Location CurrentLocation { get; }
     public byte CurrentSequence { get; }
-    public OCG_CardPosition PreviousPosition { get; }
-    public OCG_CardPosition CurrentPosition { get; }
+    public CardPosition PreviousPosition { get; }
+    public CardPosition CurrentPosition { get; }
+    private OCG_CardLocation _currentLocation;
+    private OCG_CardPosition _previousPosition;
+    private OCG_CardPosition _currentPosition;
 
     public PosChangeMessage(
 	    uint cardCode, 
@@ -24,14 +31,17 @@ public class PosChangeMessage : BaseMessage
     {
 	    CardCode = cardCode;
 	    CurrentController = currentController;
-	    CurrentLocation = currentLocation;
+	    _currentLocation = currentLocation;
 	    CurrentSequence = currentSequence;
-	    PreviousPosition = previousPosition;
-	    CurrentPosition = currentPosition;
+	    _previousPosition = previousPosition;
+	    _currentPosition = currentPosition;
+	    CurrentPosition = _currentPosition.ToCardPosition();
+	    CurrentLocation = _currentLocation.ToLocation();
+	    PreviousPosition = _previousPosition.ToCardPosition();
     }
 
     public override string ToString()
     {
-	    return $"Card {CardLibrary.InternalGetCard(CardCode).Name} was changed from {PreviousPosition} to {CurrentPosition}";
+	    return $"Card {CardLibrary.InternalGetCard(CardCode).Name} was changed from {_previousPosition} to {_currentPosition}";
     }
 }

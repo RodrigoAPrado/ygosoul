@@ -15,9 +15,9 @@ public class ChainingMessage : BaseMessage, IChainingMessage
     public uint CardCode { get; }
     public IFullLocationReference LocationReference => _locationReference;
     public byte ActivationPlayer { get; }
-    public Location ActivationLocation => _activationLocation.ToLocation();
+    public Location ActivationLocation { get; }
     public uint ActivationSequence { get; }
-    public string Description => DescriptionHandler.GetDescription(_description);
+    public string Description { get; }
     public uint ChainSize { get; }
     private readonly FullLocationReference _locationReference;
     private readonly OCG_CardLocation _activationLocation;
@@ -33,6 +33,8 @@ public class ChainingMessage : BaseMessage, IChainingMessage
         ActivationSequence = activationSequence;
         _description = description;
         ChainSize = chainSize;
+        ActivationLocation = _activationLocation.ToLocation();
+        Description = DescriptionHandler.GetDescription(_description);
     }
 
     public override string ToString()

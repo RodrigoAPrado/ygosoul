@@ -9,12 +9,13 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 public class HintAttributeMessage : BaseMessage, IHintAttributeMessage
 {
     public byte Player { get; }
-    public CardAttribute Attribute => _attribute.ToCardAttribute();
+    public CardAttribute Attribute { get; }
     private readonly OCG_MonsterAttributes _attribute;
     public HintAttributeMessage(byte player, OCG_MonsterAttributes attribute)
     {
         Player = player;
         _attribute = attribute;
+        Attribute = _attribute.ToCardAttribute();
     }
 
     public override string ToString()

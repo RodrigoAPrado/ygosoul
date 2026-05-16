@@ -14,17 +14,17 @@ public class AnnounceAttributeMessage : BaseMessage, ISelectionOcgMessage, IAnno
     public override int InputCount => Count;
     public byte Player { get; }
     public byte Count { get; }
-    public IReadOnlyList<CardAttribute> Attributes 
-        => _internalAttributes.Select(x => x.ToCardAttribute()).ToList();
+    public IReadOnlyList<CardAttribute> Attributes { get; }
     
     public bool CanCancel => false;
     private readonly List<OCG_MonsterAttributes> _internalAttributes;
     
     public AnnounceAttributeMessage(byte player, byte count, List<OCG_MonsterAttributes> attributes)
     {
+        _internalAttributes = attributes;
         Player = player;
         Count = count;
-        _internalAttributes = attributes;
+        Attributes = _internalAttributes.Select(x => x.ToCardAttribute()).ToList();
     }
     
     public override byte[] GetResponse(List<int> ids)

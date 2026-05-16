@@ -12,8 +12,8 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 public class CardHintMessage : BaseMessage, ICardHintMessage
 {
     public IFullLocationReference LocationReference => _locationReference;
-    public DuelCardHint CardHint => _cardHint.ToDuelCardHint();
-    public string Description => DescriptionHandler.GetDescription(_description, _cardHint);
+    public DuelCardHint CardHint { get; }
+    public string Description { get; }
     
     private readonly FullLocationReference _locationReference;
     private readonly OCG_CardHint _cardHint;
@@ -24,6 +24,8 @@ public class CardHintMessage : BaseMessage, ICardHintMessage
         _locationReference = fullLocationReference;
         _cardHint = cardHint;
         _description = description;
+        CardHint = _cardHint.ToDuelCardHint();
+        Description = DescriptionHandler.GetDescription(_description, _cardHint);
     }
 
     public override string ToString()

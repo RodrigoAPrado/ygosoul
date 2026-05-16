@@ -8,7 +8,7 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
 public class FieldDisabledMessage : BaseMessage, IFieldDisabledMessage
 {
-    public IReadOnlyList<FieldZones> Zones => _zones.Select(x => x.ToFieldZone()).ToList().AsReadOnly();
+    public IReadOnlyList<FieldZones> Zones { get; }
     private readonly List<OCG_Zone> _zones;
     private readonly uint _mask;
 
@@ -16,6 +16,7 @@ public class FieldDisabledMessage : BaseMessage, IFieldDisabledMessage
     {
         _zones = zones;
         _mask = mask;
+        Zones = _zones.Select(x => x.ToFieldZone()).ToList().AsReadOnly();
     }
 
     public override string ToString()

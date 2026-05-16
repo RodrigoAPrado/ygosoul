@@ -1,16 +1,20 @@
 ﻿using System.Text;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class RemoveCardsMessage : BaseMessage
+public class RemoveCardsMessage : BaseMessage, IRemoveCardsMessage
 {
-    public IReadOnlyList<FullLocationReference> Locations { get; }
+    public IReadOnlyList<IFullLocationReference> Locations => _locations;
 
+    private readonly List<FullLocationReference> _locations;
+    
     public RemoveCardsMessage(List<FullLocationReference> locations)
     {
-        Locations = locations;
+        _locations = locations;
     }
 
     public override string ToString()

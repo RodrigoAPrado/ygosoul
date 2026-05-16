@@ -1,8 +1,9 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class PayLpCostMessage : BaseMessage
+public class PayLpCostMessage : BaseMessage, IPayLpCostMessage
 {
     public byte Player { get; }
     public uint Cost { get; }

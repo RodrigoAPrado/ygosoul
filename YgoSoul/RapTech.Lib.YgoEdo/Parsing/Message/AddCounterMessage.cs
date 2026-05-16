@@ -10,9 +10,9 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
 public class AddCounterMessage : BaseMessage, IAddCounterMessage
 {
-    public CounterType CounterType => _internalCounterType.ToCardCounterType();
+    public CounterType CounterType { get; }
     public byte Player { get; }
-    public Location Location => _internalLocation.ToLocation();
+    public Location Location { get; }
     public byte Sequence { get; }
     public ushort Count { get; }
     private readonly OCG_CounterType _internalCounterType;
@@ -25,6 +25,8 @@ public class AddCounterMessage : BaseMessage, IAddCounterMessage
         _internalLocation = location;
         Sequence = sequence;
         Count = count;
+        CounterType = _internalCounterType.ToCardCounterType();
+        Location = _internalLocation.ToLocation();
     }
 
     public override string ToString()

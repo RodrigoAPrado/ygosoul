@@ -1,18 +1,21 @@
 ﻿using System.Text;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class RandomSelectedMessage : BaseMessage
+public class RandomSelectedMessage : BaseMessage, IRandomSelectedMessage
 {
     public byte Player { get; }
-    public IReadOnlyList<FullLocationReference> Location { get; }
+    public IReadOnlyList<IFullLocationReference> Locations => _locations;
+    private readonly List<FullLocationReference> _locations;
 
-    public RandomSelectedMessage(byte player, IReadOnlyList<FullLocationReference> location)
+    public RandomSelectedMessage(byte player, List<FullLocationReference> location)
     {
         Player = player;
-        Location = location;
+        _locations = location;
     }
 
     public override string ToString()
@@ -20,7 +23,7 @@ public class RandomSelectedMessage : BaseMessage
         var sb = new StringBuilder();
         sb.AppendLine($"RandomSelected=[\nPlayer={Player},Locations=[");
 
-        foreach (var location in Location)
+        foreach (var location in _locations)
         {
             sb.AppendLine($"[{location}],");
         }

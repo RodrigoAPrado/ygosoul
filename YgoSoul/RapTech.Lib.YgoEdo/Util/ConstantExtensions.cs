@@ -10,6 +10,16 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 public static class ConstantExtensions
 {
+    public static PlayerHint ToPlayerHint(this OCG_PlayerHint value)
+    {
+        return (PlayerHint)(uint)value;
+    }
+    
+    public static DuelPhase ToDuelPhase(this OCG_GamePhases value)
+    {
+        return (DuelPhase)(uint)value;
+    }
+    
     public static OCG_DuelFlags FromDuelMode(this DuelMode value)
     {
         switch (value)
@@ -601,5 +611,10 @@ public static class ConstantExtensions
     public static SystemStrings ToSystemStrings(this OCG_GameStrings value)
     {
         return (SystemStrings)(ulong)value;
+    }
+
+    public static SystemReason ToSystemReason(this OCG_Reason value)
+    {
+        return (SystemReason)(uint)value;
     }
 }
