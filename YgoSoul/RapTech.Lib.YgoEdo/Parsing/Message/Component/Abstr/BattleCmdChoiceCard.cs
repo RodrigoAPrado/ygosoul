@@ -7,9 +7,8 @@ public abstract class BattleCmdChoiceCard : BattleCmdChoice
 {
     public uint CardCode { get; }
     public byte Controller { get; }
-    public OCG_CardLocation Location { get; }
     public uint Sequence { get; }
-    
+    protected readonly OCG_CardLocation _location;
     
     protected BattleCmdChoiceCard(
         PlayerBattleAction action, 
@@ -22,7 +21,7 @@ public abstract class BattleCmdChoiceCard : BattleCmdChoice
     {
         CardCode = cardCode;
         Controller = controller;
-        Location = location;
+        _location = location;
         Sequence = sequence;
     }
 }

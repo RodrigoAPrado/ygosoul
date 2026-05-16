@@ -1,4 +1,5 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
+using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
@@ -14,7 +15,7 @@ public class SelectCounterParser : BaseParser
         var reader = new PacketReader(buffer);
         reader.ReadByte();//msg
         var player = reader.ReadByte();
-        var counterType = reader.ReadUInt16();
+        var counterType = (OCG_CounterType) reader.ReadUInt16();
         var counterAmount = reader.ReadUInt16();
         var count = reader.ReadUInt32();
         var cards = new List<CardReference>();

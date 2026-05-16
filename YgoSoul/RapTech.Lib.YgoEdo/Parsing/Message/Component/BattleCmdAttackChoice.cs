@@ -1,12 +1,16 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Flag;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component.Command;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
-public class BattleCmdAttackChoice : BattleCmdChoiceCard
+public class BattleCmdAttackChoice : BattleCmdChoiceCard, IBattleAttack
 {
+    public Location Location { get; }
     public bool DirectAttack { get; }
 
     public BattleCmdAttackChoice(
@@ -20,6 +24,7 @@ public class BattleCmdAttackChoice : BattleCmdChoiceCard
         : base(action, index, cardCode, controller, location, sequence)
     {
         DirectAttack = directAttack;
+        Location = _location.ToLocation();
     }
 
     public override string ToString()

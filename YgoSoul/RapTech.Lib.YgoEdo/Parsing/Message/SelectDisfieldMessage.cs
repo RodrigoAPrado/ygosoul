@@ -1,4 +1,6 @@
 ﻿using System.Text;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
@@ -6,20 +8,21 @@ using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class SelectDisfieldMessage : IOcgMessage
+public class SelectDisfieldMessage : ISelectionOcgMessage, ISelectDisfieldMessage
 {
     public InputType Input => InputType.Value;
-    public int InputCount => Choices.Count;
-
+    public int InputCount => _choices.Count;
     public byte Player { get; }
     public uint Amount { get; }
-    public IReadOnlyList<OCG_Zone> Choices { get; }
+    public IReadOnlyList<FieldZones> Choices { get; }
+    private readonly List<OCG_Zone> _choices;
 
     public SelectDisfieldMessage(byte player, uint amount, List<OCG_Zone> choices)
     {
         Player = player;
         Amount = amount;
-        Choices = choices;
+        _choices = choices;
+        Choices = _choices.Select(x => x.ToFieldZone()).ToList().AsReadOnly();
     }
     
     public byte[] GetResponse(List<int> input)
@@ -29,10 +32,10 @@ public class SelectDisfieldMessage : IOcgMessage
         
         var id = input[0];
         
-        if (id < 0 || id >= Choices.Count)
+        if (id < 0 || id >= _choices.Count)
             return [];
 
-        var zone = Choices[id];
+        var zone = _choices[id];
         if (!ZoneUtils.ZoneLocation.ContainsKey(zone)
             || !ZoneUtils.ZoneIndexInput.ContainsKey(zone))
             return [];
@@ -53,11 +56,17 @@ public class SelectDisfieldMessage : IOcgMessage
         var sb = new StringBuilder();
         sb.AppendLine($"Player {Player}, you need to select {Amount} places.");
         sb.AppendLine("Please input your action:");
-        for (int i = 0; i < Choices.Count; i++)
+        for (int i = 0; i < _choices.Count; i++)
         {
-            sb.AppendLine($"{i} -> Place card on {Choices[i]}");
+            sb.AppendLine($"{i} -> Place card on {_choices[i]}");
         }
 
         return sb.ToString();
+    }
+
+    public bool CanCancel => false;
+    public byte[] Cancel()
+    {
+        return [];
     }
 }

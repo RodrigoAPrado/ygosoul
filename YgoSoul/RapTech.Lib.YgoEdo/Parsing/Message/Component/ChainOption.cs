@@ -1,21 +1,33 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
+using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Handler;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
-public class ChainOption
+public class ChainOption : IChainOption
 {
-    public uint Code { get; set; }
-    public byte Controller { get; set; }
-    public OCG_CardLocation Location { get; set; }
-    public uint Sequence { get; set; }
-    public OCG_CardPosition Position { get; set; }
-    public ulong Description { get; set; }
+    public uint Code { get; }
+    public string Description { get; }
+    public IFullLocationReference LocationReference => _locationReference;
+    private readonly FullLocationReference _locationReference;
+    private readonly ulong _description;
 
+    public ChainOption(uint code, FullLocationReference locationReference, ulong description)
+    {
+        Code = code;
+        _locationReference = locationReference;
+        _description = description;
+        Description = DescriptionHandler.GetDescription(_description);
+    }
+    
     public override string ToString()
     {
-        return $"Card={CardLibrary.InternalGetCard(Code).Name}, Ctrl={Controller}, Loc={Location}, Seq={Sequence}, SubSeq={Position}. " +
-               $"\nDesc={DescriptionHandler.GetDescription(Description)}";
+        return $"Card={CardLibrary.InternalGetCard(Code).Name}, " +
+               $"Ctrl={_locationReference.Controller}, " +
+               $"Loc={_locationReference.Location}, " +
+               $"Seq={_locationReference.Sequence}, " +
+               $"SubSeq={_locationReference.Position}. " +
+               $"\nDesc={DescriptionHandler.GetDescription(_description)}";
     }
 }

@@ -1,22 +1,25 @@
 ﻿using System.Text;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Abstr;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class SelectBattleCmdMessage : IOcgMessage
+public class SelectBattleCmdMessage : IOcgMessage, ISelectBattleCommandMessage
 {
     public InputType Input => InputType.Value;
-    public int InputCount => Choices.Count;
+    public int InputCount => _choices.Count;
 
     public byte Player { get; }
-    public IReadOnlyList<BattleCmdChoice> Choices { get; }
+    public IReadOnlyList<IBattleCommand> Choices => _choices;
+    private readonly List<BattleCmdChoice> _choices;
 
     public SelectBattleCmdMessage(byte player, List<BattleCmdChoice> choices)
     {
         Player = player;
-        Choices = choices;
+        _choices = choices;
     }
     
     public byte[] GetResponse(List<int> input)
@@ -26,10 +29,10 @@ public class SelectBattleCmdMessage : IOcgMessage
         
         var id = input[0];
         
-        if (id >= Choices.Count)
+        if (id >= _choices.Count)
             return [];
 
-        var choice = Choices[id];
+        var choice = _choices[id];
 
         uint value = (choice.Index << 16) | (uint)choice.Action;
 
@@ -40,9 +43,9 @@ public class SelectBattleCmdMessage : IOcgMessage
     {
         var sb = new StringBuilder();
         sb.AppendLine($"Player {Player}, input your action:");
-        for (int i = 0; i < Choices.Count; i++)
+        for (int i = 0; i < _choices.Count; i++)
         {
-            sb.AppendLine($"[{i}] => {Choices[i]}");
+            sb.AppendLine($"[{i}] => {_choices[i]}");
         }
         return sb.ToString();
     }

@@ -1,40 +1,48 @@
 ﻿using System.Text;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Base;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
+using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class SelectCounterMessage : ISelectionOcgMessage
+public class SelectCounterMessage : ISelectionOcgMessage, ISelectCounterMessage
 {
     public InputType Input => InputType.Sort;
-    public int InputCount => Cards.Count;
+    public int InputCount => _cards.Count;
     public bool CanCancel => false;
     public byte Player { get; }
-    public ushort CounterType { get; }
+    public CounterType CounterType { get; }
     public ushort CounterAmount { get; }
-    public IReadOnlyList<CardReference> Cards { get; }
+    public IReadOnlyList<ICardReference> Cards => _cards;
+    private readonly OCG_CounterType _counterType;
+    private readonly List<CardReference> _cards;
 
-    public SelectCounterMessage(byte player, ushort counterType, ushort counterAmount, IReadOnlyList<CardReference> cards)
+    public SelectCounterMessage(byte player, OCG_CounterType counterType, ushort counterAmount, List<CardReference> cards)
     {
         Player = player;
-        CounterType = counterType;
+        _counterType = counterType;
         CounterAmount = counterAmount;
-        Cards = cards;
+        _cards = cards;
+        CounterType = _counterType.ToCounterType();
     }
     
     public byte[] GetResponse(List<int> ids)
     {
-        if (ids.Count != Cards.Count)
+        if (ids.Count != _cards.Count)
             return [];
         var response = new byte[ids.Count*2];
         var offset = 0;
         
         for (var i = 0; i < ids.Count; i++)
         {
-            if (ids[i] > Cards[i].CounterAmount)
+            if (ids[i] > _cards[i].CounterAmount)
                 return [];
             
             BitConverter.GetBytes((ushort)ids[i]).CopyTo(response, offset);
@@ -53,7 +61,7 @@ public class SelectCounterMessage : ISelectionOcgMessage
     {
         var sb = new StringBuilder();
         sb.AppendLine($"Selec counter from cards, you need {(OCG_CounterType)CounterAmount} counters.");
-        foreach (var c in Cards)
+        foreach (var c in _cards)
         {
             sb.AppendLine($"{CardLibrary.InternalGetCard(c.CardCode).Name} has {c.CounterAmount} counters...");
         }

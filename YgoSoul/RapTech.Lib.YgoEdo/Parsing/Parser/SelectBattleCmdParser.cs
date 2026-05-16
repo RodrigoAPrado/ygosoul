@@ -50,10 +50,10 @@ public class SelectBattleCmdParser : BaseParser
 
         var toMainPhase2 = reader.ReadByte() == 1;
         if(toMainPhase2)
-            choices.Add(new BattleCmdOtherChoice(PlayerBattleAction.GoToMainPhase2, 0));
+            choices.Add(new BattleCmdToMain2Choice(PlayerBattleAction.GoToMainPhase2, 0));
         var toEndPhase = reader.ReadByte() == 1;
         if(toEndPhase)
-            choices.Add(new BattleCmdOtherChoice(PlayerBattleAction.GoToEndPhase, 0));
+            choices.Add(new BattleCmdToEndPhaseChoice(PlayerBattleAction.GoToEndPhase, 0));
 
         return new SelectBattleCmdMessage(player, choices);
     }

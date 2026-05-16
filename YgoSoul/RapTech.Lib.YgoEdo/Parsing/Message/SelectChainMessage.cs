@@ -1,48 +1,61 @@
 ﻿using System.Text;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Base;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Handler;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
+using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class SelectChainMessage : BaseMessage
+public class SelectChainMessage : ISelectionOcgMessage, ISelectChainMessage
 {
-    public override InputType Input => InputType.SelectChain;
+    public int InputCount => _effects.Count;
+    public InputType Input => InputType.SelectChain;
     public byte Player { get; }
-    public bool Cancelable { get; }
     public bool Forced { get; }
-    public uint TimingMask { get; }
-    public uint TimingOtherMask { get; }
-    public IReadOnlyList<ChainOption> Effects { get; }
 
+    public bool CanCancel { get; }
+    public IReadOnlyList<IChainOption> Effects => _effects;
+    public IReadOnlyList<HintTiming> Timing { get; }
+    public IReadOnlyList<HintTiming> TimingOther { get; }
+    
+    private readonly List<ChainOption> _effects;
+    private readonly List<OCG_HintTiming> _timing;
+    private readonly List<OCG_HintTiming> _timingOther;
+    
+    
     public SelectChainMessage(
         byte player, 
         bool cancelable, 
-        bool forced, 
-        uint timingMask, 
-        uint timingOtherMask, 
-        IReadOnlyList<ChainOption> effects
-    )
+        bool forced,
+        List<ChainOption> effects,
+        List<OCG_HintTiming> timing,
+        List<OCG_HintTiming> timingOther
+        )
     {
         Player = player;
-        Cancelable = cancelable;
+        CanCancel = cancelable;
         Forced = forced;
-        TimingMask = timingMask;
-        TimingOtherMask = timingOtherMask;
-        Effects = effects;
+        _effects = effects;
+        _timing = timing;
+        _timingOther = timingOther;
+        Timing = _timing.Select(x => x.ToHintTiming()).ToList().AsReadOnly();
+        TimingOther = _timingOther.Select(x => x.ToHintTiming()).ToList().AsReadOnly();
     }
 
-    public override byte[] GetResponse(List<int> input)
+    public byte[] GetResponse(List<int> input)
     {
         if (input.Count != 1)
             return [];
         
         var id = input[0];
         
-        if (id < 0 || id >= Effects.Count)
+        if (id < 0 || id >= _effects.Count)
             return [];
         return BitConverter.GetBytes(id);
     }
@@ -52,40 +65,25 @@ public class SelectChainMessage : BaseMessage
         var sb = new StringBuilder();
 
         sb.AppendLine(
-            $"Player {Player}, {Effects.Count} effect(s) available. " +
-            $"Cancelable: {Cancelable}, Forced: {Forced}."
+            $"Player {Player}, {_effects.Count} effect(s) available. " +
+            $"Cancelable: {CanCancel}, Forced: {Forced}."
         );
 
-        var timingList = new List<OCG_HintTiming>();
-        var timingOtherList = new List<OCG_HintTiming>();
-        
-        foreach (OCG_HintTiming hintTiming in System.Enum.GetValues(typeof(OCG_HintTiming)))
-        {
-            if (((uint)hintTiming & TimingMask) != 0)
-            {
-                timingList.Add(hintTiming);
-            }
-            if (((uint)hintTiming & TimingOtherMask) != 0)
-            {
-                timingOtherList.Add(hintTiming);
-            }
-        }
-
         sb.AppendLine($"For player {Player}, the timing(s) is(are):");
-        foreach (var t in timingList)
+        foreach (var t in _timing)
         {
             sb.Append($"{t},");
         }
 
         sb.AppendLine();
         sb.AppendLine($"For player {1-Player}, the timing(s) is(are):");
-        foreach (var t in timingOtherList)
+        foreach (var t in _timingOther)
         {
             sb.Append($"{t},");
         }
 
         sb.AppendLine();
-        if (Effects.Count == 0)
+        if (_effects.Count == 0)
         {
             sb.AppendLine("There is nothing to be activated...");
             return sb.ToString();
@@ -93,16 +91,20 @@ public class SelectChainMessage : BaseMessage
 
         sb.AppendLine("Available chain options:");
 
-        for (int i = 0; i < Effects.Count; i++)
+        for (int i = 0; i < _effects.Count; i++)
         {
-            var e = Effects[i];
-            var description = DescriptionHandler.GetDescription(e.Description);
+            var e = _effects[i];
+            var description = e.Description;
             sb.AppendLine(
-                $"[{i}] => {CardLibrary.InternalGetCard(e.Code).Name}'s effect, Controller={e.Controller}, " +
-                $"Location={e.Location}, Seq={e.Sequence}, Desc={description}"
+                $"[{i}] => {CardLibrary.InternalGetCard(e.Code).Name}'s effect, Controller={e.LocationReference.Controller}, " +
+                $"Location={e.LocationReference.Location}, Seq={e.LocationReference.Sequence}, Desc={description}"
             );
         }
 
         return sb.ToString();
+    }
+    public byte[] Cancel()
+    {
+        return CanCancel && !Forced ? BitConverter.GetBytes(-1) : [];
     }
 }

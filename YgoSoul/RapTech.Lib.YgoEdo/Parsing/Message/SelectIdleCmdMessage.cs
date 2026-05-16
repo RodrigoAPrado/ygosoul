@@ -5,7 +5,7 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Abstr;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class SelectIdleCmdMessage : IOcgMessage
+public class SelectIdleCmdMessage : ISelectionOcgMessage
 {
     public InputType Input => InputType.Value;
     public int InputCount => Choices.Count;
@@ -45,5 +45,11 @@ public class SelectIdleCmdMessage : IOcgMessage
             sb.AppendLine($"[{i}] => {Choices[i]}");
         }
         return sb.ToString();
+    }
+
+    public bool CanCancel => false;
+    public byte[] Cancel()
+    {
+        return [];
     }
 }

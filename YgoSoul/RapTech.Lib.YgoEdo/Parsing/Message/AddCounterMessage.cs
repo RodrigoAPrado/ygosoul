@@ -25,7 +25,7 @@ public class AddCounterMessage : BaseMessage, IAddCounterMessage
         _internalLocation = location;
         Sequence = sequence;
         Count = count;
-        CounterType = _internalCounterType.ToCardCounterType();
+        CounterType = _internalCounterType.ToCounterType();
         Location = _internalLocation.ToLocation();
     }
 

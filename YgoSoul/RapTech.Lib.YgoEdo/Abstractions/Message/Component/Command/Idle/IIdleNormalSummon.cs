@@ -1,0 +1,11 @@
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Flag;
+
+namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component.Command.Idle;
+
+public interface IIdleNormalSummon : IIdleCommand
+{
+    uint CardCode { get; }
+    byte Controller { get; }
+    uint Sequence { get; }
+    Location Location { get; }
+}

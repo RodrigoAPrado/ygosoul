@@ -19,9 +19,24 @@ public class SelectChainParser : BaseParser
         byte cancelable = reader.ReadByte();
         byte forced = reader.ReadByte();
 
-        uint hintTiming = reader.ReadUInt32();
-        uint hintTimingOther = reader.ReadUInt32();
+        uint timingMask = reader.ReadUInt32();
+        uint timingOtherMask = reader.ReadUInt32();
         var count = reader.ReadUInt32();
+
+        var timingList = new List<OCG_HintTiming>();
+        var timingOtherList = new List<OCG_HintTiming>();
+        
+        foreach (OCG_HintTiming hintTiming in System.Enum.GetValues(typeof(OCG_HintTiming)))
+        {
+            if (((uint)hintTiming & timingMask) != 0)
+            {
+                timingList.Add(hintTiming);
+            }
+            if (((uint)hintTiming & timingOtherMask) != 0)
+            {
+                timingOtherList.Add(hintTiming);
+            }
+        }
 
         var chains = new List<ChainOption>();
 
@@ -35,24 +50,16 @@ public class SelectChainParser : BaseParser
             var description = reader.ReadULong64();
             reader.Skip(1); // client mode
 
-            chains.Add(new ChainOption
-            {
-                Code = code,
-                Controller = controller,
-                Location = location,
-                Sequence = sequence,
-                Position = position,
-                Description = description
-            });
+            chains.Add(new ChainOption(code, new FullLocationReference(controller, location, sequence, position), description));
         }
         
         return new SelectChainMessage(
             playerId,
             cancelable != 0,
             forced != 0,
-            hintTiming,
-            hintTimingOther,
-            chains
+            chains,
+            timingList,
+            timingOtherList
         );
     }
 }

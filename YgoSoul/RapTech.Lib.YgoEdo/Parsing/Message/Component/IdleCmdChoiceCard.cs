@@ -6,25 +6,25 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Abstr;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
-public class IdleCmdChoiceCard : IIdleCmdChoice
+public abstract class IdleCmdChoiceCard : IIdleCmdChoice
 {
     public PlayerIdleAction Action { get; }
-    public byte Player { get; }
+    public byte Controller { get; }
     public uint Index { get; }
     public uint Sequence { get; }
-    public OCG_CardLocation Location { get; }
     public uint CardCode { get; }
-    public ulong Description { get; }
+    protected ulong _description { get; }
+    protected OCG_CardLocation _location { get; }
 
     public IdleCmdChoiceCard(PlayerIdleAction playerIdleAction, uint cardCode, byte player, OCG_CardLocation location, uint sequence, uint index, ulong description)
     {
         Action = playerIdleAction;
-        Player = player;
+        Controller = player;
         Sequence = sequence;
-        Location = location;
+        _location = location;
         CardCode = cardCode;
         Index = index;
-        Description = description;
+        _description = description;
     }
 
     public override string ToString()
@@ -32,9 +32,9 @@ public class IdleCmdChoiceCard : IIdleCmdChoice
         var description = "";
         if (Action == PlayerIdleAction.EffectActivation)
         {
-            description = $", Description={DescriptionHandler.GetDescription(Description)}";
+            description = $", Description={DescriptionHandler.GetDescription(_description)}";
         }
             
-        return $"to {Action.ToString()} {CardLibrary.InternalGetCard(CardCode).Name}, Location={Location.ToString()}, Sequence={Sequence}, Index={Index}{description}...";
+        return $"to {Action.ToString()} {CardLibrary.InternalGetCard(CardCode).Name}, Location={_location.ToString()}, Sequence={Sequence}, Index={Index}{description}...";
     }
 }

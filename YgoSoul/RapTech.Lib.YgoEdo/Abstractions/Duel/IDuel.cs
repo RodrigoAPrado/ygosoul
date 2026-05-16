@@ -74,6 +74,8 @@ public interface IDuel
     bool ProceedDuel();
     
     bool SetResponse(List<int> playerInput);
+
+    bool SetCancel();
     
     bool NextMessage();
 }

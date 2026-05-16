@@ -10,6 +10,11 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 public static class ConstantExtensions
 {
+    public static HintTiming ToHintTiming(this OCG_HintTiming value)
+    {
+        return (HintTiming)(uint)value;
+    }
+    
     public static PlayerHint ToPlayerHint(this OCG_PlayerHint value)
     {
         return (PlayerHint)(uint)value;
@@ -287,7 +292,7 @@ public static class ConstantExtensions
         }
     }
     
-    public static CounterType ToCardCounterType(this OCG_CounterType value)
+    public static CounterType ToCounterType(this OCG_CounterType value)
     {
         switch (value)
         {

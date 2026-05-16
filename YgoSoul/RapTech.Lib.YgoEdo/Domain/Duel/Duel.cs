@@ -184,6 +184,31 @@ public class Duel : IDuel, IDisposable
         return true;
     }
 
+    public bool SetCancel()
+    {
+        if (_state != DuelState.WaitingInput)
+        {
+            Console.WriteLine($"Current state is: {_state}.");
+            return false;
+        }
+        
+        if (_messages.Count == 0)
+            return false;
+        
+        var currentMessage = _messages[CurrentMessageIndex];
+
+        if (currentMessage is not ISelectionOcgMessage { CanCancel: true } selectionOcgMessage) 
+            return false;
+        
+        var response = selectionOcgMessage.Cancel();
+        
+        OCG_Api.Run.OCG_DuelSetResponse(_pDuel, response, (uint) response.Length);
+        
+        _state = DuelState.DuelReady;
+        
+        return true;
+    }
+
     public bool NextMessage()
     {
         if (_messages.Count == 0)

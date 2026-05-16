@@ -3,16 +3,16 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Abstr;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
-public class IdleCmdChoiceOther : IIdleCmdChoice
+public abstract class IdleCmdChoiceOther : IIdleCmdChoice
 {
     public PlayerIdleAction Action { get; }
-    public byte Player { get; }
+    public byte Controller { get; }
     public uint Index => 0;
 
     public IdleCmdChoiceOther(PlayerIdleAction playerIdleAction, byte player)
     {
         Action = playerIdleAction;
-        Player = player;
+        Controller = player;
     }
 
     public override string ToString()

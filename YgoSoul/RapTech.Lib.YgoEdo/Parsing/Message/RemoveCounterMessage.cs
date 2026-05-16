@@ -25,7 +25,7 @@ public class RemoveCounterMessage : BaseMessage, IRemoveCounterMessage
         _location = location;
         Sequence = sequence;
         Count = count;
-        CounterType = _counterType.ToCardCounterType();
+        CounterType = _counterType.ToCounterType();
         Location = _location.ToLocation();
     }
 
