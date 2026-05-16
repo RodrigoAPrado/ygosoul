@@ -1,21 +1,26 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class EquipMessage : BaseMessage
+public class EquipMessage : BaseMessage, IEquipMessage
 {
-    public FullLocationReference Equipment { get; }
-    public FullLocationReference Target { get; }
+    public IFullLocationReference Equipment => _equipment;
+    public IFullLocationReference Target => _target;
+    
+    private readonly FullLocationReference _equipment;
+    private readonly FullLocationReference _target;
 
     public EquipMessage(FullLocationReference equipment, FullLocationReference target)
     {
-        Equipment = equipment;
-        Target = target;
+        _equipment = equipment;
+        _target = target;
     }
 
     public override string ToString()
     {
-        return $"Equip, Equipment={Equipment}, Target={Target}";
+        return $"Equip, Equipment={_equipment}, Target={_target}";
     }
 }

@@ -1,20 +1,24 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class HintRaceMessage : BaseMessage
+public class HintRaceMessage : BaseMessage, IHintRaceMessage
 {
     public byte Player { get; }
-    public OCG_MonsterRaces Race { get; }
+    public MonsterType MonsterType => _race.ToMonsterType();
+    private readonly OCG_MonsterRaces _race;
     public HintRaceMessage(byte player, OCG_MonsterRaces race)
     {
         Player = player;
-        Race = race;
+        _race = race;
     }
 
     public override string ToString()
     {
-        return $"Hint: Player={Player}, Race={Race}";
+        return $"Hint: Player={Player}, Race={_race}";
     }
 }

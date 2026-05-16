@@ -40,8 +40,6 @@ public class BasicParser : BaseParser
                         (OCG_CardPosition)reader.ReadUInt32()), 
                     0
                 ));
-            case OCG_GameMessage.FieldDisabled:
-                return new FieldDisabledMessage(reader.ReadUInt32());
             case OCG_GameMessage.Summoned:
                 return new SummonedMessage();
             case OCG_GameMessage.SpSummoned:

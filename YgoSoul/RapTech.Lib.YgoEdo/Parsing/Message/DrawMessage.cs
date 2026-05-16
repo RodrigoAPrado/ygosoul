@@ -1,24 +1,27 @@
 ﻿using System.Text;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class DrawMessage : BaseMessage
+public class DrawMessage : BaseMessage, IDrawMessage
 {
     public uint Player { get; }
-    public List<DrawnCard> Cards { get; }
+    public IReadOnlyList<IDrawnCard> Cards => _cards;
+    private readonly List<DrawnCard> _cards;
     public DrawMessage(uint player, List<DrawnCard> cards)
     {
         Player = player;
-        Cards = cards;
+        _cards = cards;
     }
 
     public override string ToString()
     {
         var sb = new StringBuilder();
         sb.AppendLine($"Player {Player} drew the following cards:");
-        foreach (var card in Cards)
+        foreach (var card in _cards)
         {
             sb.AppendLine($"- {card.ToString()}");
         }

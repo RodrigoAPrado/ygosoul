@@ -1,6 +1,6 @@
-﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Enum;
+﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Enum;
 
-public enum PlayerIdleAction : uint
+public enum PlayerIdleAction
 {
     NormalSummon = 0,
     SpecialSummon = 1,

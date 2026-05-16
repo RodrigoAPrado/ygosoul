@@ -47,7 +47,7 @@ public class CardData : ICardData
     private CardAttribute SetupCardIcon()
     {
         if (Data.attribute != 0)
-            return ((OCG_MonsterAttributes)Data.attribute).ToCardIcon();
+            return ((OCG_MonsterAttributes)Data.attribute).ToCardAttribute();
         return Frame == Frame.Spell ? CardAttribute.Spell : CardAttribute.Trap;
     }
 

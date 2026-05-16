@@ -2,6 +2,7 @@
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Flag;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 
@@ -30,7 +31,7 @@ public static class ConstantExtensions
         }
     }
     
-    public static CardAttribute ToCardIcon(this OCG_MonsterAttributes value)
+    public static CardAttribute ToCardAttribute(this OCG_MonsterAttributes value)
     {
         switch (value)
         {
@@ -496,5 +497,109 @@ public static class ConstantExtensions
     public static DuelCardHint ToDuelCardHint(this OCG_CardHint value)
     {
         return (DuelCardHint)(int)value;
+    }
+    
+    public static FieldZones ToFieldZone(this OCG_Zone value)
+    {
+        switch (value)
+        {
+            case OCG_Zone.Monster0:
+                return FieldZones.Monster0;
+
+            case OCG_Zone.Monster1:
+                return FieldZones.Monster1;
+
+            case OCG_Zone.Monster2:
+                return FieldZones.Monster2;
+
+            case OCG_Zone.Monster3:
+                return FieldZones.Monster3;
+
+            case OCG_Zone.Monster4:
+                return FieldZones.Monster4;
+
+            case OCG_Zone.ExtraMonsterZone0:
+                return FieldZones.ExtraMonsterZone0;
+
+            case OCG_Zone.ExtraMonsterZone1:
+                return FieldZones.ExtraMonsterZone1;
+
+            case OCG_Zone.SpellTrap0:
+                return FieldZones.SpellTrap0;
+
+            case OCG_Zone.SpellTrap1:
+                return FieldZones.SpellTrap1;
+
+            case OCG_Zone.SpellTrap2:
+                return FieldZones.SpellTrap2;
+
+            case OCG_Zone.SpellTrap3:
+                return FieldZones.SpellTrap3;
+
+            case OCG_Zone.SpellTrap4:
+                return FieldZones.SpellTrap4;
+
+            case OCG_Zone.FieldZone:
+                return FieldZones.FieldZone;
+
+            case OCG_Zone.Pendulum0:
+                return FieldZones.Pendulum0;
+
+            case OCG_Zone.Pendulum1:
+                return FieldZones.Pendulum1;
+
+            case OCG_Zone.OpponentMonster0:
+                return FieldZones.OpponentMonster0;
+
+            case OCG_Zone.OpponentMonster1:
+                return FieldZones.OpponentMonster1;
+
+            case OCG_Zone.OpponentMonster2:
+                return FieldZones.OpponentMonster2;
+
+            case OCG_Zone.OpponentMonster3:
+                return FieldZones.OpponentMonster3;
+
+            case OCG_Zone.OpponentMonster4:
+                return FieldZones.OpponentMonster4;
+
+            case OCG_Zone.OpponentExtraMonsterZone0:
+                return FieldZones.OpponentExtraMonsterZone0;
+
+            case OCG_Zone.OpponentExtraMonsterZone1:
+                return FieldZones.OpponentExtraMonsterZone1;
+
+            case OCG_Zone.OpponentSpellTrap0:
+                return FieldZones.OpponentSpellTrap0;
+
+            case OCG_Zone.OpponentSpellTrap1:
+                return FieldZones.OpponentSpellTrap1;
+
+            case OCG_Zone.OpponentSpellTrap2:
+                return FieldZones.OpponentSpellTrap2;
+
+            case OCG_Zone.OpponentSpellTrap3:
+                return FieldZones.OpponentSpellTrap3;
+
+            case OCG_Zone.OpponentSpellTrap4:
+                return FieldZones.OpponentSpellTrap4;
+
+            case OCG_Zone.OpponentFieldZone:
+                return FieldZones.OpponentFieldZone;
+
+            case OCG_Zone.OpponentPendulum0:
+                return FieldZones.OpponentPendulum0;
+
+            case OCG_Zone.OpponentPendulum1:
+                return FieldZones.OpponentPendulum1;
+
+            default:
+                throw new ArgumentOutOfRangeException(nameof(value), value, null);
+        }
+    }
+
+    public static SystemStrings ToSystemStrings(this OCG_GameStrings value)
+    {
+        return (SystemStrings)(ulong)value;
     }
 }

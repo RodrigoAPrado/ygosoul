@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
@@ -11,7 +12,6 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
-using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Query;
 
@@ -61,7 +61,7 @@ public class OldDuelRunner
             enableUnsafeLibraries = 0
         };
 
-        _parsers = MessageParserFactory.CreateParsers();
+        _parsers = MessageParserRegistry.RegisterParsers();
 
         // 4. Criação do Duelo
         IntPtr pDuel;

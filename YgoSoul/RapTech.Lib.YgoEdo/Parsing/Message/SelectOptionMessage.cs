@@ -1,7 +1,7 @@
 ﻿using System.Text;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Handler;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
-using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Enum;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 

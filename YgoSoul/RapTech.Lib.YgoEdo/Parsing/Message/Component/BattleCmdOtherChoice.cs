@@ -1,5 +1,5 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Abstr;
-using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Enum;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Abstr;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 

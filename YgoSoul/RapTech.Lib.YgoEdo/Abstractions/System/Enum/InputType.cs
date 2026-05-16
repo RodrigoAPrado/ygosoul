@@ -1,4 +1,4 @@
-﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Enum;
+﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 
 public enum InputType
 {

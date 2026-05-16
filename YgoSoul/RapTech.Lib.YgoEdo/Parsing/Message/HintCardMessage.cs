@@ -1,9 +1,10 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class HintCardMessage : BaseHintMessage
+public class HintCardMessage : BaseHintMessage, IHintCardMessage
 {
     public byte Player { get; }
     public uint CardCode { get; }

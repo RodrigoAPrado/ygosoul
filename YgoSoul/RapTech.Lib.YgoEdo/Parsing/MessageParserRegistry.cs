@@ -4,9 +4,9 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing;
 
-public static class MessageParserFactory
+public static class MessageParserRegistry
 {
-    public static Dictionary<OCG_GameMessage, IParser> CreateParsers()
+    public static Dictionary<OCG_GameMessage, IParser> RegisterParsers()
     {
         var unknownParser = new UnknownParser();
         var basicParser = new BasicParser();
@@ -59,7 +59,7 @@ public static class MessageParserFactory
             { OCG_GameMessage.PosChange, basicParser },
             { OCG_GameMessage.Set, summoningParser },
             { OCG_GameMessage.Swap, basicParser },
-            { OCG_GameMessage.FieldDisabled, basicParser },
+            { OCG_GameMessage.FieldDisabled, new FieldDisabledParser() },
             { OCG_GameMessage.Summoning, summoningParser },
             { OCG_GameMessage.Summoned, basicParser },
             { OCG_GameMessage.SpSummoning, summoningParser },

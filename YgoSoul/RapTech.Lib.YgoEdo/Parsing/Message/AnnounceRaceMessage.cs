@@ -1,9 +1,9 @@
 ﻿using System.Text;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
-using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;

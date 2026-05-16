@@ -24,7 +24,7 @@ public static class YgoEdo
         CardDatabase.Init(_dataPath + "cards.cdb");
         CardDatabase.LoadCards();
         CardLibrary.CreateInstance();
-        _manager = new DuelManager(CardLibrary.Instance, MessageParserFactory.CreateParsers());
+        _manager = new DuelManager(CardLibrary.Instance, MessageParserRegistry.RegisterParsers());
         _initialized = true;
         return _manager;
     }

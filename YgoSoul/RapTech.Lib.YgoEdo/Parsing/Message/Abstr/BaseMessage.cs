@@ -1,4 +1,4 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Enum;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
