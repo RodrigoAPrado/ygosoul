@@ -1,9 +1,10 @@
 ﻿using System.Text;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component.Command.Base;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
-using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Command.Base;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 

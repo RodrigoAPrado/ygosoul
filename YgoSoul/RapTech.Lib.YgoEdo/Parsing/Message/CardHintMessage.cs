@@ -2,7 +2,6 @@
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
-using YgoSoul.RapTech.Lib.YgoEdo.Handler;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
@@ -25,11 +24,11 @@ public class CardHintMessage : BaseMessage, ICardHintMessage
         _cardHint = cardHint;
         _description = description;
         CardHint = _cardHint.ToDuelCardHint();
-        Description = DescriptionHandler.GetDescription(_description, _cardHint);
+        Description = DescriptionUtil.GetDescription(_description, _cardHint);
     }
 
     public override string ToString()
     {
-        return $"{_locationReference}. Hint={_cardHint}, Description={DescriptionHandler.GetDescription(_description, _cardHint)}, DescriptionDex={_description:x16}";
+        return $"{_locationReference}. Hint={_cardHint}, Description={DescriptionUtil.GetDescription(_description, _cardHint)}, DescriptionDex={_description:x16}";
     }
 }

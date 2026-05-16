@@ -1,7 +1,6 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
-using YgoSoul.RapTech.Lib.YgoEdo.Handler;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
@@ -21,11 +20,11 @@ public class PlayerHintMessage : BaseMessage, IPlayerHintMessage
         _hint = hint;
         _description = description;
         Hint = hint.ToPlayerHint();
-        Description = DescriptionHandler.GetDescription(_description);
+        Description = DescriptionUtil.GetDescription(_description);
     }
 
     public override string ToString()
     {
-        return $"Player={Player}, Hint={_hint}, Description={DescriptionHandler.GetDescription(_description)}";
+        return $"Player={Player}, Hint={_hint}, Description={DescriptionUtil.GetDescription(_description)}";
     }
 }

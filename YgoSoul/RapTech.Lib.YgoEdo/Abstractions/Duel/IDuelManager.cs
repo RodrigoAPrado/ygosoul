@@ -22,7 +22,7 @@ public interface IDuelManager
     /// If there is already an ongoing OcgDuel, it does nothing.
     /// </summary>
     /// <returns>True if created, false otherwise.</returns>
-    bool CreateOcgDuel();
+    bool CreateDuel();
     
     /// <summary>
     /// Disposes of the Current Duel.

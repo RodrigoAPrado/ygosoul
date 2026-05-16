@@ -1,7 +1,7 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
-using YgoSoul.RapTech.Lib.YgoEdo.Handler;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
+using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Query.Component;
 
@@ -38,7 +38,7 @@ public class FieldQueryChain
                $"TriggerController={TriggerController}, " +
                $"TriggerLocation={TriggerLocation}, " +
                $"TriggerSequence={TriggerSequence}], " +
-               $"Description={DescriptionHandler.GetDescription(Description)}," +
+               $"Description={DescriptionUtil.GetDescription(Description)}," +
                $"DescriptionHex={Description:x16}]";
     }
 }

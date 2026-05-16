@@ -5,7 +5,6 @@ using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
-using YgoSoul.RapTech.Lib.YgoEdo.Handler;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
@@ -27,7 +26,6 @@ public class SelectChainMessage : ISelectionOcgMessage, ISelectChainMessage
     private readonly List<ChainOption> _effects;
     private readonly List<OCG_HintTiming> _timing;
     private readonly List<OCG_HintTiming> _timingOther;
-    
     
     public SelectChainMessage(
         byte player, 

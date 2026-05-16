@@ -10,6 +10,16 @@ namespace YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 public static class ConstantExtensions
 {
+    public static SystemVictoryReason ToSystemVictoryReason(this OCG_VictoryReason value)
+    {
+        return (SystemVictoryReason)(uint)value;
+    }
+    
+    public static CoinResult ToCoinResult(this OCG_CoinResult value)
+    {
+        return (CoinResult)(int)value;
+    }
+    
     public static HintTiming ToHintTiming(this OCG_HintTiming value)
     {
         return (HintTiming)(uint)value;

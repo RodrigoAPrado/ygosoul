@@ -1,21 +1,26 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class TossCoinMessage : BaseMessage
+public class TossCoinMessage : BaseMessage, ITossCoinMessage
 {
     public byte Player { get; }
-    public IReadOnlyList<OCG_CoinResult> Results { get; }
+    public IReadOnlyList<CoinResult> Results { get; }
+    private readonly List<OCG_CoinResult> _results;
 
     public TossCoinMessage(byte player, List<OCG_CoinResult> results)
     {
         Player = player;
-        Results = results;
+        _results = results;
+        Results = _results.Select(x => x.ToCoinResult()).ToList().AsReadOnly();
     }
 
     public override string ToString()
     {
-        return $"TossCoin, Player={Player}, Results=[{string.Join(", ", Results)}]";
+        return $"TossCoin, Player={Player}, Results=[{string.Join(", ", _results)}]";
     }
 }

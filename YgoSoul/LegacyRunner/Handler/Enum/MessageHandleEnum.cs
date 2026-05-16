@@ -1,4 +1,4 @@
-﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Handler.Enum;
+﻿namespace YgoSoul.LegacyRunner.Handler.Enum;
 
 public enum MessageHandleEnum
 {

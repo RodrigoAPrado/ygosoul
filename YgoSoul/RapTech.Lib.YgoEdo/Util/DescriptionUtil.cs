@@ -2,9 +2,9 @@
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Handler;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-public class DescriptionHandler
+public class DescriptionUtil
 {
     public static string GetDescription(ulong value)
     {

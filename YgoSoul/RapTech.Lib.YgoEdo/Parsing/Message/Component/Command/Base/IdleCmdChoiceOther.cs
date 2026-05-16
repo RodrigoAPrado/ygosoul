@@ -1,7 +1,6 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Enum;
-using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Abstr;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Command.Base;
 
 public abstract class IdleCmdChoiceOther : IIdleCmdChoice
 {

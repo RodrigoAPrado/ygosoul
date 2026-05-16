@@ -1,16 +1,19 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
+using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class SpecialSummoningMessage : BaseMessage
+public class SpecialSummoningMessage : BaseMessage, ISpecialSummoningMessage
 {
-    public CardReference Card { get; }
+    public ICardReference Card => _card;
+    private readonly CardReference _card;
     
     public SpecialSummoningMessage(CardReference card) 
     {
-        Card = card;
+        _card = card;
     }
 
     public override string ToString()

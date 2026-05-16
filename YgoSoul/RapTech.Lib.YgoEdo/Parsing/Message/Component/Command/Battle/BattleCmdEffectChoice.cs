@@ -1,13 +1,12 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Flag;
-using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component.Command;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component.Command.Battle;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
-using YgoSoul.RapTech.Lib.YgoEdo.Handler;
-using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Command.Base;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Command.Battle;
 
 public class BattleCmdEffectChoice : BattleCmdChoiceCard, IBattleActivateEffect
 {
@@ -26,11 +25,11 @@ public class BattleCmdEffectChoice : BattleCmdChoiceCard, IBattleActivateEffect
     {
         _description = description;
         Location = _location.ToLocation();
-        Description = DescriptionHandler.GetDescription(_description);
+        Description = DescriptionUtil.GetDescription(_description);
     }
 
     public override string ToString()
     {
-        return $"to activate {CardLibrary.InternalGetCard(CardCode).Name}'s effect, description={DescriptionHandler.GetDescription(_description)}";
+        return $"to activate {CardLibrary.InternalGetCard(CardCode).Name}'s effect, description={DescriptionUtil.GetDescription(_description)}";
     }
 }

@@ -1,7 +1,7 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
-using YgoSoul.RapTech.Lib.YgoEdo.Handler;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
@@ -18,7 +18,7 @@ public class SelectYesNoMessage : ISelectionOcgMessage, ISelectYesNoMessage
     {
         Player = player;
         _description = description;
-        Description = DescriptionHandler.GetDescription(_description);
+        Description = DescriptionUtil.GetDescription(_description);
     }
     public byte[] GetResponse(List<int> input)
     {
@@ -35,7 +35,7 @@ public class SelectYesNoMessage : ISelectionOcgMessage, ISelectYesNoMessage
     
     public override string ToString()
     {
-        return $"Player {Player}, activate effect? Description={DescriptionHandler.GetDescription(_description)}:\n[0] - No\n[1] - Yes";
+        return $"Player {Player}, activate effect? Description={DescriptionUtil.GetDescription(_description)}:\n[0] - No\n[1] - Yes";
     }
 
     public bool CanCancel => false;

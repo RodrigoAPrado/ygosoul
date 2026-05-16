@@ -1,8 +1,8 @@
 ﻿using System.Text;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
-using YgoSoul.RapTech.Lib.YgoEdo.Handler;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
@@ -19,7 +19,7 @@ public class SelectOptionMessage : ISelectionOcgMessage, ISelectOptionMessage
     {
         Player = player;
         _options = options;
-        Options = _options.Select(DescriptionHandler.GetDescription).ToList().AsReadOnly();
+        Options = _options.Select(DescriptionUtil.GetDescription).ToList().AsReadOnly();
     }
     
     public byte[] GetResponse(List<int> input)
@@ -42,7 +42,7 @@ public class SelectOptionMessage : ISelectionOcgMessage, ISelectOptionMessage
 
         for (var i = 0; i < Options.Count; i++)
         {
-            sb.AppendLine($"[{i}] => {DescriptionHandler.GetDescription(_options[i])}, {_options[i]:x16}");
+            sb.AppendLine($"[{i}] => {DescriptionUtil.GetDescription(_options[i])}, {_options[i]:x16}");
         }
         return sb.ToString();
     }

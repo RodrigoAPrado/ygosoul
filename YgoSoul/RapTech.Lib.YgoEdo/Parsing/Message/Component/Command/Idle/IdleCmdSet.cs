@@ -2,10 +2,10 @@
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component.Command.Idle;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
-using YgoSoul.RapTech.Lib.YgoEdo.Handler;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Command.Base;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Command.Idle;
 
 public class IdleCmdSet : IdleCmdChoiceCard, IIdleSet
 {

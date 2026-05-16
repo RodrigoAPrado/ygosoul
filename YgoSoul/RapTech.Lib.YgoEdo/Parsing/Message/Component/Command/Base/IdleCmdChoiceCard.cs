@@ -1,10 +1,9 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
-using YgoSoul.RapTech.Lib.YgoEdo.Handler;
-using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Command.Base;
 
 public abstract class IdleCmdChoiceCard : IIdleCmdChoice
 {
@@ -32,7 +31,7 @@ public abstract class IdleCmdChoiceCard : IIdleCmdChoice
         var description = "";
         if (Action == PlayerIdleAction.EffectActivation)
         {
-            description = $", Description={DescriptionHandler.GetDescription(_description)}";
+            description = $", Description={DescriptionUtil.GetDescription(_description)}";
         }
             
         return $"to {Action.ToString()} {CardLibrary.InternalGetCard(CardCode).Name}, Location={_location.ToString()}, Sequence={Sequence}, Index={Index}{description}...";

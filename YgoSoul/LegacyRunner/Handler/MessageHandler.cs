@@ -1,8 +1,8 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
-using YgoSoul.RapTech.Lib.YgoEdo.Handler.Enum;
+﻿using YgoSoul.LegacyRunner.Handler.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Handler;
+namespace YgoSoul.LegacyRunner.Handler;
 
 public class MessageHandler
 {

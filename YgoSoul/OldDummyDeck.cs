@@ -1,9 +1,9 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Struct;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Domain;
+namespace YgoSoul;
 
-public static class DummyDeck
+public static class OldDummyDeck
 {
     private static List<uint> _brandedMain =
     [

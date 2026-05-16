@@ -1,4 +1,6 @@
 ﻿using System.Text;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.System.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
@@ -6,18 +8,19 @@ using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class SortChainMessage : ISelectionOcgMessage
+public class SortChainMessage : ISelectionOcgMessage, ISortChainMessage
 {
     public InputType Input => InputType.Sort;
     public int InputCount => Cards.Count;
     public bool CanCancel => true;
     public byte Player { get; }
-    public IReadOnlyList<CardReference> Cards { get; }
+    public IReadOnlyList<ICardReference> Cards => _cards;
+    private readonly List<CardReference> _cards;
     
     public SortChainMessage(byte player, List<CardReference> cards)
     {
         Player = player;
-        Cards = cards;
+        _cards = cards;
     }
 
     public byte[] GetResponse(List<int> ids)

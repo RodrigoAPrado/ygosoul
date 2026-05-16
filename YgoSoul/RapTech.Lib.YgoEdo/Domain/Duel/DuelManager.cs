@@ -22,7 +22,7 @@ public class DuelManager : IDuelManager
         _parsers = parsers;
     }
     
-    public bool CreateOcgDuel()
+    public bool CreateDuel()
     {
         if (_ocgDuel != null) 
             return false;

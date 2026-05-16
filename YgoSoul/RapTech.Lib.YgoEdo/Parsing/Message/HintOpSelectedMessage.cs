@@ -1,6 +1,6 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
-using YgoSoul.RapTech.Lib.YgoEdo.Handler;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
@@ -11,10 +11,10 @@ public class HintOpSelectedMessage : BaseHintMessage, IHintOpSelectedMessage
     private readonly ulong _description;
     
     public HintOpSelectedMessage(byte player, ulong description) : base(
-        $"$Player {player}, choose {DescriptionHandler.GetDescription(description)}")
+        $"$Player {player}, choose {DescriptionUtil.GetDescription(description)}")
     {
         Player = player;
         _description = description;
-        Description = DescriptionHandler.GetDescription(_description);
+        Description = DescriptionUtil.GetDescription(_description);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
-using YgoSoul.RapTech.Lib.YgoEdo.Handler;
+using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
@@ -18,7 +18,7 @@ public class ChainOption : IChainOption
         Code = code;
         _locationReference = locationReference;
         _description = description;
-        Description = DescriptionHandler.GetDescription(_description);
+        Description = DescriptionUtil.GetDescription(_description);
     }
     
     public override string ToString()
@@ -28,6 +28,6 @@ public class ChainOption : IChainOption
                $"Loc={_locationReference.Location}, " +
                $"Seq={_locationReference.Sequence}, " +
                $"SubSeq={_locationReference.Position}. " +
-               $"\nDesc={DescriptionHandler.GetDescription(_description)}";
+               $"\nDesc={DescriptionUtil.GetDescription(_description)}";
     }
 }
