@@ -1,7 +1,7 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Struct;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Manager;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Domain;
 
 public static class DummyDeck
 {

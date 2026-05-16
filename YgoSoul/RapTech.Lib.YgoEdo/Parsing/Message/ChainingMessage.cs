@@ -1,43 +1,46 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Flag;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
+using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
+using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Handler;
-using YgoSoul.RapTech.Lib.YgoEdo.Manager;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
+using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Message;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class ChainingMessage : BaseMessage
+public class ChainingMessage : BaseMessage, IChainingMessage
 {
     public uint CardCode { get; }
-    public byte Player { get; }
-    public OCG_CardLocation Location { get; }
-    public uint Sequence { get; }
-    public OCG_CardPosition Position { get; }
+    public IFullLocationReference LocationReference => _locationReference;
     public byte ActivationPlayer { get; }
-    public OCG_CardLocation ActivationLocation { get; }
+    public Location ActivationLocation => _activationLocation.ToLocation();
     public uint ActivationSequence { get; }
-    public ulong Description { get; }
+    public string Description => DescriptionHandler.GetDescription(_description);
     public uint ChainSize { get; }
+    private readonly FullLocationReference _locationReference;
+    private readonly OCG_CardLocation _activationLocation;
+    private readonly ulong _description;
 
-    public ChainingMessage(uint cardCode, byte player, OCG_CardLocation location, uint sequence, OCG_CardPosition position,
+    public ChainingMessage(uint cardCode, FullLocationReference locationReference,
         byte activationPlayer, OCG_CardLocation activationLocation, uint activationSequence, ulong description, uint chainSize)
     {
         CardCode = cardCode;
-        Player = player;
-        Location = location;
-        Sequence = sequence;
-        Position = position;
+        _locationReference = locationReference;
         ActivationPlayer = activationPlayer;
-        ActivationLocation = activationLocation;
+        _activationLocation = activationLocation;
         ActivationSequence = activationSequence;
-        Description = description;
+        _description = description;
         ChainSize = chainSize;
     }
 
     public override string ToString()
     {
         return $"Card {CardLibrary.InternalGetCard(CardCode).Name} from " +
-               $"Player={Player}, Location={Location}, Sequence={Sequence}, Position={Position}, " +
+               $"Player={LocationReference.Controller}, Location={LocationReference.Location}, " +
+               $"Sequence={LocationReference.Sequence}, Position={LocationReference.Position}, " +
                $"\nwas activated by Player={ActivationPlayer}, Location={ActivationLocation}, Sequence={ActivationSequence}, " +
-               $"\nwith Description={DescriptionHandler.GetDescription(Description)}, Chain Size={ChainSize}";
+               $"\nwith Description={Description}, Chain Size={ChainSize}";
     }
 }

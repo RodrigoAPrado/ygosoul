@@ -1,10 +1,10 @@
 ﻿using System.Text;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Message;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
 public class SelectPlaceMessage : IOcgMessage
 {

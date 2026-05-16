@@ -1,4 +1,6 @@
-﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Manager.Interface;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card;
+
+namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel;
 
 /// <summary>
 /// Gives access to cards and manages duels.

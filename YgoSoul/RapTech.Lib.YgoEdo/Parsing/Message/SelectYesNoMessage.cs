@@ -1,8 +1,8 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Handler;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Enum;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Message;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
 public class SelectYesNoMessage : IOcgMessage
 {

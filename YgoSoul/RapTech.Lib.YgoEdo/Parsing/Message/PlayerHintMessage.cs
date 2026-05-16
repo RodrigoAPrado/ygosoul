@@ -1,8 +1,8 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
 using YgoSoul.RapTech.Lib.YgoEdo.Handler;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Message;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
 public class PlayerHintMessage : BaseMessage
 {

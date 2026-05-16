@@ -1,10 +1,10 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
-using YgoSoul.RapTech.Lib.YgoEdo.CardInfo.Interface;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Flag;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Flag;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
-using YgoSoul.RapTech.Lib.YgoEdo.Manager.Interface.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Message.Component;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
 public class FullLocationReference : IFullLocationReference
 {

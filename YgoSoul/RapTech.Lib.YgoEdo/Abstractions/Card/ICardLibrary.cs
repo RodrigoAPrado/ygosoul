@@ -1,4 +1,4 @@
-﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Manager.Interface;
+﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card;
 
 /// <summary>
 /// Stores all available cards.

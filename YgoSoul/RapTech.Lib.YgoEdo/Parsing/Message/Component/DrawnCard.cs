@@ -1,7 +1,7 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
-using YgoSoul.RapTech.Lib.YgoEdo.Manager;
+using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Message.Component;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
 public class DrawnCard
 {

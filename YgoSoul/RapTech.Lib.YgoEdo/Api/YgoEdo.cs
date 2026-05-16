@@ -1,6 +1,8 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Factory;
-using YgoSoul.RapTech.Lib.YgoEdo.Manager;
-using YgoSoul.RapTech.Lib.YgoEdo.Manager.Interface;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel;
+using YgoSoul.RapTech.Lib.YgoEdo.Domain.Bridge;
+using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
+using YgoSoul.RapTech.Lib.YgoEdo.Domain.Duel;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Api;
 

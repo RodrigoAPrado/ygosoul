@@ -1,10 +1,10 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.CardInfo.Interface;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Struct;
-using YgoSoul.RapTech.Lib.YgoEdo.Manager.Interface;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Manager;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 
 public class CardData : ICardData
 {

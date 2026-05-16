@@ -3,7 +3,7 @@ using Microsoft.Data.Sqlite;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Struct;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Manager;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 
 public class CardDatabase
 {

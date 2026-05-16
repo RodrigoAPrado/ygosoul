@@ -1,6 +1,6 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Message.Enum;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Enum;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Message.Interface.Base;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Base;
 
 public interface IDuelMessage
 {

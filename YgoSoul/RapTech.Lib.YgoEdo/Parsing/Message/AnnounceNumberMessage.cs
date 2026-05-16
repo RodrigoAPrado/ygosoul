@@ -1,9 +1,9 @@
 ﻿using System.Text;
 using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Enum;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Message;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
 public class AnnounceNumberMessage : BaseMessage, ISelectionOcgMessage, IAnnounceNumberMessage
 {

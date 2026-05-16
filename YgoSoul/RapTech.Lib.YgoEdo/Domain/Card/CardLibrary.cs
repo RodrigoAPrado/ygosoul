@@ -1,7 +1,7 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Struct;
-using YgoSoul.RapTech.Lib.YgoEdo.Manager.Interface;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card;
+using YgoSoul.RapTech.Lib.YgoEdo.Core.Struct;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Manager;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 
 public class CardLibrary : ICardLibrary
 {

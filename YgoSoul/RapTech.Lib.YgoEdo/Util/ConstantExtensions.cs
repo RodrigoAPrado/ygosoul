@@ -1,7 +1,9 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.CardInfo.Interface;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Flag;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
-using YgoSoul.RapTech.Lib.YgoEdo.Manager.Interface.Flag;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Util;
 

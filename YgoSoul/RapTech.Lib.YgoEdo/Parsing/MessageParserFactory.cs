@@ -1,8 +1,8 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
-using YgoSoul.RapTech.Lib.YgoEdo.Parser;
-using YgoSoul.RapTech.Lib.YgoEdo.Parser.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Factory;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing;
 
 public static class MessageParserFactory
 {

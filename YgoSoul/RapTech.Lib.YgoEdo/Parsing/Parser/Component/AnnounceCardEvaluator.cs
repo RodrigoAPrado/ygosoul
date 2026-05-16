@@ -1,7 +1,7 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Struct;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parser.Component;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Component;
 
 public class AnnounceCardEvaluator
 {

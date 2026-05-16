@@ -1,11 +1,11 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
-using YgoSoul.RapTech.Lib.YgoEdo.Message;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
-using YgoSoul.RapTech.Lib.YgoEdo.Parser.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 using ArgumentOutOfRangeException = System.ArgumentOutOfRangeException;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parser;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser;
 
 public class ShuffleCardsParser : BaseParser
 {

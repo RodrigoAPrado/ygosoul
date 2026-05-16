@@ -1,7 +1,7 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Enum;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Message.Component.Abstr;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Abstr;
 
 public abstract class BattleCmdChoiceCard : BattleCmdChoice
 {

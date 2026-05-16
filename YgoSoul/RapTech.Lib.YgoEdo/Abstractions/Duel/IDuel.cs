@@ -1,7 +1,8 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.CardInfo.Interface;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Interface.Base;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Base;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Manager.Interface;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel;
 
 /// <summary>
 /// Ocg Duel Instance. Wraps a duel from the ocgcore lib.

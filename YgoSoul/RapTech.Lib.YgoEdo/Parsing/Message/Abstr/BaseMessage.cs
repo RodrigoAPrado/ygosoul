@@ -1,6 +1,6 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Message.Enum;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Enum;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
 public abstract class BaseMessage : IOcgMessage
 {

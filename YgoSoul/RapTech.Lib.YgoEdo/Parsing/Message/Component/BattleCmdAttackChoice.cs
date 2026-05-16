@@ -1,9 +1,9 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
-using YgoSoul.RapTech.Lib.YgoEdo.Manager;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Component.Abstr;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Enum;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Message.Component;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
 public class BattleCmdAttackChoice : BattleCmdChoiceCard
 {

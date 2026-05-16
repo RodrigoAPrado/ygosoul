@@ -1,16 +1,18 @@
 ﻿using System.Runtime.InteropServices;
-using YgoSoul.RapTech.Lib.YgoEdo.CardInfo.Interface;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Base;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Native;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Struct;
-using YgoSoul.RapTech.Lib.YgoEdo.Manager.Interface;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Enum;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Interface.Base;
+using YgoSoul.RapTech.Lib.YgoEdo.Domain.Bridge;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Manager;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Domain.Duel;
 
 public class Duel : IDuel, IDisposable
 {

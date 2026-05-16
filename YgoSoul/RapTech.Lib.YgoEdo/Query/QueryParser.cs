@@ -1,5 +1,5 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Component;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Query.Component;
 using YgoSoul.RapTech.Lib.YgoEdo.Util;
 

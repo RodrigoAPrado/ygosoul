@@ -1,8 +1,8 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
-using YgoSoul.RapTech.Lib.YgoEdo.Message;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parser.Abstr;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
 
 public abstract class BaseParser : IParser
 {

@@ -1,6 +1,6 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Parser.Abstr;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
 
 public interface IParser
 {

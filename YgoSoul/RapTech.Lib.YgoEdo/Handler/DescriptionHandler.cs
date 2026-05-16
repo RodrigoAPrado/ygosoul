@@ -1,6 +1,6 @@
 ﻿using YgoSoul.RapTech.Lib.YgoEdo.Core.Constant;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
-using YgoSoul.RapTech.Lib.YgoEdo.Manager;
+using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Handler;
 

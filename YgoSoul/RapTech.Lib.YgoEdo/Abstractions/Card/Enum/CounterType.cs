@@ -1,4 +1,4 @@
-﻿namespace YgoSoul.RapTech.Lib.YgoEdo.CardInfo.Interface;
+﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Enum;
 
 public enum CounterType
 {

@@ -1,5 +1,5 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.CardInfo.Interface;
-using YgoSoul.RapTech.Lib.YgoEdo.Manager.Interface.Flag;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Flag;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Flag;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 

@@ -1,8 +1,9 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Message;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
 
-public class ChainNegatedMessage : BaseMessage
+public class ChainNegatedMessage : BaseMessage, IChainNegatedMessage
 {
     public byte ChainSize { get; }
 

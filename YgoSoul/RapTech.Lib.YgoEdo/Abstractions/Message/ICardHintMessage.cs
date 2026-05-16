@@ -1,6 +1,6 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
-using YgoSoul.RapTech.Lib.YgoEdo.CardInfo.Interface;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Interface.Base;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Base;
+using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
 
 namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message;
 

@@ -1,6 +1,6 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.CardInfo.Interface;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card.Enum;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Manager.Interface;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Card;
 
 public interface ICardData
 {

@@ -1,6 +1,6 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Message.Interface.Base;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Base;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
 public interface ISelectionOcgMessage : IOcgMessage, ISelectionDuelMessage
 {

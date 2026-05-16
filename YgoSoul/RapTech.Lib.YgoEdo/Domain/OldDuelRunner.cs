@@ -4,18 +4,18 @@ using YgoSoul.RapTech.Lib.YgoEdo.Core.Enum;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Flag;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Native;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Struct;
-using YgoSoul.RapTech.Lib.YgoEdo.Factory;
+using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 using YgoSoul.RapTech.Lib.YgoEdo.Handler;
 using YgoSoul.RapTech.Lib.YgoEdo.Handler.Enum;
-using YgoSoul.RapTech.Lib.YgoEdo.Message;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Component;
-using YgoSoul.RapTech.Lib.YgoEdo.Message.Enum;
-using YgoSoul.RapTech.Lib.YgoEdo.Parser.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing;
 using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Enum;
+using YgoSoul.RapTech.Lib.YgoEdo.Parsing.Parser.Abstr;
 using YgoSoul.RapTech.Lib.YgoEdo.Query;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Manager;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Domain;
 
 public class OldDuelRunner
 {

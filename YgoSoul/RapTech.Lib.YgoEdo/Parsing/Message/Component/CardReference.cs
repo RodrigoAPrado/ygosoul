@@ -1,15 +1,17 @@
-﻿using YgoSoul.RapTech.Lib.YgoEdo.Manager;
+﻿using YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Message.Component;
+using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Message.Component;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Component;
 
-public class CardReference
+public class CardReference : ICardReference
 {
+    public IFullLocationReference LocationReference => _locationReference;
     public uint CardCode { get; }
-    public FullLocationReference LocationReference { get; }
     public uint Index { get; }
     public byte ReleaseValue { get; set; }
     public ushort CounterAmount { get; set; }
     public ulong Sum { get; set; }
+    private readonly FullLocationReference _locationReference;
 
     public CardReference(
         uint cardCode,
@@ -17,7 +19,7 @@ public class CardReference
         uint index)
     {
         CardCode = cardCode;
-        LocationReference = locationReference;
+        _locationReference = locationReference;
         Index = index;
     }
 

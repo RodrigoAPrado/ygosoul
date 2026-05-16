@@ -1,4 +1,4 @@
-﻿namespace YgoSoul.RapTech.Lib.YgoEdo.CardInfo.Interface;
+﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Abstractions.Duel.Flag;
 
 [Flags]
 public enum Location

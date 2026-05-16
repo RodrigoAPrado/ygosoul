@@ -1,7 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 using YgoSoul.RapTech.Lib.YgoEdo.Core.Native;
+using YgoSoul.RapTech.Lib.YgoEdo.Domain.Card;
 
-namespace YgoSoul.RapTech.Lib.YgoEdo.Manager;
+namespace YgoSoul.RapTech.Lib.YgoEdo.Domain.Bridge;
 
 public static class OcgBridge
 {

@@ -1,4 +1,4 @@
-﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Message.Abstr;
+﻿namespace YgoSoul.RapTech.Lib.YgoEdo.Parsing.Message.Abstr;
 
 public abstract class SimpleTextMessage : BaseMessage
 {
