@@ -35,8 +35,9 @@ namespace YgoSoul
             Console.WriteLine($"OCGCore Version: {major}.{minor}");
 
             // Inicializa banco de dados
-            CardDatabase.Init("cards.cdb");
+            CardDatabase.Init("db/cards.cdb");
             CardDatabase.LoadCards();
+            CardLibrary.CreateInstance();
 
             // 2. Configure os delegates (Importante: manter referências static)
             _dataReader = MyCardReader;
@@ -277,7 +278,7 @@ namespace YgoSoul
                 var input = Console.ReadLine();
                 if (int.TryParse(input, out var choice))
                 {
-                    response = message.GetResponse(new List<int>(choice));
+                    response = message.GetResponse(new List<int>(){choice});
                     if (response.Length == 0)
                         Console.WriteLine("--- INVALID CHOICE ---");
                 }
@@ -315,7 +316,7 @@ namespace YgoSoul
 
                 if (int.TryParse(input, out var choice))
                 {
-                    response = message.GetResponse(new List<int>(choice));
+                    response = message.GetResponse(new List<int>(){choice});
                     if (response.Length == 0)
                         Console.WriteLine("--- INVALID CHOICE ---");
                 }
@@ -356,7 +357,7 @@ namespace YgoSoul
 
                 if (int.TryParse(input, out var choice))
                 {
-                    response = message.GetResponse(new List<int>(choice));
+                    response = message.GetResponse(new List<int>(){choice});
                     if (response.Length == 0)
                         Console.WriteLine("--- INVALID CHOICE ---");
                 }

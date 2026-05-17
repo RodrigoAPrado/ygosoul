@@ -298,7 +298,7 @@ namespace YgoSoul
             32909498,
             32909498,
             32909498,
-            69540484
+            58297729
         ];
 
         private static readonly List<uint> _extra =
