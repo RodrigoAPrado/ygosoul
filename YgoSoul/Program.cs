@@ -1,4 +1,6 @@
-﻿namespace YgoSoul
+﻿using YgoSoul.CardDownloader;
+
+namespace YgoSoul
 {
     internal class Program
     {
@@ -16,9 +18,21 @@
                     case 0:
                         OldDuelRunner.RunDuel();
                         break;
+                    case 1:
+                        WaitTask();
+                        break;
                 }
 
             Console.WriteLine("Exiting...");
+        }
+
+        private static void WaitTask()
+        {
+            var task = Task.Run(CardImgDownloader.Download);
+            do
+            {
+                Thread.Sleep(1000);
+            } while (!task.IsCompleted);
         }
     }
 }
